@@ -1,0 +1,7 @@
+# Ignore aditional libraries
+
+Debug/
+.vs/
+x64/
+
+/External/**
