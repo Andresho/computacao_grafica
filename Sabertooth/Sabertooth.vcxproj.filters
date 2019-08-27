@@ -19,6 +19,15 @@
     <Filter Include="Shaders\Core">
       <UniqueIdentifier>{a385c29a-17a6-49db-8114-65941d6252aa}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\projects">
+      <UniqueIdentifier>{d68dd97c-b606-4197-8d96-8f026b46b4e0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\projects\simpleTriangle">
+      <UniqueIdentifier>{b3c9de6e-3e5c-4f8b-ab28-05bd3c0547e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\projects\meshCube">
+      <UniqueIdentifier>{2b2b1ec3-37c0-4c1d-8b12-a6c4e54dd14d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -33,6 +42,12 @@
     <ClCompile Include="Texture.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="projects\simpleTriangle\run.cpp">
+      <Filter>Source Files\projects\simpleTriangle</Filter>
+    </ClCompile>
+    <ClCompile Include="projects\meshCube\run.cpp">
+      <Filter>Source Files\projects\meshCube</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -46,6 +61,12 @@
     </ClInclude>
     <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\simpleTriangle\run.h">
+      <Filter>Source Files\projects\simpleTriangle</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\run.h">
+      <Filter>Source Files\projects\meshCube</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
