@@ -11,6 +11,13 @@
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
+using namespace glm;
+using namespace std;
+
+#include "../../Face.h"
+#include "../../Group.h"
+#include "../../Mesh.h"
+
 int run();
 
 #endif

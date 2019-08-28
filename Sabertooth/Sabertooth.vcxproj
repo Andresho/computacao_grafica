@@ -133,6 +133,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
+    <ClInclude Include="Face.h" />
+    <ClInclude Include="Group.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="projects\meshCube\run.h" />
     <ClInclude Include="projects\simpleTriangle\run.h" />
     <ClInclude Include="Shader.h" />
