@@ -135,19 +135,19 @@ void readData() {
                 stoken << token;
                 string aux;
                 getline(stoken, aux, '/');
-                int x = stoi(aux);
+                int x = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
 
                 sline >> token; // v/t/n, por exemplo
                 stoken.str("");// limpa a sstream para pegar apenas o primeiro
                 stoken << token;
                 getline(stoken, aux, '/');
-                int y = stoi(aux);
+                int y = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
 
                 sline >> token; // v/t/n, por exemplo
                 stoken.str("");// limpa a sstream para pegar apenas o primeiro
                 stoken << token;
                 getline(stoken, aux, '/');
-                int z = stoi(aux);
+                int z = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
 /* faces */
                 vec3 v = vec3(x,y,z);
                 Face *f = new Face(v);

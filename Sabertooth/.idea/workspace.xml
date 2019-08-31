@@ -12,10 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/cube.obj" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/meshCube/run.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/meshCube/run.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/meshCube/run.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/meshCube/run.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -32,12 +29,12 @@
     <favorites_list name="MeshCube" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file pinned="false" current-in-tab="false">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
+            <state relative-caret-position="315">
+              <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-end-line="21" selection-end-column="27" />
             </state>
           </provider>
         </entry>
@@ -54,17 +51,24 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cube.obj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="353">
-              <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+            <state>
+              <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="17" />
+              <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="18" />
+              <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="18" />
+              <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="17" />
+              <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="19" />
+              <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="18" />
+              <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="17" />
+              <caret selection-end-column="16" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="165">
-              <caret line="159" lean-forward="true" selection-start-line="159" selection-start-column="2" selection-end-line="165" selection-end-column="5" />
+            <state relative-caret-position="15">
+              <caret line="90" column="4" selection-start-line="90" selection-start-column="4" selection-end-line="104" />
             </state>
           </provider>
         </entry>
@@ -147,7 +151,7 @@
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6" fullScreen="true">
+  <component name="ProjectFrameBounds" fullScreen="true">
     <option name="y" value="23" />
     <option name="width" value="1366" />
     <option name="height" value="703" />
@@ -157,44 +161,10 @@
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
-    <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="MeshCube" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sabertooth" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MeshCube" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sabertooth" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MeshCube" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sabertooth" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-              <item name="meshCube" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MeshCube" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sabertooth" type="462c0819:PsiDirectoryNode" />
-              <item name="projects" type="462c0819:PsiDirectoryNode" />
-              <item name="simpleTriangle" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="MeshCube" type="b2602c69:ProjectViewProjectNode" />
-              <item name="Sabertooth" type="462c0819:PsiDirectoryNode" />
-              <item name="Shaders" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="Scope" />
-    </panes>
+    <panes />
   </component>
   <component name="PropertiesComponent">
+    <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
@@ -225,8 +195,8 @@
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.Unnamed" />
       <item itemvalue="CMake Application.MeshCube" />
+      <item itemvalue="CMake Application.Unnamed" />
     </list>
   </component>
   <component name="SvnConfiguration">
@@ -239,12 +209,13 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1567027313983</updated>
-      <workItem from="1567027315746" duration="9061000" />
+      <workItem from="1567027315746" duration="9441000" />
+      <workItem from="1567117787902" duration="1204000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="9061000" />
+    <option name="totallyTimeSpent" value="10645000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -257,28 +228,27 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1366" height="768" extended-state="6" />
-    <editor active="true" />
     <layout>
-      <window_info id="Favorites" side_tool="true" weight="0.32930514" />
       <window_info content_ui="combo" id="Project" order="0" weight="0.25" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info anchor="bottom" id="CMake" weight="0.3295129" />
-      <window_info anchor="bottom" id="Database Changes" />
-      <window_info anchor="bottom" id="Version Control" weight="0.3295129" />
-      <window_info anchor="bottom" id="Messages" weight="0.3295129" />
-      <window_info anchor="bottom" id="Terminal" weight="0.3295129" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
+      <window_info id="Favorites" order="2" side_tool="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.3295129" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3295129" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3295129" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.39971346" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
-      <window_info anchor="right" id="Database" />
+      <window_info anchor="bottom" id="Database Changes" order="7" />
+      <window_info anchor="bottom" id="Messages" order="8" weight="0.3295129" />
+      <window_info anchor="bottom" id="Terminal" order="9" weight="0.3295129" />
+      <window_info anchor="bottom" id="Event Log" order="10" side_tool="true" />
+      <window_info anchor="bottom" id="Version Control" order="11" weight="0.3295129" />
+      <window_info anchor="bottom" id="CMake" order="12" weight="0.3295129" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Database" order="3" />
     </layout>
     <layout-to-restore>
       <window_info id="Favorites" order="0" side_tool="true" />
@@ -307,12 +277,36 @@
     <option name="version" value="1" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Face.h">
+    <entry file="file://$PROJECT_DIR$/main.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="14" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="14" />
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
         </state>
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/cube.obj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="7" selection-start-line="7" selection-end-line="7" selection-end-column="17" />
+          <caret line="6" selection-start-line="6" selection-end-line="6" selection-end-column="18" />
+          <caret line="5" selection-start-line="5" selection-end-line="5" selection-end-column="18" />
+          <caret line="4" selection-start-line="4" selection-end-line="4" selection-end-column="17" />
+          <caret line="3" selection-start-line="3" selection-end-line="3" selection-end-column="19" />
+          <caret line="2" selection-start-line="2" selection-end-line="2" selection-end-column="18" />
+          <caret line="1" selection-start-line="1" selection-end-line="1" selection-end-column="17" />
+          <caret selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/meshCube/run.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="90">
+          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/simpleTriangle/run.h">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/Group.h">
       <provider selected="true" editor-type-id="text-editor">
@@ -328,41 +322,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/simpleTriangle/run.h">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/projects/meshCube/run.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="6" column="19" selection-start-line="6" selection-start-column="19" selection-end-line="6" selection-end-column="19" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="11" column="16" selection-start-line="11" selection-start-column="16" selection-end-line="11" selection-end-column="16" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
+    <entry file="file://$PROJECT_DIR$/Face.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="60">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/cube.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="353">
-          <caret line="31" column="5" selection-start-line="31" selection-start-column="5" selection-end-line="31" selection-end-column="5" />
+          <caret line="4" column="14" selection-start-line="4" selection-start-column="9" selection-end-line="4" selection-end-column="14" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="165">
-          <caret line="159" lean-forward="true" selection-start-line="159" selection-start-column="2" selection-end-line="165" selection-end-column="5" />
+        <state relative-caret-position="15">
+          <caret line="90" column="4" selection-start-line="90" selection-start-column="4" selection-end-line="104" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Downloads/FlexBison-master/lex.yy.c">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-30024">
+          <caret selection-end-line="2067" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="315">
+          <caret line="21" column="27" lean-forward="true" selection-start-line="21" selection-end-line="21" selection-end-column="27" />
         </state>
       </provider>
     </entry>
