@@ -105,10 +105,27 @@ Mesh* readData() {
                 // ler vértice ...
                 float x, y, z;
                 sline >> x >> y >> z;
-                // ... atribuir vértices da malha
+                // atribuir vértices da malha
                 vec3* v = new vec3(x, y, z);
                 mesh->vertex.push_back(v);
-            } else if (temp == "g") {
+            }
+            else if (temp == "vn") {
+                // ler normais ...
+                float x, y, z;
+                sline >> x >> y >> z;
+                //atribuir normais da malha
+                vec3* vn = new vec3(x, y, z);
+                mesh->normals.push_back(vn);
+            }
+            else if (temp == "vt") {
+                // ler mapeamento de textura ...
+                float x, y;
+                sline >> x >> y;
+                // atribuir mapeamentos de textura da malha
+                vec2* vt = new vec2(x, y);
+                mesh->mappings.push_back(vt);
+            }
+            else if (temp == "g") {
                 if (g != nullptr) {
                     mesh->groups.push_back(g);
                 }
@@ -123,8 +140,12 @@ Mesh* readData() {
                 // implementar lógica de varições
                 // para face: v, v/t/n, v/t e v//n
                 Face *f = new Face();
+                Face *fAux = new Face();
+                int vertices = 0;
+
                 // le todas faces ate final da linha
                 while(!sline.eof()) {
+                    vertices++;
                     string token;
                     sline >> token;
                     if (token.empty()) {
@@ -132,36 +153,56 @@ Mesh* readData() {
                     }
                     stringstream stoken;
                     stoken << token;
+
                     string aux[3];
                     int countParamsFace = -1;
                     do {
                         countParamsFace = countParamsFace + 1;
                         getline(stoken, aux[countParamsFace], '/');
                     } while (!stoken.eof());
+
                     for (int i = 0; i < 3; i = i + 1) {
                         switch (i) {
                             // posicao 0 --> indice de vertex
                             case 0:
                                 if (aux[i].empty()) {
-                                    f->verts.push_back(-1);
+                                    if(vertices>3)
+                                        fAux->verts.push_back(-1);
+                                    else
+                                        f->verts.push_back(-1);
                                 } else {
-                                    f->verts.push_back(stoi(aux[i])-1);
+                                    if(vertices>3)
+                                        fAux->verts.push_back(stoi(aux[i])-1);
+                                    else
+                                        f->verts.push_back(stoi(aux[i])-1);
                                 }
                                 break;
                                 // posicao 1 --> indice de mapamento de textura
                             case 1:
                                 if (aux[i].empty()) {
-                                    f->texts.push_back(-1);
+                                    if(vertices>3)
+                                        fAux->texts.push_back(-1);
+                                    else
+                                        f->texts.push_back(-1);
                                 } else {
-                                    f->texts.push_back(stoi(aux[i])-1);
+                                    if(vertices>3)
+                                        fAux->texts.push_back(stoi(aux[i])-1);
+                                    else
+                                        f->texts.push_back(stoi(aux[i])-1);
                                 }
                                 break;
                                 // posicao 1 --> indice de normais
                             case 2:
                                 if (aux[i].empty()) {
-                                    f->norms.push_back(-1);
+                                    if(vertices>3)
+                                        fAux->norms.push_back(-1);
+                                    else
+                                        f->norms.push_back(-1);
                                 } else {
-                                    f->norms.push_back(stoi(aux[i])-1);
+                                    if(vertices>3)
+                                        fAux->norms.push_back(stoi(aux[i])-1);
+                                    else
+                                        f->norms.push_back(stoi(aux[i])-1);
                                 }
                                 break;
                             default:
@@ -169,14 +210,26 @@ Mesh* readData() {
                         }
                     }
                 }
-                // Adiciona faces no grupo
+
+                // Adiciona face no grupo
                 g->faces.push_back(f);
+                if(vertices>3){
+                    for(int i=1; i<3; i++){
+                        fAux->verts.push_back(f->verts[i]);
+                        fAux->norms.push_back(f->norms[i]);
+                        fAux->texts.push_back(f->texts[i]);
+                    }
+                    // Adiciona face no grupo
+                    g->faces.push_back(fAux);
+                }
+
             }
         }
         // adiciona grupo para o mesh
         mesh->groups.push_back(g);
         return mesh;
     }
+    return nullptr;
 }
 
 void loadVertices(Mesh* mesh) {
@@ -186,32 +239,42 @@ void loadVertices(Mesh* mesh) {
         g = mesh->groups[i];
 
         vector<float> vs;
-        //vector<float*> vts;
-        //vector<float*> vns;
+        vector<float> vts;
+        vector<float> vns;
+
         for (int j = 0; j < g->faces.size(); j++) {
             f = g->faces[j];
+
+            // para vertices
             for(int k = 0; k< (f->verts.size()); k++){
-                int vk = f->verts[k];
-                vec3* v = mesh->vertex[vk];
+                vec3* v = mesh->vertex[f->verts[k]];
                 vs.push_back(v->x);
                 vs.push_back(v->y);
                 vs.push_back(v->z);
             }
-            /*
-            vt = mesh->texts[f->texts[i]];
-            vts.push_back(vt.x);
-            vts.push_back(vt.y);
-            vn = mesh->norms[f->norms[i]];
-            vns.push_back(vn.x);
-            vns.push_back(vn.y);
-            vns.push_back(vn.z);
-            */
 
+            // para normais
+            for(int n = 0; n<(f->norms.size()); n++){
+                vec3* vn = mesh->vertex[f->verts[n]];
+                vns.push_back(vn->x);
+                vns.push_back(vn->y);
+                vns.push_back(vn->z);
+            }
+
+            // para texturas
+            for(int t = 0; t< (f->texts.size()); t++){
+                vec2* vt = mesh->mappings[f->texts[t]];
+                vts.push_back(vt->x);
+                vts.push_back(vt->y);
+            }
         }
         g->numVertices = vs.size();
         printf("Num Vertices %d",g->numVertices);
 
         float*  arrayPoints = vs.data();
+        float*  arrayNormals = vns.data();
+        float*  arrayTexts = vts.data();
+
         /*
         VBO
         */
@@ -225,6 +288,7 @@ void loadVertices(Mesh* mesh) {
         glGenVertexArrays(1, &g->vao);
         glBindVertexArray(g->vao);
         glBindBuffer(GL_ARRAY_BUFFER, g->vbo); // identifica vbo atual
+
         // habilitado primeiro atributo do vbo bound atual
         glEnableVertexAttribArray(0);
         // associa��o do vbo atual com primeiro atributo
