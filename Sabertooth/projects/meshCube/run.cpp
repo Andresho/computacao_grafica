@@ -85,11 +85,11 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-Mesh* readData() {
+Mesh* readData(string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
-    ifstream arq("cube.obj");
+    ifstream arq(fileName);
 
     if (!arq){
         cout << "Archive not found!";
@@ -255,7 +255,7 @@ void loadVertices(Mesh* mesh) {
 
             // para normais
             for(int n = 0; n<(f->norms.size()); n++){
-                vec3* vn = mesh->vertex[f->verts[n]];
+                vec3* vn = mesh->normals[f->norms[n]];
                 vns.push_back(vn->x);
                 vns.push_back(vn->y);
                 vns.push_back(vn->z);
@@ -276,27 +276,45 @@ void loadVertices(Mesh* mesh) {
         float*  arrayTexts = vts.data();
 
         /*
-        VBO
-        */
-        glGenBuffers(1, &g->vbo);
-        glBindBuffer(GL_ARRAY_BUFFER, g->vbo);
-        glBufferData(GL_ARRAY_BUFFER, g->numVertices * sizeof(float), arrayPoints, GL_STATIC_DRAW);
-
-        /*
         VAO
         */
         glGenVertexArrays(1, &g->vao);
         glBindVertexArray(g->vao);
-        glBindBuffer(GL_ARRAY_BUFFER, g->vbo); // identifica vbo atual
 
-        // habilitado primeiro atributo do vbo bound atual
-        glEnableVertexAttribArray(0);
-        // associa��o do vbo atual com primeiro atributo
-        // 0 identifica que o primeiro atributo est� sendo definido
-        // 3, GL_FLOAT identifica que dados s�o vec3 e est�o a cada 3 float.
-        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-        // � poss�vel associar outros atributos, como normais, mapeamento e cores
-        // lembre-se: um por v�rtice
+        /*
+        VBO vertices
+        */
+        GLuint vboVerts;
+        glGenBuffers(1, &vboVerts);
+        glBindBuffer(GL_ARRAY_BUFFER, vboVerts);
+        glBufferData(GL_ARRAY_BUFFER, vs.size() * sizeof(float), arrayPoints, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
+        // associacao do vbo atual com primeiro atributo
+        // 0 identifica que o primeiro atributo está sendo definido
+        // 3, GL_FLOAT identifica que dados sao vec3 e estao a cada 3 float.
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        /*
+            VBO normals
+        */
+        GLuint vboNorms;
+        glGenBuffers (1, &vboNorms);
+        glBindBuffer (GL_ARRAY_BUFFER, vboNorms);
+        glBufferData (GL_ARRAY_BUFFER, vns.size() * sizeof (float), arrayNormals, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(1);
+        glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+        /*
+            VBO textures
+        */
+        GLuint vboTexts;
+        glGenBuffers (1, &vboTexts);
+        glBindBuffer (GL_ARRAY_BUFFER, vboTexts);
+        glBufferData (GL_ARRAY_BUFFER, vts.size() * sizeof (float), arrayTexts, GL_STATIC_DRAW);
+        glEnableVertexAttribArray(2);
+        glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+
     }
 }
 
@@ -338,7 +356,7 @@ int run() {
 	/*
 		Realiza a leitura dos dados para criar o Mesh
 	*/
-    Mesh* mesh = readData();
+    Mesh* mesh = readData("cube.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
@@ -346,11 +364,12 @@ int run() {
 	const char* vertex_shader =
 		"#version 330\n"
 		"layout(location=0) in vec3 vp;"
-		"layout(location=1) in vec3 vc;"
+        "layout(location=1) in vec3 vn;"
+        "layout(location=2) in vec2 vt;"
 		"uniform mat4 matrix;"
 		"out vec3 color;"
 		"void main () {"
-		" color = vc;"
+		" color = vn;"
 		" gl_Position = matrix * vec4(vp, 1.0);"
 		"}";
 
@@ -359,7 +378,7 @@ int run() {
 		"in vec3 color;"
 		"out vec4 frag_color;"
 		"void main () {"
-		" frag_color = vec4 (1.0,1.0,1.0, 1.0);"
+		" frag_color = vec4 (color, 1.0);"
 		"}";
 
 	// identifica vShader e o associa com vertex_shader
@@ -393,13 +412,12 @@ int run() {
 			g = mesh->groups[i];
 			// Define vao como verte array atual
 			glBindVertexArray(g->vao);
-			// desenha pontos a partir do p0 e 3 no total do VAO atual com o shader
-			// atualmente em uso
 
 			//pass uniform location to shader
 			glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, glm::value_ptr(matrix));
 
-			glDrawArrays(GL_LINE_LOOP, 0, g->numVertices);
+            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices/3);
+//            glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
 		}
 		glfwSwapBuffers(window);
 

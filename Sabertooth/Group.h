@@ -6,9 +6,7 @@ public:
 	string name;
 	string material;
 
-	GLuint vbo;
 	GLuint vao;
-
 	int numVertices = 0;
 
 	vector<Face*> faces;
