@@ -247,25 +247,34 @@ void loadVertices(Mesh* mesh) {
 
             // para vertices
             for(int k = 0; k< (f->verts.size()); k++){
-                vec3* v = mesh->vertex[f->verts[k]];
-                vs.push_back(v->x);
-                vs.push_back(v->y);
-                vs.push_back(v->z);
+                int ind_v = f->verts[k];
+                if(ind_v>-1){
+                    vec3* v = mesh->vertex[ind_v];
+                    vs.push_back(v->x);
+                    vs.push_back(v->y);
+                    vs.push_back(v->z);
+                }
             }
 
             // para normais
             for(int n = 0; n<(f->norms.size()); n++){
-                vec3* vn = mesh->normals[f->norms[n]];
-                vns.push_back(vn->x);
-                vns.push_back(vn->y);
-                vns.push_back(vn->z);
+                int ind_n = f->norms[n];
+                if(ind_n>-1) {
+                    vec3 *vn = mesh->normals[ind_n];
+                    vns.push_back(vn->x);
+                    vns.push_back(vn->y);
+                    vns.push_back(vn->z);
+                }
             }
 
             // para texturas
             for(int t = 0; t< (f->texts.size()); t++){
-                vec2* vt = mesh->mappings[f->texts[t]];
-                vts.push_back(vt->x);
-                vts.push_back(vt->y);
+                int ind_t = f->texts[t];
+                if(ind_t>-1) {
+                    vec2 *vt = mesh->mappings[ind_t];
+                    vts.push_back(vt->x);
+                    vts.push_back(vt->y);
+                }
             }
         }
         g->numVertices = vs.size();

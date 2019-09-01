@@ -12,9 +12,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/Group.h" beforeDir="false" afterPath="$PROJECT_DIR$/Group.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/cube.obj" beforeDir="false" afterPath="$PROJECT_DIR$/cube.obj" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/meshCube/run.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/meshCube/run.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -51,20 +49,20 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cube.obj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="195">
-              <caret line="14" column="5" selection-start-line="14" selection-end-line="14" selection-end-column="5" />
+            <state relative-caret-position="210">
+              <caret line="14" selection-start-line="14" selection-end-line="19" selection-end-column="33" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="277">
-              <caret line="420" column="59" lean-forward="true" selection-start-line="420" selection-start-column="59" selection-end-line="420" selection-end-column="59" />
+            <state relative-caret-position="-1095">
+              <caret line="169" column="63" selection-start-line="169" selection-start-column="62" selection-end-line="169" selection-end-column="63" />
             </state>
           </provider>
         </entry>
@@ -249,7 +247,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="31217000" />
+    <option name="totallyTimeSpent" value="31430000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -264,7 +262,7 @@
     <frame x="0" y="0" width="1366" height="768" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25377643" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -390,15 +388,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="420" column="59" lean-forward="true" selection-start-line="420" selection-start-column="59" selection-end-line="420" selection-end-column="59" />
+        <state relative-caret-position="-1095">
+          <caret line="169" column="63" selection-start-line="169" selection-start-column="62" selection-end-line="169" selection-end-column="63" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/cube.obj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="195">
-          <caret line="14" column="5" selection-start-line="14" selection-end-line="14" selection-end-column="5" />
+        <state relative-caret-position="210">
+          <caret line="14" selection-start-line="14" selection-end-line="19" selection-end-column="33" />
         </state>
       </provider>
     </entry>
