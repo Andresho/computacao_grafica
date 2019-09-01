@@ -2,7 +2,6 @@
 
 vector<Face*> faces;
 vector<Group*> groups;
-Mesh *mesh;
 
 glm::mat4 matrix_translaction = glm::mat4(1);
 glm::mat4 matrix_rotation = glm::mat4(1);
@@ -86,10 +85,9 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     }
 }
 
-void readData() {
-	vector< vec3 > vertex;
-	vector< vec3 > normals;
-	vector< vec2 > mappings;
+Mesh* readData() {
+    Mesh *mesh = new Mesh();
+    Group *g = nullptr;
 
     ifstream arq("cube.obj");
 
@@ -108,45 +106,136 @@ void readData() {
                 float x, y, z;
                 sline >> x >> y >> z;
                 // ... atribuir vértices da malha
-                vec3 v = vec3(x, y, z);
-                vertex.push_back( v );
+                vec3* v = new vec3(x, y, z);
+                mesh->vertex.push_back(v);
+            } else if (temp == "g") {
+                if (g != nullptr) {
+                    mesh->groups.push_back(g);
+                }
+                string gName;
+                sline >> gName;
+                g = new Group(gName, "default");
             } else if (temp == "f") {
+                //se grupo nao existe, cria um padrao
+                if (g == nullptr) {
+                    g = new Group("default", "default");
+                }
                 // implementar lógica de varições
                 // para face: v, v/t/n, v/t e v//n
-                string token;
-                sline >> token; // v/t/n, por exemplo
-                stringstream stoken;
-                stoken << token;
-                string aux;
-                getline(stoken, aux, '/');
-                int x = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
-
-                sline >> token; // v/t/n, por exemplo
-                stoken.str("");// limpa a sstream para pegar apenas o primeiro
-                stoken << token;
-                getline(stoken, aux, '/');
-                int y = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
-
-                sline >> token; // v/t/n, por exemplo
-                stoken.str("");// limpa a sstream para pegar apenas o primeiro
-                stoken << token;
-                getline(stoken, aux, '/');
-                int z = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
-                /* faces */
-                vec3 v = vec3(x,y,z);
-                Face *f = new Face(v);
-                faces.push_back(f);
-
+                Face *f = new Face();
+                // le todas faces ate final da linha
+                while(!sline.eof()) {
+                    string token;
+                    sline >> token;
+                    if (token.empty()) {
+                        continue;
+                    }
+                    stringstream stoken;
+                    stoken << token;
+                    string aux[3];
+                    int countParamsFace = -1;
+                    do {
+                        countParamsFace = countParamsFace + 1;
+                        getline(stoken, aux[countParamsFace], '/');
+                    } while (!stoken.eof());
+                    for (int i = 0; i < 3; i = i + 1) {
+                        switch (i) {
+                            // posicao 0 --> indice de vertex
+                            case 0:
+                                if (aux[i].empty()) {
+                                    f->verts.push_back(-1);
+                                } else {
+                                    f->verts.push_back(stoi(aux[i])-1);
+                                }
+                                break;
+                                // posicao 1 --> indice de mapamento de textura
+                            case 1:
+                                if (aux[i].empty()) {
+                                    f->texts.push_back(-1);
+                                } else {
+                                    f->texts.push_back(stoi(aux[i])-1);
+                                }
+                                break;
+                                // posicao 1 --> indice de normais
+                            case 2:
+                                if (aux[i].empty()) {
+                                    f->norms.push_back(-1);
+                                } else {
+                                    f->norms.push_back(stoi(aux[i])-1);
+                                }
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+                // Adiciona faces no grupo
+                g->faces.push_back(f);
             }
         }
-
+        // adiciona grupo para o mesh
+        mesh->groups.push_back(g);
+        return mesh;
     }
-	
-	Group *g = new Group("cube", "stones", faces);
-	groups.push_back( g );
-
-	mesh = new Mesh(vertex, normals, mappings, groups);
 }
+
+void loadVertices(Mesh* mesh) {
+    Group *g;
+    Face *f;
+    for (int i = 0; i < mesh->groups.size(); i++) {
+        g = mesh->groups[i];
+
+        vector<float> vs;
+        //vector<float*> vts;
+        //vector<float*> vns;
+        for (int j = 0; j < g->faces.size(); j++) {
+            f = g->faces[j];
+            for(int k = 0; k< (f->verts.size()); k++){
+                int vk = f->verts[k];
+                vec3* v = mesh->vertex[vk];
+                vs.push_back(v->x);
+                vs.push_back(v->y);
+                vs.push_back(v->z);
+            }
+            /*
+            vt = mesh->texts[f->texts[i]];
+            vts.push_back(vt.x);
+            vts.push_back(vt.y);
+            vn = mesh->norms[f->norms[i]];
+            vns.push_back(vn.x);
+            vns.push_back(vn.y);
+            vns.push_back(vn.z);
+            */
+
+        }
+        g->numVertices = vs.size();
+        printf("Num Vertices %d",g->numVertices);
+
+        float*  arrayPoints = vs.data();
+        /*
+        VBO
+        */
+        glGenBuffers(1, &g->vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, g->vbo);
+        glBufferData(GL_ARRAY_BUFFER, g->numVertices * sizeof(float), arrayPoints, GL_STATIC_DRAW);
+
+        /*
+        VAO
+        */
+        glGenVertexArrays(1, &g->vao);
+        glBindVertexArray(g->vao);
+        glBindBuffer(GL_ARRAY_BUFFER, g->vbo); // identifica vbo atual
+        // habilitado primeiro atributo do vbo bound atual
+        glEnableVertexAttribArray(0);
+        // associa��o do vbo atual com primeiro atributo
+        // 0 identifica que o primeiro atributo est� sendo definido
+        // 3, GL_FLOAT identifica que dados s�o vec3 e est�o a cada 3 float.
+        glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
+        // � poss�vel associar outros atributos, como normais, mapeamento e cores
+        // lembre-se: um por v�rtice
+    }
+}
+
 
 int run() {
 	if (!glfwInit()) {
@@ -185,71 +274,10 @@ int run() {
 	/*
 		Realiza a leitura dos dados para criar o Mesh
 	*/
-	readData();
+    Mesh* mesh = readData();
 
-    Group *g;
-    vec3 v;
-    Face *f;
-    for (int i = 0; i < mesh->groups.size(); i++) {
-        g = mesh->groups[i];
-
-		vector<float> group_v;
-		//vector<float*> vts;
-		//vector<float*> vns;
-		for (int j = 0; j < g->faces.size(); j++) {
-		    f = g->faces[j];
-			v = mesh->vertex[f->verts.x];
-			group_v.push_back(v.x);
-			group_v.push_back(v.y);
-			group_v.push_back(v.z);
-
-			v = mesh->vertex[f->verts.y];
-			group_v.push_back(v.x);
-			group_v.push_back(v.y);
-			group_v.push_back(v.z);
-
-			v = mesh->vertex[f->verts.z];
-			group_v.push_back(v.x);
-			group_v.push_back(v.y);
-			group_v.push_back(v.z);
-
-			/*
-			vt = mesh->texts[f->texts[i]];
-			vts.push_back(vt.x);
-			vts.push_back(vt.y);
-			vn = mesh->norms[f->norms[i]];
-			vns.push_back(vn.x);
-			vns.push_back(vn.y);
-			vns.push_back(vn.z);
-			*/
-
-		}
-		g->numVertices = group_v.size();
-		printf("Num Vertices %d",g->numVertices);
-
-		float*  arrayPoints = group_v.data();
-		/*
-		VBO
-		*/
-		glGenBuffers(1, &g->vbo);
-		glBindBuffer(GL_ARRAY_BUFFER, g->vbo);
-		glBufferData(GL_ARRAY_BUFFER, g->numVertices * sizeof(float), arrayPoints, GL_STATIC_DRAW);
-
-		/*
-		VAO
-		*/
-		glGenVertexArrays(1, &g->vao);
-		glBindVertexArray(g->vao);
-		glBindBuffer(GL_ARRAY_BUFFER, g->vbo); // identifica vbo atual
-											// habilitado primeiro atributo do vbo bound atual
-		glEnableVertexAttribArray(0);
-		// associa��o do vbo atual com primeiro atributo
-		// 0 identifica que o primeiro atributo est� sendo definido
-		// 3, GL_FLOAT identifica que dados s�o vec3 e est�o a cada 3 float.
-		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, NULL);
-		// � poss�vel associar outros atributos, como normais, mapeamento e cores
-		// lembre-se: um por v�rtice
-	}
+    // indica como ler os vertices
+    loadVertices(mesh);
 
 	const char* vertex_shader =
 		"#version 330\n"
@@ -270,18 +298,18 @@ int run() {
 		" frag_color = vec4 (1.0,1.0,1.0, 1.0);"
 		"}";
 
-	// identifica vs e o associa com vertex_shader
-	GLuint vs = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vs, 1, &vertex_shader, NULL);
-	glCompileShader(vs);
-	// identifica fs e o associa com fragment_shader
-	GLuint fs = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fs, 1, &fragment_shader, NULL);
-	glCompileShader(fs);
+	// identifica vShader e o associa com vertex_shader
+	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
+	glShaderSource(vShader, 1, &vertex_shader, NULL);
+	glCompileShader(vShader);
+	// identifica fShader e o associa com fragment_shader
+	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
+	glShaderSource(fShader, 1, &fragment_shader, NULL);
+	glCompileShader(fShader);
 	// identifica do programa, adiciona partes e faz "linkagem"
 	GLuint shader_programme = glCreateProgram();
-	glAttachShader(shader_programme, fs);
-	glAttachShader(shader_programme, vs);
+	glAttachShader(shader_programme, fShader);
+	glAttachShader(shader_programme, vShader);
 	glLinkProgram(shader_programme);
 
 	int matrixLocation = glGetUniformLocation(shader_programme, "matrix");

@@ -12,10 +12,10 @@ public:
 	int numVertices = 0;
 
 	vector<Face*> faces;
-	Group(string name, string material, vector<Face*> faces) {
+
+	Group(string name, string material) {
 		this->name = name;
 		this->material = material;
-		this->faces = faces;
 	};
 	~Group() {};
 };
