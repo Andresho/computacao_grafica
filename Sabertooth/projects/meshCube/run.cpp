@@ -87,22 +87,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 }
 
 void readData() {
-
-//	int faceIndexes[12][3] = {
-//		{ 2, 1, 7},
-//		{ 0, 1, 7 },
-//		{ 4, 0, 5 },
-//		{ 5, 0, 7 },
-//		{ 0, 6, 4 },
-//		{ 0,6,1 },
-//		{ 6,1,2 },
-//		{ 6,3,2 },
-//		{ 3,5,4 },
-//		{ 3,6,4 },
-//		{ 3,2,7 },
-//		{ 3,7,5 }
-//	};
-
 	vector< vec3 > vertex;
 	vector< vec3 > normals;
 	vector< vec2 > mappings;
@@ -148,7 +132,7 @@ void readData() {
                 stoken << token;
                 getline(stoken, aux, '/');
                 int z = stoi(aux)-1; // -1 pois o indice do arquivo é diferente do c++
-/* faces */
+                /* faces */
                 vec3 v = vec3(x,y,z);
                 Face *f = new Face(v);
                 faces.push_back(f);
@@ -157,14 +141,6 @@ void readData() {
         }
 
     }
-//
-//        /* faces */
-//	for (int i = 0; i < 12; i++) {
-//		vec3 v = vec3(faceIndexes[i][0], faceIndexes[i][1], faceIndexes[i][2]);
-//		Face *f = new Face(v);
-//		faces.push_back(f);
-//	}
-
 	
 	Group *g = new Group("cube", "stones", faces);
 	groups.push_back( g );
@@ -211,18 +187,17 @@ int run() {
 	*/
 	readData();
 
-	Group *g;
-	vec3 v;
-	Face *f;
-	for (int i = 0; i < mesh->groups.size(); i++) {
-		g = mesh->groups[i];
-		
+    Group *g;
+    vec3 v;
+    Face *f;
+    for (int i = 0; i < mesh->groups.size(); i++) {
+        g = mesh->groups[i];
+
 		vector<float> group_v;
 		//vector<float*> vts;
 		//vector<float*> vns;
 		for (int j = 0; j < g->faces.size(); j++) {
-			f = g->faces[j];
-			
+		    f = g->faces[j];
 			v = mesh->vertex[f->verts.x];
 			group_v.push_back(v.x);
 			group_v.push_back(v.y);
@@ -249,14 +224,16 @@ int run() {
 			*/
 
 		}
-		g->vertexSize = group_v.size();
+		g->numVertices = group_v.size();
+		printf("Num Vertices %d",g->numVertices);
+
 		float*  arrayPoints = group_v.data();
 		/*
 		VBO
 		*/
 		glGenBuffers(1, &g->vbo);
 		glBindBuffer(GL_ARRAY_BUFFER, g->vbo);
-		glBufferData(GL_ARRAY_BUFFER, group_v.size() * sizeof(float), arrayPoints, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, g->numVertices * sizeof(float), arrayPoints, GL_STATIC_DRAW);
 
 		/*
 		VAO
@@ -282,7 +259,7 @@ int run() {
 		"out vec3 color;"
 		"void main () {"
 		" color = vc;"
-		" gl_Position = matrix * vec4 (vp, 1.0);"
+		" gl_Position = matrix * vec4(vp, 1.0);"
 		"}";
 
 	const char* fragment_shader =
@@ -330,7 +307,7 @@ int run() {
 			//pass uniform location to shader
 			glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, glm::value_ptr(matrix));
 
-			glDrawArrays(GL_LINE_LOOP, 0, g->vertexSize);
+			glDrawArrays(GL_LINE_LOOP, 0, g->numVertices);
 		}
 		glfwSwapBuffers(window);
 

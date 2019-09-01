@@ -9,7 +9,7 @@ public:
 	GLuint vbo;
 	GLuint vao;
 
-	int vertexSize = 0;
+	int numVertices = 0;
 
 	vector<Face*> faces;
 	Group(string name, string material, vector<Face*> faces) {
