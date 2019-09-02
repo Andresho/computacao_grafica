@@ -1,5 +1,8 @@
 #include "run.h"
 
+#define WEIGTH 800
+#define HEIGHT 600
+
 vector<Face*> faces;
 vector<Group*> groups;
 
@@ -8,10 +11,10 @@ glm::mat4 matrix_rotation = glm::mat4(1);
 glm::mat4 matrix_scala = glm::mat4(1);
 glm::mat4 matrix = matrix_translaction * matrix_rotation * matrix_scala;
 
-float xCentro = 0.0f;
-float yCentro = 0.0f;
+float xCentro = WEIGTH/2;
+float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
-float value_move = 3.0f;
+float value_move = 0.10f;
 float angle_rotation = 1.0;
 //Define acoes do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -59,13 +62,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
         }
         else if (key == GLFW_KEY_DOWN) {
             matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(0.0f, value_move, 0.0f));
+                                                     glm::vec3(0.0f, -value_move, 0.0f));
             matrix = matrix_translaction * matrix_rotation * matrix_scala;
             yCentro = yCentro + value_move;
         }
         else if (key == GLFW_KEY_UP) {
             matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(0.0f, -value_move, 0.0f));
+                                                     glm::vec3(0.0f, value_move, 0.0f));
             matrix = matrix_translaction * matrix_rotation * matrix_scala;
             yCentro = yCentro - value_move;
         }
@@ -344,7 +347,7 @@ int run() {
 
 
 	GLFWwindow* window = glfwCreateWindow(
-		640, 480, "Teste de versao OpenGL", NULL, NULL);
+            WEIGTH, HEIGHT, "Cube 3D", NULL, NULL);
 	if (!window) {
 		fprintf(stderr, "ERROR: could not open window with GLFW3\n");
 		glfwTerminate();
