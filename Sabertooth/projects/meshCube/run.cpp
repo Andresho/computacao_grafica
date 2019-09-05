@@ -6,10 +6,36 @@
 vector<Face*> faces;
 vector<Group*> groups;
 
-glm::mat4 matrix_translaction = glm::mat4(1);
-glm::mat4 matrix_rotation = glm::mat4(1);
-glm::mat4 matrix_scala = glm::mat4(1);
-glm::mat4 matrix = matrix_translaction * matrix_rotation * matrix_scala;
+glm::mat4 model_translaction = glm::mat4(1);
+glm::mat4 model_rotation = glm::mat4(1);
+glm::mat4 model_scala = glm::mat4(1);
+glm::mat4 model = model_translaction * model_rotation * model_scala;
+
+glm::mat4 proj = glm::perspective(glm::radians(45.0f),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
+/*
+//eye: posição
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+
+// direction: direção
+glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraDirection =   glm::normalize(cameraPos - cameraTarget);
+
+// right: direita. Vetor perpendicular ao plano direction-up
+glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraRight =  glm::normalize(glm::cross(up, cameraDirection));
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+
+//up: teto. Vetor perpendicular ao plano direction-right
+glm::vec3 cameraUp =  glm::cross(cameraDirection, cameraRight);
+
+
+//glm::mat4 view = //glm::lookAt(glm::vec3(0.0f, 0.0f, 0.5f),
+                   //                glm::vec3(0.0f, 0.0f, 0.0f),
+                     //        cameraUp);
+//        glm::lookAt(cameraPos, cameraTarget, cameraUp);
+//
+*/
+glm::mat4 view =glm::mat4(1);
 
 float xCentro = WEIGTH/2;
 float yCentro = HEIGHT/2;
@@ -22,68 +48,78 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 
     if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
         if (key == GLFW_KEY_U) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-angle_rotation), glm::vec3(1, 0, 0));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(1, 0, 0));
+            model = model_translaction * model_rotation * model_scala;
         }
         else if (key == GLFW_KEY_R) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(angle_rotation), glm::vec3(1, 0, 0));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(1, 0, 0));
+            model = model_translaction * model_rotation * model_scala;
         }
 
         if (key == GLFW_KEY_I) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-angle_rotation), glm::vec3(0, 1, 0));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 1, 0));
+            model = model_translaction * model_rotation * model_scala;
         }
         else if (key == GLFW_KEY_E) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(angle_rotation), glm::vec3(0, 1, 0));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 1, 0));
+            model = model_translaction * model_rotation * model_scala;
         }
 
         if (key == GLFW_KEY_O) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(-angle_rotation), glm::vec3(0, 0, 1));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 0, 1));
+            model = model_translaction * model_rotation * model_scala;
         }
         else if (key == GLFW_KEY_W) {
-            matrix_rotation = glm::rotate(matrix_rotation, glm::radians(angle_rotation), glm::vec3(0, 0, 1));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 0, 1));
+            model = model_translaction * model_rotation * model_scala;
         }
 
         else if (key == GLFW_KEY_RIGHT) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(value_move, 0.0f, 0.0f));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(value_move, 0.0f, 0.0f));
+            model = model_translaction * model_rotation * model_scala;
             xCentro = xCentro + value_move;
         }
         else if (key == GLFW_KEY_LEFT) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(-value_move, 0.0f, 0.0f));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(-value_move, 0.0f, 0.0f));
+            model = model_translaction * model_rotation * model_scala;
             xCentro = xCentro - value_move;
         }
         else if (key == GLFW_KEY_DOWN) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(0.0f, -value_move, 0.0f));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(0.0f, -value_move, 0.0f));
+            model = model_translaction * model_rotation * model_scala;
             yCentro = yCentro + value_move;
         }
         else if (key == GLFW_KEY_UP) {
-            matrix_translaction = glm::translate(matrix_translaction,
-                                                     glm::vec3(0.0f, value_move, 0.0f));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(0.0f, value_move, 0.0f));
+            model = model_translaction * model_rotation * model_scala;
             yCentro = yCentro - value_move;
+        }
+        else if (key == GLFW_KEY_A) {
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(0.0f, 0.0f,value_move));
+            model = model_translaction * model_rotation * model_scala;
+        }
+        else if (key == GLFW_KEY_S) {
+            model_translaction = glm::translate(model_translaction,
+                                                glm::vec3(0.0f, 0.0f,-value_move));
+            model = model_translaction * model_rotation * model_scala;
         }
         else if (key == GLFW_KEY_ESCAPE) {
             glfwSetWindowShouldClose(window, true);
         }
         else if (key == GLFW_KEY_M)
         {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(value_scala, value_scala, value_scala));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_scala = glm::scale(model_scala, glm::vec3(value_scala, value_scala, value_scala));
+            model = model_translaction * model_rotation * model_scala;
         }
         else if (key == GLFW_KEY_L)
         {
-            matrix_scala = glm::scale(matrix_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
-            matrix = matrix_translaction * matrix_rotation * matrix_scala;
+            model_scala = glm::scale(model_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
+            model = model_translaction * model_rotation * model_scala;
         }
     }
 }
@@ -280,7 +316,7 @@ void loadVertices(Mesh* mesh) {
                 }
             }
         }
-        g->numVertices = vs.size();
+        g->numVertices = vs.size()/3;
         printf("Num Vertices %d",g->numVertices);
 
         float*  arrayPoints = vs.data();
@@ -332,112 +368,121 @@ void loadVertices(Mesh* mesh) {
 
 
 int run() {
-	if (!glfwInit()) {
-		fprintf(stderr, "ERROR: could not start GLFW3\n");
-		return 1;
-	}
-	/* Caso necess�rio, defini��es espec�ficas para SOs, p. e. Apple OSX *
-	Definir como 3.2 para Apple OS X */
+    if (!glfwInit()) {
+        fprintf(stderr, "ERROR: could not start GLFW3\n");
+        return 1;
+    }
+    /* Caso necess�rio, defini��es espec�ficas para SOs, p. e. Apple OSX *
+    Definir como 3.2 para Apple OS X */
 
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-	glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-	//*/
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+    //*/
 
 
-	GLFWwindow* window = glfwCreateWindow(
+    GLFWwindow* window = glfwCreateWindow(
             WEIGTH, HEIGHT, "Cube 3D", NULL, NULL);
-	if (!window) {
-		fprintf(stderr, "ERROR: could not open window with GLFW3\n");
-		glfwTerminate();
-		return 1;
-	}
-	glfwMakeContextCurrent(window);
-	// inicia manipulador da extens�o GLEW
-	glewExperimental = GL_TRUE;
-	glewInit();
+    if (!window) {
+        fprintf(stderr, "ERROR: could not open window with GLFW3\n");
+        glfwTerminate();
+        return 1;
+    }
+    glfwMakeContextCurrent(window);
+    // inicia manipulador da extens�o GLEW
+    glewExperimental = GL_TRUE;
+    glewInit();
 
-	// obten��o de vers�o suportada da OpenGL e renderizador
-	const GLubyte* renderer = glGetString(GL_RENDERER);
-	const GLubyte* version = glGetString(GL_VERSION);
-	printf("Renderer: %s\n", renderer);
-	printf("OpenGL (versao suportada) %s\n", version);
-	// encerra contexto GL e outros recursos da GLFW
+    //habilita profundidade
+    glEnable(GL_DEPTH_TEST);
 
-	/*
-		Realiza a leitura dos dados para criar o Mesh
-	*/
+    // obten��o de vers�o suportada da OpenGL e renderizador
+    const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* version = glGetString(GL_VERSION);
+    printf("Renderer: %s\n", renderer);
+    printf("OpenGL (versao suportada) %s\n", version);
+    // encerra contexto GL e outros recursos da GLFW
+
+    /*
+        Realiza a leitura dos dados para criar o Mesh
+    */
     Mesh* mesh = readData("cube.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
 
-	const char* vertex_shader =
-		"#version 330\n"
-		"layout(location=0) in vec3 vp;"
-        "layout(location=1) in vec3 vn;"
-        "layout(location=2) in vec2 vt;"
-		"uniform mat4 matrix;"
-		"out vec3 color;"
-		"void main () {"
-		" color = vn;"
-		" gl_Position = matrix * vec4(vp, 1.0);"
-		"}";
+    const char* vertex_shader =
+            "#version 330\n"
+            "layout(location=0) in vec3 vp;"
+            "layout(location=1) in vec3 vn;"
+            "layout(location=2) in vec2 vt;"
+            "uniform mat4 view, proj, model;"
+            "out vec3 color;"
+            "void main () {"
+            " color = vn;"
+            " gl_Position = view * proj * model * vec4(vp, 1.0);"
+            "}";
 
-	const char* fragment_shader =
-		"#version 330\n"
-		"in vec3 color;"
-		"out vec4 frag_color;"
-		"void main () {"
-		" frag_color = vec4 (color, 1.0);"
-		"}";
+    const char* fragment_shader =
+            "#version 330\n"
+            "in vec3 color;"
+            "out vec4 frag_color;"
+            "void main () {"
+            " frag_color = vec4 (color, 1.0);"
+            "}";
 
-	// identifica vShader e o associa com vertex_shader
-	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vShader, 1, &vertex_shader, NULL);
-	glCompileShader(vShader);
-	// identifica fShader e o associa com fragment_shader
-	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fShader, 1, &fragment_shader, NULL);
-	glCompileShader(fShader);
-	// identifica do programa, adiciona partes e faz "linkagem"
-	GLuint shader_programme = glCreateProgram();
-	glAttachShader(shader_programme, fShader);
-	glAttachShader(shader_programme, vShader);
-	glLinkProgram(shader_programme);
+    // identifica vShader e o associa com vertex_shader
+    GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(vShader, 1, &vertex_shader, NULL);
+    glCompileShader(vShader);
+    // identifica fShader e o associa com fragment_shader
+    GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(fShader, 1, &fragment_shader, NULL);
+    glCompileShader(fShader);
+    // identifica do programa, adiciona partes e faz "linkagem"
+    GLuint shader_programme = glCreateProgram();
+    glAttachShader(shader_programme, fShader);
+    glAttachShader(shader_programme, vShader);
+    glLinkProgram(shader_programme);
 
-	int matrixLocation = glGetUniformLocation(shader_programme, "matrix");
+    int viewLocation = glGetUniformLocation(shader_programme, "view");
+    int projLocation = glGetUniformLocation(shader_programme, "proj");
+    int modelLocation = glGetUniformLocation(shader_programme, "model");
+
 
 
     glfwSetKeyCallback(window, key_callback);
 
-    glClearColor(0.4f, 0.878f, 0.784f, 0.0f);
+    glClearColor(0.4f, 0.278f, 0.184f, 0.0f);
 
-	glUseProgram(shader_programme);
+    glUseProgram(shader_programme);
 
-	while (!glfwWindowShouldClose(window)) {
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    while (!glfwWindowShouldClose(window)) {
+        glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-		Group *g;
-		for (int i = 0; i < mesh->groups.size(); i++) {
-			g = mesh->groups[i];
-			// Define vao como verte array atual
-			glBindVertexArray(g->vao);
+        Group *g;
+        for (int i = 0; i < mesh->groups.size(); i++) {
+            g = mesh->groups[i];
+            // Define vao como verte array atual
+            glBindVertexArray(g->vao);
 
-			//pass uniform location to shader
-			glUniformMatrix4fv(matrixLocation, 1, GL_FALSE, glm::value_ptr(matrix));
+            //pass uniform location to shader
+            glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+            glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
+            glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
 
-            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices/3);
+
+            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
 //            glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
-		}
-		glfwSwapBuffers(window);
+        }
+        glfwSwapBuffers(window);
 
-		/* para a janela 'responder' */
-		glfwPollEvents();
-	}
+        /* para a janela 'responder' */
+        glfwPollEvents();
+    }
 
 
-	glfwTerminate();
-	return 0;
+    glfwTerminate();
+    return 0;
 }
