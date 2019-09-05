@@ -12,29 +12,18 @@ glm::mat4 model_scala = glm::mat4(1);
 glm::mat4 model = model_translaction * model_rotation * model_scala;
 
 glm::mat4 proj = glm::perspective(glm::radians(45.0f),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
-/*
+
 //eye: posição
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(3.0f, 0.0f, 3.0f);
 
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraDirection =   glm::normalize(cameraPos - cameraTarget);
 
 // right: direita. Vetor perpendicular ao plano direction-up
 glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
-glm::vec3 cameraRight =  glm::normalize(glm::cross(up, cameraDirection));
+
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
-//up: teto. Vetor perpendicular ao plano direction-right
-glm::vec3 cameraUp =  glm::cross(cameraDirection, cameraRight);
-
-
-//glm::mat4 view = //glm::lookAt(glm::vec3(0.0f, 0.0f, 0.5f),
-                   //                glm::vec3(0.0f, 0.0f, 0.0f),
-                     //        cameraUp);
-//        glm::lookAt(cameraPos, cameraTarget, cameraUp);
-//
-*/
 glm::mat4 view =glm::mat4(1);
 
 float xCentro = WEIGTH/2;
@@ -421,7 +410,7 @@ int run() {
             "out vec3 color;"
             "void main () {"
             " color = vn;"
-            " gl_Position = view * proj * model * vec4(vp, 1.0);"
+            " gl_Position = proj * view  * model * vec4(vp, 1.0);"
             "}";
 
     const char* fragment_shader =
@@ -461,6 +450,12 @@ int run() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+        view = glm::lookAt(cameraPos, cameraTarget, up);
+
+        //pass uniform location to shader
+        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+        glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
+
         Group *g;
         for (int i = 0; i < mesh->groups.size(); i++) {
             g = mesh->groups[i];
@@ -468,13 +463,11 @@ int run() {
             glBindVertexArray(g->vao);
 
             //pass uniform location to shader
-            glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-            glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
             glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
 
 
-            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
-//            glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
+//            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
+            glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
         }
         glfwSwapBuffers(window);
 
