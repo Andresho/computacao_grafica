@@ -3,6 +3,8 @@
 #define WEIGTH 800
 #define HEIGHT 600
 
+bool keys[1024];
+
 float xCentro = WEIGTH/2;
 float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
@@ -18,18 +20,20 @@ float directionSpeed = 1.f;
 
 vector<Face*> faces;
 vector<Group*> groups;
+vector<Obj3d*> objs;
 
+/*
 glm::mat4 model_translaction = glm::mat4(1);
 glm::mat4 model_rotation = glm::mat4(1);
 glm::mat4 model_scala = glm::mat4(1);
 glm::mat4 model = model_translaction * model_rotation * model_scala;
+*/
 
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
 
 //eye: posição
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
-
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 direction(
@@ -67,64 +71,15 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             cameraPos -= glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
         else if (GLFW_KEY_D == key)
             cameraPos += glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
+		else if (GLFW_KEY_Q == key)
+			cameraPos -= cameraUp * cameraSpeed;
+		else if (GLFW_KEY_E == key)
+			cameraPos += cameraUp * cameraSpeed;
     }
 
     if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
-        if (key == GLFW_KEY_U) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(1, 0, 0));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_T) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(1, 0, 0));
-            model = model_translaction * model_rotation * model_scala;
-        }
-
-        if (key == GLFW_KEY_I) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 1, 0));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_R) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 1, 0));
-            model = model_translaction * model_rotation * model_scala;
-        }
-
-        if (key == GLFW_KEY_O) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 0, 1));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_E) {
-            model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 0, 1));
-            model = model_translaction * model_rotation * model_scala;
-        }
-
-
-		/*
-        else if (key == GLFW_KEY_RIGHT) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(value_move, 0.0f, 0.0f));
-            model = model_translaction * model_rotation * model_scala;
-            xCentro = xCentro + value_move;
-        }
-        else if (key == GLFW_KEY_LEFT) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(-value_move, 0.0f, 0.0f));
-            model = model_translaction * model_rotation * model_scala;
-            xCentro = xCentro - value_move;
-        }
-        else if (key == GLFW_KEY_DOWN) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(0.0f, -value_move, 0.0f));
-            model = model_translaction * model_rotation * model_scala;
-            yCentro = yCentro + value_move;
-        }
-        else if (key == GLFW_KEY_UP) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(0.0f, value_move, 0.0f));
-            model = model_translaction * model_rotation * model_scala;
-            yCentro = yCentro - value_move;
-        }
-		*/
-		else if (key == GLFW_KEY_RIGHT) {
+        
+		if (key == GLFW_KEY_RIGHT) {
 			yawAngle += directionSpeed;
 			direction.x = sin(glm::radians(yawAngle));
 			direction.z = -3*cos(glm::radians(yawAngle));
@@ -134,6 +89,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			direction.x = sin(glm::radians(yawAngle));
 			direction.z = -3*cos(glm::radians(yawAngle));
 		}
+		/*
 		else if (key == GLFW_KEY_DOWN) {
 			pitchAngle -= directionSpeed;
 			direction.y = sin(glm::radians(pitchAngle));
@@ -144,31 +100,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 			direction.y = sin(glm::radians(pitchAngle));
 			direction.z = -3 * cos(glm::radians(pitchAngle));
 		}
-
-
-        else if (key == GLFW_KEY_Z) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(0.0f, 0.0f,value_move));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_X) {
-            model_translaction = glm::translate(model_translaction,
-                                                glm::vec3(0.0f, 0.0f,-value_move));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_ESCAPE) {
-            glfwSetWindowShouldClose(window, true);
-        }
-        else if (key == GLFW_KEY_M)
-        {
-            model_scala = glm::scale(model_scala, glm::vec3(value_scala, value_scala, value_scala));
-            model = model_translaction * model_rotation * model_scala;
-        }
-        else if (key == GLFW_KEY_L)
-        {
-            model_scala = glm::scale(model_scala, glm::vec3(1.0f / value_scala, 1.0f / value_scala, 1.0f / value_scala));
-            model = model_translaction * model_rotation * model_scala;
-        }
+		*/
     }
 }
 
@@ -460,6 +392,10 @@ int run() {
     // indica como ler os vertices
     loadVertices(mesh);
 
+	objs.push_back(new Obj3d(mesh, 0, 0, 0));
+	objs.push_back(new Obj3d(mesh, 2, 0, 0));
+	objs.push_back(new Obj3d(mesh, 0, 0, 6));
+
     const char* vertex_shader =
             "#version 330\n"
             "layout(location=0) in vec3 vp;"
@@ -520,19 +456,21 @@ int run() {
         glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
         glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
 
-        Group *g;
-        for (int i = 0; i < mesh->groups.size(); i++) {
-            g = mesh->groups[i];
-            // Define vao como verte array atual
-            glBindVertexArray(g->vao);
+		for (int o = 0; o < objs.size(); o++) {
+			Group *g;
+			for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
+				g = mesh->groups[i];
+				// Define vao como verte array atual
+				glBindVertexArray(g->vao);
 
-            //pass uniform location to shader
-            glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(model));
+				//pass uniform location to shader
+				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(objs[o]->transformations));
 
 
-//            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
-            glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
-        }
+				//            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
+				glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
+			}
+		}
         glfwSwapBuffers(window);
 
         /* para a janela 'responder' */

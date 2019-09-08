@@ -19,6 +19,7 @@ using namespace std;
 #include "../../Face.h"
 #include "../../Group.h"
 #include "../../Mesh.h"
+#include "../../Obj3d.h"
 
 int run();
 
