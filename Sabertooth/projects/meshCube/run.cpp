@@ -11,6 +11,11 @@ float angle_rotation = 1.0;
 float cameraSpeed = 0.05f; // adjust accordingly
 float fov = 45.0f;
 
+float pitchAngle = 0.f;
+float yawAngle = 0;
+
+float directionSpeed = 1.f;
+
 vector<Face*> faces;
 vector<Group*> groups;
 
@@ -27,7 +32,11 @@ glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
+glm::vec3 direction(
+	sin(glm::radians(yawAngle)),
+	sin(glm::radians(pitchAngle)),
+	-3
+);
 
 // right: direita. Vetor perpendicular ao plano direction-up
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
@@ -37,12 +46,12 @@ glm::mat4 view =glm::mat4(1);
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
-    if(fov >= 1.0f && fov <= 45.0f)
+    if(fov >= 1.0f && fov <= 90.0f)
         fov -= yoffset;
     if(fov <= 1.0f)
         fov = 1.0f;
-    if(fov >= 45.0f)
-        fov = 45.0f;
+    if(fov >= 90.0f)
+        fov = 90.0f;
 }
 
 //Define acoes do teclado
@@ -51,13 +60,13 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
     // MECHE A CAMERA
     if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
         if (GLFW_KEY_W == key)
-            cameraPos += cameraSpeed * cameraFront;
+            cameraPos += cameraSpeed * direction;
         else if (GLFW_KEY_S == key)
-            cameraPos -= cameraSpeed * cameraFront;
+            cameraPos -= cameraSpeed * direction;
         else if (GLFW_KEY_A == key)
-            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            cameraPos -= glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
         else if (GLFW_KEY_D == key)
-            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+            cameraPos += glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
     }
 
     if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
@@ -88,6 +97,8 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             model = model_translaction * model_rotation * model_scala;
         }
 
+
+		/*
         else if (key == GLFW_KEY_RIGHT) {
             model_translaction = glm::translate(model_translaction,
                                                 glm::vec3(value_move, 0.0f, 0.0f));
@@ -112,6 +123,29 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             model = model_translaction * model_rotation * model_scala;
             yCentro = yCentro - value_move;
         }
+		*/
+		else if (key == GLFW_KEY_RIGHT) {
+			yawAngle += directionSpeed;
+			direction.x = sin(glm::radians(yawAngle));
+			direction.z = -3*cos(glm::radians(yawAngle));
+		}
+		else if (key == GLFW_KEY_LEFT) {
+			yawAngle -= directionSpeed;
+			direction.x = sin(glm::radians(yawAngle));
+			direction.z = -3*cos(glm::radians(yawAngle));
+		}
+		else if (key == GLFW_KEY_DOWN) {
+			pitchAngle -= directionSpeed;
+			direction.y = sin(glm::radians(pitchAngle));
+			direction.z = -3 * cos(glm::radians(pitchAngle));
+		}
+		else if (key == GLFW_KEY_UP) {
+			pitchAngle += directionSpeed;
+			direction.y = sin(glm::radians(pitchAngle));
+			direction.z = -3 * cos(glm::radians(pitchAngle));
+		}
+
+
         else if (key == GLFW_KEY_Z) {
             model_translaction = glm::translate(model_translaction,
                                                 glm::vec3(0.0f, 0.0f,value_move));
@@ -477,9 +511,10 @@ int run() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+		proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
 //        view = glm::lookAt(cameraPos, cameraTarget, up);
-        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
-//        view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
+        view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
+ //       view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
 
         //pass uniform location to shader
         glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
