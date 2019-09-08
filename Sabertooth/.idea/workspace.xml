@@ -12,6 +12,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/../.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/MeshCube" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/meshCube/run.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/meshCube/run.cpp" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
@@ -33,8 +37,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="21" column="27" selection-start-line="21" selection-end-line="21" selection-end-column="27" />
+            <state relative-caret-position="180">
+              <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
             </state>
           </provider>
         </entry>
@@ -51,7 +55,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/cube.obj">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="270">
+            <state relative-caret-position="163">
               <caret line="18" column="5" selection-start-line="18" selection-end-line="18" selection-end-column="5" />
             </state>
           </provider>
@@ -60,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="90">
-              <caret line="412" column="34" selection-start-line="412" selection-start-column="34" selection-end-line="412" selection-end-column="34" />
+            <state relative-caret-position="330">
+              <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
             </state>
           </provider>
         </entry>
@@ -155,7 +159,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -189,6 +192,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -251,12 +255,14 @@
       <workItem from="1567370053699" duration="1091000" />
       <workItem from="1567388692881" duration="1907000" />
       <workItem from="1567392071331" duration="1077000" />
-      <workItem from="1567633741569" duration="7398000" />
+      <workItem from="1567633741569" duration="8022000" />
+      <workItem from="1567808933627" duration="44000" />
+      <workItem from="1567908758185" duration="2256000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="43843000" />
+    <option name="totallyTimeSpent" value="46767000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -271,7 +277,7 @@
     <frame x="0" y="0" width="1366" height="768" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.27265862" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.28021148" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Message" order="0" />
@@ -347,10 +353,26 @@
     <entry file="file://$PROJECT_DIR$/Shaders/Core/core.frag">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
+    <entry file="file://$USER_HOME$/Downloads/unisinos-computacao-grafica-master/Cubo/main/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-825">
+          <folding>
+            <element signature="e#0#30#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="21" column="27" selection-start-line="21" selection-end-line="21" selection-end-column="27" />
+        <state relative-caret-position="180">
+          <caret line="12" column="22" selection-start-line="12" selection-start-column="22" selection-end-line="12" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/main.cpp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
         </state>
       </provider>
     </entry>
@@ -382,33 +404,17 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/Downloads/unisinos-computacao-grafica-master/Cubo/main/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-825">
-          <folding>
-            <element signature="e#0#30#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/cube.obj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="270">
+        <state relative-caret-position="163">
           <caret line="18" column="5" selection-start-line="18" selection-end-line="18" selection-end-column="5" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/main.cpp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="60">
-          <caret line="4" column="6" selection-start-line="4" selection-start-column="6" selection-end-line="4" selection-end-column="6" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/meshCube/run.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="90">
-          <caret line="412" column="34" selection-start-line="412" selection-start-column="34" selection-end-line="412" selection-end-column="34" />
+        <state relative-caret-position="330">
+          <caret line="39" column="21" selection-start-line="39" selection-start-column="21" selection-end-line="39" selection-end-column="21" />
         </state>
       </provider>
     </entry>

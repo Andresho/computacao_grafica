@@ -1,6 +1,6 @@
 Debug/
 .vs/
 x64/
-Sabertooth/cmake-build-debug/
+Sabertooth/cmake-build-debug/**
 
 Sabertooth/.idea/workspace.xml

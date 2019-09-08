@@ -13,14 +13,15 @@ glm::mat4 model = model_translaction * model_rotation * model_scala;
 
 glm::mat4 proj = glm::perspective(glm::radians(45.0f),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
+
 //eye: posição
-glm::vec3 cameraPos = glm::vec3(3.0f, 0.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 1.0f, 3.0f);
 
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 
 // right: direita. Vetor perpendicular ao plano direction-up
-glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
 glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
@@ -31,16 +32,29 @@ float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
+float cameraSpeed = 0.05f; // adjust accordingly
+
 //Define acoes do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
+    // MECHE A CAMERA
+    if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
+        if (GLFW_KEY_W == key)
+            cameraPos += cameraSpeed * cameraFront;
+        else if (GLFW_KEY_S == key)
+            cameraPos -= cameraSpeed * cameraFront;
+        else if (GLFW_KEY_A == key)
+            cameraPos -= glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+        else if (GLFW_KEY_D == key)
+            cameraPos += glm::normalize(glm::cross(cameraFront, cameraUp)) * cameraSpeed;
+    }
 
     if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
         if (key == GLFW_KEY_U) {
             model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(1, 0, 0));
             model = model_translaction * model_rotation * model_scala;
         }
-        else if (key == GLFW_KEY_R) {
+        else if (key == GLFW_KEY_T) {
             model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(1, 0, 0));
             model = model_translaction * model_rotation * model_scala;
         }
@@ -49,7 +63,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 1, 0));
             model = model_translaction * model_rotation * model_scala;
         }
-        else if (key == GLFW_KEY_E) {
+        else if (key == GLFW_KEY_R) {
             model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 1, 0));
             model = model_translaction * model_rotation * model_scala;
         }
@@ -58,7 +72,7 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             model_rotation = glm::rotate(model_rotation, glm::radians(-angle_rotation), glm::vec3(0, 0, 1));
             model = model_translaction * model_rotation * model_scala;
         }
-        else if (key == GLFW_KEY_W) {
+        else if (key == GLFW_KEY_E) {
             model_rotation = glm::rotate(model_rotation, glm::radians(angle_rotation), glm::vec3(0, 0, 1));
             model = model_translaction * model_rotation * model_scala;
         }
@@ -87,12 +101,12 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
             model = model_translaction * model_rotation * model_scala;
             yCentro = yCentro - value_move;
         }
-        else if (key == GLFW_KEY_A) {
+        else if (key == GLFW_KEY_Z) {
             model_translaction = glm::translate(model_translaction,
                                                 glm::vec3(0.0f, 0.0f,value_move));
             model = model_translaction * model_rotation * model_scala;
         }
-        else if (key == GLFW_KEY_S) {
+        else if (key == GLFW_KEY_X) {
             model_translaction = glm::translate(model_translaction,
                                                 glm::vec3(0.0f, 0.0f,-value_move));
             model = model_translaction * model_rotation * model_scala;
@@ -450,7 +464,8 @@ int run() {
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        view = glm::lookAt(cameraPos, cameraTarget, up);
+//        view = glm::lookAt(cameraPos, cameraTarget, up);
+        view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
 
         //pass uniform location to shader
         glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
