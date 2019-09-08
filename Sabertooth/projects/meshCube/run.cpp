@@ -10,13 +10,13 @@ float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
-float cameraSpeed = 0.05f; // adjust accordingly
+float cameraSpeed = 3.f; // adjust accordingly
 float fov = 45.0f;
 
 float pitchAngle = 0.f;
 float yawAngle = 0;
 
-float directionSpeed = 1.f;
+float directionSpeed = 30.f;
 
 vector<Face*> faces;
 vector<Group*> groups;
@@ -58,50 +58,51 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 90.0f;
 }
 
+void keyboard_reaction(float elapsedTime) {
+	// MECHE A POSICAO DA CAMERA
+	if (keys[GLFW_KEY_W])
+		cameraPos += cameraSpeed * direction * elapsedTime;
+	if (keys[GLFW_KEY_S])
+		cameraPos -= cameraSpeed * direction * elapsedTime;
+	if (keys[GLFW_KEY_A])
+		cameraPos -= glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed * elapsedTime;
+	if (keys[GLFW_KEY_D])
+		cameraPos += glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed * elapsedTime;
+	if (keys[GLFW_KEY_Q])
+		cameraPos -= cameraUp * cameraSpeed * elapsedTime;
+	if (keys[GLFW_KEY_E])
+		cameraPos += cameraUp * cameraSpeed * elapsedTime;
+
+	//meche a direcao da camera
+	if (keys[GLFW_KEY_RIGHT]) {
+		yawAngle += directionSpeed * elapsedTime;
+		direction.x = sin(glm::radians(yawAngle));
+		direction.z = -3 * cos(glm::radians(yawAngle));
+	}
+	if (keys[GLFW_KEY_LEFT]) {
+		yawAngle -= directionSpeed * elapsedTime;
+		direction.x = sin(glm::radians(yawAngle));
+		direction.z = -3 * cos(glm::radians(yawAngle));
+	}
+	/*
+	else if (key == GLFW_KEY_DOWN) {
+		pitchAngle -= directionSpeed;
+		direction.y = sin(glm::radians(pitchAngle));
+		direction.z = -3 * cos(glm::radians(pitchAngle));
+	}
+	else if (key == GLFW_KEY_UP) {
+		pitchAngle += directionSpeed;
+		direction.y = sin(glm::radians(pitchAngle));
+		direction.z = -3 * cos(glm::radians(pitchAngle));
+	}
+	*/
+}
+
 //Define acoes do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
 {
-    // MECHE A CAMERA
-    if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
-        if (GLFW_KEY_W == key)
-            cameraPos += cameraSpeed * direction;
-        else if (GLFW_KEY_S == key)
-            cameraPos -= cameraSpeed * direction;
-        else if (GLFW_KEY_A == key)
-            cameraPos -= glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
-        else if (GLFW_KEY_D == key)
-            cameraPos += glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed;
-		else if (GLFW_KEY_Q == key)
-			cameraPos -= cameraUp * cameraSpeed;
-		else if (GLFW_KEY_E == key)
-			cameraPos += cameraUp * cameraSpeed;
-    }
-
-    if ((action == GLFW_REPEAT || action == GLFW_PRESS)) {
-        
-		if (key == GLFW_KEY_RIGHT) {
-			yawAngle += directionSpeed;
-			direction.x = sin(glm::radians(yawAngle));
-			direction.z = -3*cos(glm::radians(yawAngle));
-		}
-		else if (key == GLFW_KEY_LEFT) {
-			yawAngle -= directionSpeed;
-			direction.x = sin(glm::radians(yawAngle));
-			direction.z = -3*cos(glm::radians(yawAngle));
-		}
-		/*
-		else if (key == GLFW_KEY_DOWN) {
-			pitchAngle -= directionSpeed;
-			direction.y = sin(glm::radians(pitchAngle));
-			direction.z = -3 * cos(glm::radians(pitchAngle));
-		}
-		else if (key == GLFW_KEY_UP) {
-			pitchAngle += directionSpeed;
-			direction.y = sin(glm::radians(pitchAngle));
-			direction.z = -3 * cos(glm::radians(pitchAngle));
-		}
-		*/
-    }
+	if (action == GLFW_PRESS) keys[key] = true;
+	if (action == GLFW_RELEASE) keys[key] = false;
 }
 
 Mesh* readData(string fileName) {
@@ -444,8 +445,16 @@ int run() {
 
     glUseProgram(shader_programme);
 
+	double previous_seconds = glfwGetTime();
+
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+
+		double current_seconds = glfwGetTime();
+		double elapsed_seconds = current_seconds - previous_seconds;
+		previous_seconds = current_seconds;
+
+		keyboard_reaction(elapsed_seconds);
 
 		proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
 //        view = glm::lookAt(cameraPos, cameraTarget, up);
