@@ -3,6 +3,14 @@
 #define WEIGTH 800
 #define HEIGHT 600
 
+float xCentro = WEIGTH/2;
+float yCentro = HEIGHT/2;
+float value_scala = 1.2f;
+float value_move = 0.10f;
+float angle_rotation = 1.0;
+float cameraSpeed = 0.05f; // adjust accordingly
+float fov = 45.0f;
+
 vector<Face*> faces;
 vector<Group*> groups;
 
@@ -11,28 +19,31 @@ glm::mat4 model_rotation = glm::mat4(1);
 glm::mat4 model_scala = glm::mat4(1);
 glm::mat4 model = model_translaction * model_rotation * model_scala;
 
-glm::mat4 proj = glm::perspective(glm::radians(45.0f),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
+glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
 
 //eye: posição
-glm::vec3 cameraPos = glm::vec3(0.0f, 1.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
 
 // right: direita. Vetor perpendicular ao plano direction-up
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
-glm::vec3 cameraFront = glm::vec3(0.0f, 0.0f, -1.0f);
-
 glm::mat4 view =glm::mat4(1);
 
-float xCentro = WEIGTH/2;
-float yCentro = HEIGHT/2;
-float value_scala = 1.2f;
-float value_move = 0.10f;
-float angle_rotation = 1.0;
-float cameraSpeed = 0.05f; // adjust accordingly
+
+void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
+{
+    if(fov >= 1.0f && fov <= 45.0f)
+        fov -= yoffset;
+    if(fov <= 1.0f)
+        fov = 1.0f;
+    if(fov >= 45.0f)
+        fov = 45.0f;
+}
 
 //Define acoes do teclado
 void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
@@ -454,8 +465,10 @@ int run() {
     int modelLocation = glGetUniformLocation(shader_programme, "model");
 
 
-
+    //define calbacks
     glfwSetKeyCallback(window, key_callback);
+    glfwSetScrollCallback(window, scroll_callback);
+
 
     glClearColor(0.4f, 0.278f, 0.184f, 0.0f);
 
@@ -466,6 +479,7 @@ int run() {
 
 //        view = glm::lookAt(cameraPos, cameraTarget, up);
         view = glm::lookAt(cameraPos, cameraPos + cameraFront, cameraUp);
+//        view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
 
         //pass uniform location to shader
         glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
