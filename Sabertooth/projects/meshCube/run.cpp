@@ -22,13 +22,6 @@ vector<Face*> faces;
 vector<Group*> groups;
 vector<Obj3d*> objs;
 
-/*
-glm::mat4 model_translaction = glm::mat4(1);
-glm::mat4 model_rotation = glm::mat4(1);
-glm::mat4 model_scala = glm::mat4(1);
-glm::mat4 model = model_translaction * model_rotation * model_scala;
-*/
-
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
 
@@ -103,6 +96,28 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 {
 	if (action == GLFW_PRESS) keys[key] = true;
 	if (action == GLFW_RELEASE) keys[key] = false;
+}
+
+
+bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
+    shaderStr[0] = '\0'; // zera a string
+    FILE *file = fopen(fileName, "r");
+    if ( !file ) {
+        return false;
+    }
+    int currentLen = 0;
+    char line[2048];
+    strcpy(line, ""); // limpa a linha
+    while (!feof(file)) {
+        if (nullptr != fgets( line, 2048, file )) {
+            currentLen += strlen( line );
+            strcat( shaderStr, line );
+        }
+    }
+    if (EOF == fclose(file)) {
+        return false;
+    }
+    return true;
 }
 
 Mesh* readData(string fileName) {
@@ -388,7 +403,7 @@ int run() {
     /*
         Realiza a leitura dos dados para criar o Mesh
     */
-    Mesh* mesh = readData("cube.obj");
+    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
@@ -397,53 +412,57 @@ int run() {
 	objs.push_back(new Obj3d(mesh, 2, 0, 0));
 	objs.push_back(new Obj3d(mesh, 0, 0, 6));
 
-    const char* vertex_shader =
-            "#version 330\n"
-            "layout(location=0) in vec3 vp;"
-            "layout(location=1) in vec3 vn;"
-            "layout(location=2) in vec2 vt;"
-            "uniform mat4 view, proj, model;"
-            "out vec3 color;"
-            "void main () {"
-            " color = vn;"
-            " gl_Position = proj * view  * model * vec4(vp, 1.0);"
-            "}";
+	// criacao dos shaders
+    char vertex_shader[1024 * 256];
+    char fragment_shader[1024 * 256];
 
-    const char* fragment_shader =
-            "#version 330\n"
-            "in vec3 color;"
-            "out vec4 frag_color;"
-            "void main () {"
-            " frag_color = vec4 (color, 1.0);"
-            "}";
+    convertFileInString("projects/meshCube/shaders/core.vert", vertex_shader, 1024 * 256);
+    convertFileInString("projects/meshCube/shaders/core.frag", fragment_shader, 1024 * 256);
 
     // identifica vShader e o associa com vertex_shader
     GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(vShader, 1, &vertex_shader, NULL);
+    auto vShaderPointer = (const GLchar *) vertex_shader;
+    glShaderSource(vShader, 1, &vShaderPointer, NULL);
     glCompileShader(vShader);
+
     // identifica fShader e o associa com fragment_shader
     GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(fShader, 1, &fragment_shader, NULL);
+    auto fShaderPointer = (const GLchar *) fragment_shader;
+    glShaderSource(fShader, 1, &fShaderPointer, NULL);
     glCompileShader(fShader);
+
     // identifica do programa, adiciona partes e faz "linkagem"
     GLuint shader_programme = glCreateProgram();
     glAttachShader(shader_programme, fShader);
     glAttachShader(shader_programme, vShader);
     glLinkProgram(shader_programme);
 
+    glUseProgram(shader_programme);
+
     int viewLocation = glGetUniformLocation(shader_programme, "view");
     int projLocation = glGetUniformLocation(shader_programme, "proj");
     int modelLocation = glGetUniformLocation(shader_programme, "model");
 
+    //logs dos shaders
+    int maxLength = 2048;
+    int currentLength = 0;
+    char logVS[2048];
+    glGetShaderInfoLog(vShader, maxLength, &currentLength, logVS);
+    printf("\nInformações de logs - Vertex Shader:\n%s\n", logVS);
+
+    char logFS[2048];
+    glGetShaderInfoLog(fShader, maxLength, &currentLength, logFS);
+    printf("Informações de logs - Fragment Shader:\n%s\n", logFS);
+
+    char logSP[2048];
+    glGetProgramInfoLog(shader_programme, maxLength, &currentLength, logSP);
+    printf("Informações de logs - Shader Program:\n%s", logSP);
 
     //define calbacks
     glfwSetKeyCallback(window, key_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
-
     glClearColor(0.4f, 0.278f, 0.184f, 0.0f);
-
-    glUseProgram(shader_programme);
 
 	double previous_seconds = glfwGetTime();
 
@@ -476,7 +495,7 @@ int run() {
 				glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(objs[o]->transformations));
 
 
-				//            glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
+//				glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
 				glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
 			}
 		}

@@ -9,14 +9,15 @@ include_directories(.)
 
 add_executable(MeshCube
         CMakeLists.txt
-        cube.obj
+        projects/meshCube/shaders/core.vert
+        projects/meshCube/shaders/core.frag
+        projects/meshCube/objs/cube.obj
         projects/meshCube/run.h
         projects/meshCube/run.cpp
-        Face.h
-        Group.h
-        Mesh.h
+        projects/meshCube/src/Face.h
+        projects/meshCube/src/Group.h
+        projects/meshCube/src/Mesh.h
         main.cpp
-
         )
 
 find_package(GLEW REQUIRED)

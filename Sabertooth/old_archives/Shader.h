@@ -69,7 +69,7 @@ public:
 		const GLchar *vShaderCode = vertexCode.c_str();
 		const GLchar *fShaderCode = fragmentCode.c_str();
 
-		// Compile Shaders
+		// Compile shaders
 
 		GLuint vertex, fragment;
 		GLint success;

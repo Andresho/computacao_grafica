@@ -90,11 +90,11 @@ MeshCube_OBJECTS = \
 
 # External object files for target MeshCube
 MeshCube_EXTERNAL_OBJECTS = \
-"/Users/gian/GitHub/computacao_grafica/Sabertooth/cube.obj"
+"/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/objs/cube.obj"
 
 MeshCube: CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o
 MeshCube: CMakeFiles/MeshCube.dir/main.cpp.o
-MeshCube: ../cube.obj
+MeshCube: ../projects/meshCube/objs/cube.obj
 MeshCube: CMakeFiles/MeshCube.dir/build.make
 MeshCube: /usr/local/lib/libglfw.3.3.dylib
 MeshCube: /usr/local/lib/libGLEW.dylib

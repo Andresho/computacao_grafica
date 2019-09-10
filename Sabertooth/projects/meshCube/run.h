@@ -16,10 +16,10 @@
 using namespace glm;
 using namespace std;
 
-#include "../../Face.h"
-#include "../../Group.h"
-#include "../../Mesh.h"
-#include "../../Obj3d.h"
+#include "projects/meshCube/src/Face.h"
+#include "projects/meshCube/src/Group.h"
+#include "projects/meshCube/src/Mesh.h"
+#include "projects/meshCube/src/Obj3d.h"
 
 int run();
 

@@ -66,7 +66,7 @@ int System::OpenGLSetup()
 int System::SystemSetup()
 {
 
-	coreShader = Shader( "Shaders/Core/core.vert", "Shaders/Core/core.frag" );
+	coreShader = Shader( "shaders/Core/core.vert", "shaders/Core/core.frag" );
 	coreShader.Use();
 
 	return EXIT_SUCCESS;

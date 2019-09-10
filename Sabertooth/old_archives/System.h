@@ -22,7 +22,7 @@
 // Headers
 #include "Shader.h"
 #include "AssetManager.h"
-#include "Time.h"
+#include "time.h"
 
 class System
 {
