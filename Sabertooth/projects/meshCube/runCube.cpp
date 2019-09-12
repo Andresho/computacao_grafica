@@ -1,4 +1,6 @@
-#include "run.h"
+#pragma warning(disable:4996)
+
+#include "runCube.h"
 
 #define WEIGTH 800
 #define HEIGHT 600
@@ -10,13 +12,13 @@ float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
-float cameraSpeed = 1.f; // adjust accordingly
+float cameraSpeed = 3.f; // adjust accordingly
 float fov = 45.0f;
 
 float pitchAngle = 0.f;
-float yawAngle = 0;
+float yawAngle = -90.f;
 
-float directionSpeed = 30.f;
+float directionSpeed = 50.f;
 
 vector<Face*> faces;
 vector<Group*> groups;
@@ -29,14 +31,17 @@ glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIG
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 direction(
-	sin(glm::radians(yawAngle)),
-	sin(glm::radians(pitchAngle)),
-	-3
-);
+glm::vec3 direction;
+
+
+glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
+glm::vec3 cameraRight = glm::normalize(glm::cross(direction, cameraUp));
+
+//view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
 
 // right: direita. Vetor perpendicular ao plano direction-up
-glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
+
 
 glm::mat4 view =glm::mat4(1);
 
@@ -65,9 +70,9 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 	if (keys[GLFW_KEY_S])
 		cameraPos -= cameraSpeed * direction * elapsedTime;
 	if (keys[GLFW_KEY_A])
-		cameraPos -= glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed * elapsedTime;
+		cameraPos -= cameraRight * cameraSpeed * elapsedTime;
 	if (keys[GLFW_KEY_D])
-		cameraPos += glm::normalize(glm::cross(direction, cameraUp)) * cameraSpeed * elapsedTime;
+		cameraPos += cameraRight * cameraSpeed * elapsedTime;
 	if (keys[GLFW_KEY_Q])
 		cameraPos -= cameraUp * cameraSpeed * elapsedTime;
 	if (keys[GLFW_KEY_E])
@@ -76,26 +81,39 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 	//meche a direcao da camera
 	if (keys[GLFW_KEY_RIGHT]) {
 		yawAngle += directionSpeed * elapsedTime;
-		direction.x = sin(glm::radians(yawAngle));
-		direction.z = -3 * cos(glm::radians(yawAngle));
+
+		cameraRight = cross(direction, cameraUp);
 	}
 	if (keys[GLFW_KEY_LEFT]) {
 		yawAngle -= directionSpeed * elapsedTime;
-		direction.x = sin(glm::radians(yawAngle));
-		direction.z = -3 * cos(glm::radians(yawAngle));
+
+		cameraRight = cross(direction, cameraUp);
 	}
 
-//	if (keys[GLFW_KEY_DOWN]) {
-//		pitchAngle -= directionSpeed* elapsedTime;
-//		direction.y = sin(glm::radians(pitchAngle));
-//		direction.z = -3 * cos(glm::radians(pitchAngle));
-//	}
-//
-//	if (keys[GLFW_KEY_UP]) {
-//		pitchAngle += directionSpeed* elapsedTime;
-//		direction.y = sin(glm::radians(pitchAngle));
-//		direction.z = -3 * cos(glm::radians(pitchAngle));
-//	}
+	if (keys[GLFW_KEY_DOWN]) {
+		pitchAngle -= directionSpeed* elapsedTime;
+		if (pitchAngle > 89.0f)
+			pitchAngle = 89.0f;
+		if (pitchAngle < -89.0f)
+			pitchAngle = -89.0f;
+	
+		//cameraUp = cross(direction, cameraRight);
+	}
+
+	if (keys[GLFW_KEY_UP]) {
+		pitchAngle += directionSpeed* elapsedTime;
+		if (pitchAngle > 89.0f)
+			pitchAngle = 89.0f;
+		if (pitchAngle < -89.0f)
+			pitchAngle = -89.0f;
+
+		//cameraUp = cross(direction, cameraRight);
+	}
+	glm::vec3 front;
+	front.x = cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle));
+	front.y = sin(glm::radians(pitchAngle));
+	front.z = cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle));
+	direction = glm::normalize(front);
 
 }
 
@@ -132,8 +150,8 @@ Mesh* readData(string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
-    vec3 maxBoundBox;
-    vec3 minBoundBox;
+    vec3 maxBoundBox = vec3(0.f,0.f,0.f);
+	vec3 minBoundBox = vec3(0.f,0.f,0.f);
 
     ifstream arq(fileName);
 
@@ -338,7 +356,6 @@ void loadVertices(Mesh* mesh) {
             }
         }
         g->numVertices = vs.size()/3;
-        printf("Num Vertices %d",g->numVertices);
 
         float*  arrayPoints = vs.data();
         float*  arrayNormals = vns.data();
@@ -388,7 +405,7 @@ void loadVertices(Mesh* mesh) {
 }
 
 
-int run() {
+int runCube() {
     if (!glfwInit()) {
         fprintf(stderr, "ERROR: could not start GLFW3\n");
         return 1;
@@ -443,7 +460,6 @@ int run() {
 	// criacao dos shaders
     char vertex_shader[1024 * 256];
     char fragment_shader[1024 * 256];
-
     convertFileInString("projects/meshCube/shaders/core.vert", vertex_shader, 1024 * 256);
     convertFileInString("projects/meshCube/shaders/core.frag", fragment_shader, 1024 * 256);
 
@@ -464,6 +480,95 @@ int run() {
     glAttachShader(shader_programme, fShader);
     glAttachShader(shader_programme, vShader);
     glLinkProgram(shader_programme);
+
+
+
+
+
+
+
+
+
+
+
+
+	/**********************************************************************************************************************/
+	/*camera shader, vbo e vao.  Para desenhar pequenos vetores na origem que simbolizam a camera*/
+	/**********************************************************************************************************************/
+	
+	GLuint camVao;
+	glGenVertexArrays(1, &camVao);
+	glBindVertexArray(camVao);
+
+	float camVerts[18] = {
+		cameraPos.x, cameraPos.y, cameraPos.z,
+		direction.x, direction.y, direction.z,
+		cameraPos.x, cameraPos.y, cameraPos.z,
+		cameraUp.x + cameraPos.x, cameraUp.y + cameraPos.y, cameraUp.z + cameraPos.z,
+		cameraPos.x, cameraPos.y, cameraPos.z,
+		cameraRight.x + cameraPos.x, cameraRight.y + cameraPos.y, cameraRight.z + cameraPos.z
+	};
+
+	GLuint camVbo;
+	glGenBuffers(1, &camVbo);
+	glBindBuffer(GL_ARRAY_BUFFER, camVbo);
+	glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), camVerts, GL_STATIC_DRAW);
+	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+	/*camera shader*/
+	
+	const char* cam_vertex_shader =
+		"#version 330"
+		"layout(location = 0) in vec3 vp;"
+		"void main() {"
+		"	gl_Position = vec4(3*vp.x, 3*vp.y, 3*vp.z, 1.0);"
+		"}";
+
+	const char* cam_fragment_shader =
+		"#version 330"
+		"out vec4 frag_color;"
+		"void main() {"
+		"	frag_color = vec4(1.0, 1.0, 1.0, 1.0);"
+		"}";
+
+	//convertFileInString("projects/meshCube/shaders/camera.vert", cam_vertex_shader, 1024 * 256);
+	//convertFileInString("projects/meshCube/shaders/camera.frag", cam_fragment_shader, 1024 * 256);
+	
+	// identifica vShader e o associa com vertex_shader
+	GLuint camVShader = glCreateShader(GL_VERTEX_SHADER);
+	//auto camVShaderPointer = (const GLchar *)cam_vertex_shader;
+	glShaderSource(camVShader, 1, &cam_vertex_shader, NULL);
+	glCompileShader(camVShader);
+
+	// identifica fShader e o associa com fragment_shader
+	GLuint camFShader = glCreateShader(GL_FRAGMENT_SHADER);
+	//auto camFShaderPointer = (const GLchar *)cam_fragment_shader;
+	glShaderSource(camFShader, 1, &cam_fragment_shader, NULL);
+	glCompileShader(camFShader);
+
+	// identifica do programa, adiciona partes e faz "linkagem"
+	GLuint cam_shader_programme = glCreateProgram();
+	glAttachShader(cam_shader_programme, camFShader);
+	glAttachShader(cam_shader_programme, camVShader);
+	glLinkProgram(cam_shader_programme);
+	
+	/**********************************************************************************************************************/
+	/*fim camera shader*/
+	/**********************************************************************************************************************/
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     glUseProgram(shader_programme);
 
@@ -490,7 +595,14 @@ int run() {
     glfwSetKeyCallback(window, key_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
+	glm::vec3 front = vec3(0);
+	front.x = cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle));
+	front.y = sin(glm::radians(pitchAngle));
+	front.z = cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle));
+	direction = glm::normalize(front);
+
     // passa projection and view ao shader
+	view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
     glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
     glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
@@ -517,6 +629,8 @@ int run() {
         if(hasKeyboardPressed)
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
+
+		glUseProgram(shader_programme);
 		for (int o = 0; o < objs.size(); o++) {
 			Group *g;
 			for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
@@ -532,6 +646,28 @@ int run() {
 				glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
 			}
 		}
+
+
+
+		/*
+			desenhar pequenos vetores na horigem que simbolizam a camera
+		*/
+		glUseProgram(cam_shader_programme);
+		glBindVertexArray(camVao);
+		glDrawArrays(GL_LINES, 0, 6);
+		
+		float camVertsNew[18] = {
+			cameraPos.x, cameraPos.y, cameraPos.z,
+			direction.x, direction.y, direction.z,
+			cameraPos.x, cameraPos.y, cameraPos.z,
+			cameraUp.x + cameraPos.x, cameraUp.y + cameraPos.y, cameraUp.z + cameraPos.z,
+			cameraPos.x, cameraPos.y, cameraPos.z,
+			cameraRight.x + cameraPos.x, cameraRight.y + cameraPos.y, cameraRight.z + cameraPos.z
+		};
+
+		glBindBuffer(GL_ARRAY_BUFFER, camVbo);
+		glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), camVertsNew, GL_STATIC_DRAW);
+
         glfwSwapBuffers(window);
 
         /* para a janela 'responder' */

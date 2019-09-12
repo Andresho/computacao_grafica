@@ -125,11 +125,11 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="projects\meshCube\run.cpp" />
+    <ClCompile Include="old_archives\Shader.cpp" />
+    <ClCompile Include="old_archives\System.cpp" />
+    <ClCompile Include="old_archives\Texture.cpp" />
+    <ClCompile Include="projects\meshCube\runCube.cpp" />
     <ClCompile Include="projects\simpleTriangle\run.cpp" />
-    <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="System.cpp" />
-    <ClCompile Include="Texture.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AssetManager.h" />
@@ -137,13 +137,22 @@
     <ClInclude Include="Group.h" />
     <ClInclude Include="Mesh.h" />
     <ClInclude Include="Obj3d.h" />
-    <ClInclude Include="projects\meshCube\run.h" />
+    <ClInclude Include="old_archives\AssetManager.h" />
+    <ClInclude Include="old_archives\Shader.h" />
+    <ClInclude Include="old_archives\System.h" />
+    <ClInclude Include="old_archives\Texture.h" />
+    <ClInclude Include="projects\meshCube\runCube.h" />
+    <ClInclude Include="projects\meshCube\src\Face.h" />
+    <ClInclude Include="projects\meshCube\src\Group.h" />
+    <ClInclude Include="projects\meshCube\src\Mesh.h" />
+    <ClInclude Include="projects\meshCube\src\Obj3d.h" />
     <ClInclude Include="projects\simpleTriangle\run.h" />
-    <ClInclude Include="Shader.h" />
-    <ClInclude Include="System.h" />
-    <ClInclude Include="Texture.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="projects\meshCube\shaders\camera.frag" />
+    <None Include="projects\meshCube\shaders\camera.vert" />
+    <None Include="projects\meshCube\shaders\core.frag" />
+    <None Include="projects\meshCube\shaders\core.vert" />
     <None Include="Shaders\Core\core.frag" />
     <None Include="Shaders\Core\core.vert" />
   </ItemGroup>

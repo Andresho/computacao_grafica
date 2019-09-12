@@ -1,6 +1,5 @@
-// #include "./projects/simpleTriangle/run.h" 
-#include "./projects/meshCube/run.h"
+#include "./projects/meshCube/runCube.h"
 
 int main() {
-	run();
+	runCube();
 }

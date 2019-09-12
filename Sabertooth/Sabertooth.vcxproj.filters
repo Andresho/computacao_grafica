@@ -28,45 +28,39 @@
     <Filter Include="Source Files\projects\meshCube">
       <UniqueIdentifier>{2b2b1ec3-37c0-4c1d-8b12-a6c4e54dd14d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\projects\meshCube\src">
+      <UniqueIdentifier>{86effaad-972c-47c1-9108-787b34c26558}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\projects\meshCube\shaders">
+      <UniqueIdentifier>{d5803eb7-b47c-4110-bb0d-254ea0dca801}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="System.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="projects\simpleTriangle\run.cpp">
       <Filter>Source Files\projects\simpleTriangle</Filter>
     </ClCompile>
-    <ClCompile Include="projects\meshCube\run.cpp">
+    <ClCompile Include="old_archives\Shader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="old_archives\System.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="old_archives\Texture.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="projects\meshCube\runCube.cpp">
       <Filter>Source Files\projects\meshCube</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Shader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="System.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="AssetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Texture.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="projects\simpleTriangle\run.h">
       <Filter>Source Files\projects\simpleTriangle</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\run.h">
-      <Filter>Source Files\projects\meshCube</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>Header Files</Filter>
@@ -80,6 +74,33 @@
     <ClInclude Include="Obj3d.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="old_archives\AssetManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="old_archives\Shader.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="old_archives\System.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="old_archives\Texture.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\src\Face.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\src\Group.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\src\Mesh.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\src\Obj3d.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\runCube.h">
+      <Filter>Source Files\projects\meshCube</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="Shaders\Core\core.frag">
@@ -87,6 +108,18 @@
     </None>
     <None Include="Shaders\Core\core.vert">
       <Filter>Shaders\Core</Filter>
+    </None>
+    <None Include="projects\meshCube\shaders\core.frag">
+      <Filter>Source Files\projects\meshCube\shaders</Filter>
+    </None>
+    <None Include="projects\meshCube\shaders\core.vert">
+      <Filter>Source Files\projects\meshCube\shaders</Filter>
+    </None>
+    <None Include="projects\meshCube\shaders\camera.frag">
+      <Filter>Source Files\projects\meshCube\shaders</Filter>
+    </None>
+    <None Include="projects\meshCube\shaders\camera.vert">
+      <Filter>Source Files\projects\meshCube\shaders</Filter>
     </None>
   </ItemGroup>
 </Project>

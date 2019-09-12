@@ -1,6 +1,6 @@
 #pragma once
-#ifndef RUN_H  
-#define RUN_H
+#ifndef RUNCUBE_H  
+#define RUNCUBE_H
 
 #include <GL/glew.h> /* include GLEW and new version of GL on Windows */
 #include <GLFW/glfw3.h>
@@ -16,11 +16,11 @@
 using namespace glm;
 using namespace std;
 
-#include "projects/meshCube/src/Face.h"
-#include "projects/meshCube/src/Group.h"
-#include "projects/meshCube/src/Mesh.h"
-#include "projects/meshCube/src/Obj3d.h"
+#include "./src/Face.h"
+#include "./src/Group.h"
+#include "./src/Mesh.h"
+#include "./src/Obj3d.h"
 
-int run();
+int runCube();
 
 #endif
