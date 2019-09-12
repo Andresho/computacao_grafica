@@ -51,7 +51,14 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 90.0f;
 }
 
-void keyboard_reaction(float elapsedTime) {
+void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
+    hasKeyboardPressed = keys[GLFW_KEY_W] || keys[GLFW_KEY_S] || keys[GLFW_KEY_A]
+                         || keys[GLFW_KEY_D] || keys[GLFW_KEY_Q] || keys[GLFW_KEY_E]
+                         || keys[GLFW_KEY_RIGHT] ||keys[GLFW_KEY_LEFT] || keys[GLFW_KEY_DOWN]
+                         || keys[GLFW_KEY_UP];
+    if(!hasKeyboardPressed)
+        return;
+
 	// MECHE A POSICAO DA CAMERA
 	if (keys[GLFW_KEY_W])
 		cameraPos += cameraSpeed * direction * elapsedTime;
@@ -77,18 +84,19 @@ void keyboard_reaction(float elapsedTime) {
 		direction.x = sin(glm::radians(yawAngle));
 		direction.z = -3 * cos(glm::radians(yawAngle));
 	}
-	/*
-	else if (key == GLFW_KEY_DOWN) {
-		pitchAngle -= directionSpeed;
-		direction.y = sin(glm::radians(pitchAngle));
-		direction.z = -3 * cos(glm::radians(pitchAngle));
-	}
-	else if (key == GLFW_KEY_UP) {
-		pitchAngle += directionSpeed;
-		direction.y = sin(glm::radians(pitchAngle));
-		direction.z = -3 * cos(glm::radians(pitchAngle));
-	}
-	*/
+
+//	if (keys[GLFW_KEY_DOWN]) {
+//		pitchAngle -= directionSpeed* elapsedTime;
+//		direction.y = sin(glm::radians(pitchAngle));
+//		direction.z = -3 * cos(glm::radians(pitchAngle));
+//	}
+//
+//	if (keys[GLFW_KEY_UP]) {
+//		pitchAngle += directionSpeed* elapsedTime;
+//		direction.y = sin(glm::radians(pitchAngle));
+//		direction.z = -3 * cos(glm::radians(pitchAngle));
+//	}
+
 }
 
 //Define acoes do teclado
@@ -160,7 +168,7 @@ Mesh* readData(string fileName) {
                 vec2* vt = new vec2(x, y);
                 mesh->mappings.push_back(vt);
             }
-            else if (temp == "g") {
+            else if (temp == "g"||temp == "s") {
                 if (g != nullptr) {
                     mesh->groups.push_back(g);
                 }
@@ -249,7 +257,7 @@ Mesh* readData(string fileName) {
                 // Adiciona face no grupo
                 g->faces.push_back(f);
                 if(vertices>3){
-                    for(int i=1; i<3; i++){
+                    for(int i=0; i<2; i++){
                         fAux->verts.push_back(f->verts[i]);
                         fAux->norms.push_back(f->norms[i]);
                         fAux->texts.push_back(f->texts[i]);
@@ -403,14 +411,16 @@ int run() {
     /*
         Realiza a leitura dos dados para criar o Mesh
     */
-    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
+//    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
+//    Mesh* mesh = readData("projects/meshCube/objs/mesa/mesa01.obj");
+    Mesh* mesh = readData("projects/meshCube/objs/paintball/cenaPaintball.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
 
 	objs.push_back(new Obj3d(mesh, 0, 0, 0));
-	objs.push_back(new Obj3d(mesh, 2, 0, 0));
-	objs.push_back(new Obj3d(mesh, 0, 0, 6));
+//	objs.push_back(new Obj3d(mesh, 2, 0, 0));
+//	objs.push_back(new Obj3d(mesh, 0, 0, 6));
 
 	// criacao dos shaders
     char vertex_shader[1024 * 256];
@@ -462,9 +472,14 @@ int run() {
     glfwSetKeyCallback(window, key_callback);
     glfwSetScrollCallback(window, scroll_callback);
 
+    // passa projection and view ao shader
+    glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
+    glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
+
     glClearColor(0.4f, 0.278f, 0.184f, 0.0f);
 
 	double previous_seconds = glfwGetTime();
+    bool hasKeyboardPressed = false;
 
     while (!glfwWindowShouldClose(window)) {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -473,7 +488,7 @@ int run() {
 		double elapsed_seconds = current_seconds - previous_seconds;
 		previous_seconds = current_seconds;
 
-		keyboard_reaction(elapsed_seconds);
+		keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
 
 		proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
 //        view = glm::lookAt(cameraPos, cameraTarget, up);
@@ -481,8 +496,8 @@ int run() {
  //       view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
 
         //pass uniform location to shader
-        glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
-        glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(proj));
+        if(hasKeyboardPressed)
+            glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
 		for (int o = 0; o < objs.size(); o++) {
 			Group *g;
