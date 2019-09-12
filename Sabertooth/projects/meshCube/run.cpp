@@ -10,7 +10,7 @@ float yCentro = HEIGHT/2;
 float value_scala = 1.2f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
-float cameraSpeed = 3.f; // adjust accordingly
+float cameraSpeed = 1.f; // adjust accordingly
 float fov = 45.0f;
 
 float pitchAngle = 0.f;
@@ -132,6 +132,9 @@ Mesh* readData(string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
+    vec3 maxBoundBox;
+    vec3 minBoundBox;
+
     ifstream arq(fileName);
 
     if (!arq){
@@ -149,6 +152,19 @@ Mesh* readData(string fileName) {
                 float x, y, z;
                 sline >> x >> y >> z;
                 // atribuir vértices da malha
+                if(x>maxBoundBox.x)
+                    maxBoundBox.x = x;
+                if(y>maxBoundBox.y)
+                    maxBoundBox.y = y;
+                if(z>maxBoundBox.z)
+                    maxBoundBox.z = z;
+
+                if(x<minBoundBox.x)
+                    minBoundBox.x = x;
+                if(y<minBoundBox.y)
+                    minBoundBox.y = y;
+                if(z<minBoundBox.z)
+                    minBoundBox.z = z;
                 vec3* v = new vec3(x, y, z);
                 mesh->vertex.push_back(v);
             }
@@ -270,6 +286,7 @@ Mesh* readData(string fileName) {
         }
         // adiciona grupo para o mesh
         mesh->groups.push_back(g);
+        mesh->calculeDistanceScale(maxBoundBox,minBoundBox);
         return mesh;
     }
     return nullptr;
@@ -412,13 +429,14 @@ int run() {
         Realiza a leitura dos dados para criar o Mesh
     */
 //    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
-//    Mesh* mesh = readData("projects/meshCube/objs/mesa/mesa01.obj");
-    Mesh* mesh = readData("projects/meshCube/objs/paintball/cenaPaintball.obj");
+    Mesh* mesh = readData("projects/meshCube/objs/mesa/mesa01.obj");
+//    Mesh* mesh = readData("projects/meshCube/objs/paintball/cenaPaintball.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
 
 	objs.push_back(new Obj3d(mesh, 0, 0, 0));
+	objs[0]->scale(1/mesh->distanceScale);
 //	objs.push_back(new Obj3d(mesh, 2, 0, 0));
 //	objs.push_back(new Obj3d(mesh, 0, 0, 6));
 
