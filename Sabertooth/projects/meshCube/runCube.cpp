@@ -171,8 +171,8 @@ void readMaterial(string pathName,string fileName){
             else if (temp == "map_Kd") {
                 string nameTexture;
                 sline >> nameTexture;
-
-                materials[materials.size()-1]->textureId=0;
+                string pathWithName = pathName+nameTexture;
+                materials[materials.size()-1]->createTexture(pathWithName.c_str(),false);
             }
         }
 

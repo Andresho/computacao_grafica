@@ -6,6 +6,7 @@ CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/./src/Group.h
 CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/./src/Material.h
 CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/./src/Mesh.h
 CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/./src/Obj3d.h
+CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/./src/stb_image.h
 CMakeFiles/MeshCube.dir/main.cpp.o: .././projects/meshCube/runCube.h
 CMakeFiles/MeshCube.dir/main.cpp.o: ../main.cpp
 CMakeFiles/MeshCube.dir/main.cpp.o: /usr/local/include/GL/glew.h
@@ -217,6 +218,7 @@ CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/./
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/./src/Material.h
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/./src/Mesh.h
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/./src/Obj3d.h
+CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/./src/stb_image.h
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/runCube.cpp
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/runCube.h
 CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: /usr/local/include/GL/glew.h

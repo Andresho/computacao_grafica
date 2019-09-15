@@ -7,6 +7,7 @@ CMakeFiles/MeshCube.dir/main.cpp.o
  /Users/gian/GitHub/computacao_grafica/Sabertooth/./projects/meshCube/./src/Material.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/./projects/meshCube/./src/Mesh.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/./projects/meshCube/./src/Obj3d.h
+ /Users/gian/GitHub/computacao_grafica/Sabertooth/./projects/meshCube/./src/stb_image.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/./projects/meshCube/runCube.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/main.cpp
  /usr/local/include/GL/glew.h
@@ -218,6 +219,7 @@ CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o
  /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Material.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Mesh.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Obj3d.h
+ /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/stb_image.h
  /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp
  /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.h
  /usr/local/include/GL/glew.h
