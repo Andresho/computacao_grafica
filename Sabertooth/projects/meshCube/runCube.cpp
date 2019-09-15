@@ -9,7 +9,7 @@ bool keys[1024];
 
 float xCentro = WEIGTH/2;
 float yCentro = HEIGHT/2;
-float value_scala = 1.2f;
+float value_scala = 1.1f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
 float cameraSpeed = 3.f; // adjust accordingly
@@ -23,7 +23,6 @@ float directionSpeed = 50.f;
 vector<Face*> faces;
 vector<Group*> groups;
 vector<Obj3d*> objs;
-vector<Material*> materials;
 
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
@@ -145,7 +144,7 @@ bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
     return true;
 }
 
-void readMaterial(string pathName,string fileName){
+void readMaterial(vector<Material*> &materials, string pathName,string fileName){
     Material *material;
 
     ifstream arq(pathName+fileName);
@@ -183,6 +182,9 @@ Mesh* readData(string pathName,string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
+	vector<Material*> materials;
+	string materialName = "default";
+
     vec3 maxBoundBox = vec3(0.f,0.f,0.f);
 	vec3 minBoundBox = vec3(0.f,0.f,0.f);
 
@@ -198,10 +200,20 @@ Mesh* readData(string pathName,string fileName) {
             sline << line;
             string temp;
             sline >> temp; // pega ate primeiro espaco
-            if (temp == "mtllib") {
+			if (temp == "usemtl") {
+				
+				if (g == nullptr) {
+					g = new Group("default", materialName);
+				}
+				string mtName;
+				sline >> mtName;
+				materialName = mtName;
+				g->materialName = mtName;
+			}
+            else if (temp == "mtllib") {
                 string fName;
                 sline >> fName;
-                readMaterial(pathName,fName);
+                readMaterial(materials, pathName,fName);
             }
             else if (temp == "v") {
                 // ler vértice ...
@@ -246,11 +258,11 @@ Mesh* readData(string pathName,string fileName) {
                 }
                 string gName;
                 sline >> gName;
-                g = new Group(gName, "default");
+                g = new Group(gName, materialName);
             } else if (temp == "f") {
                 //se grupo nao existe, cria um padrao
                 if (g == nullptr) {
-                    g = new Group("default", "default");
+                    g = new Group("default", materialName);
                 }
                 // implementar lógica de varições
                 // para face: v, v/t/n, v/t e v//n
@@ -343,6 +355,17 @@ Mesh* readData(string pathName,string fileName) {
         // adiciona grupo para o mesh
         mesh->groups.push_back(g);
         mesh->calculeDistanceScale(maxBoundBox,minBoundBox);
+
+		for (int i = 0; i < mesh->groups.size(); i++) {
+			for (int j = 0; j < materials.size(); j++) {
+				
+				if (mesh->groups[i]->materialName == materials[j]->materialName) {
+					mesh->groups[i]->material = materials[j];
+				}			
+			}
+		}
+
+
         return mesh;
     }
     return nullptr;
@@ -483,15 +506,25 @@ int runCube() {
     /*
         Realiza a leitura dos dados para criar o Mesh
     */
-//    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
+	//Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
+	//Mesh *mesh = readData("projects/meshCube/objs/paintball/", "cenaPaintball.obj");
     Mesh* mesh = readData("projects/meshCube/objs/mesa/","mesa01.obj");
-//    Mesh* mesh = readData("projects/meshCube/objs/paintball/cenaPaintball.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
 
 	objs.push_back(new Obj3d(mesh, 0, 0, 0));
 	objs[0]->scale(1/mesh->distanceScale);
+
+	
+
+	//loadVertices(mesh2);
+
+	//objs.push_back(new Obj3d(mesh2, 0, 0, -5));
+	//objs[1]->scale(1 / mesh->distanceScale);
+
+
+
 //	objs.push_back(new Obj3d(mesh, 2, 0, 0));
 //	objs.push_back(new Obj3d(mesh, 0, 0, 6));
 
@@ -673,6 +706,10 @@ int runCube() {
 			Group *g;
 			for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
 				g = mesh->groups[i];
+				if (g->numVertices == 0) continue;
+				//if(g->materialName != "default")
+				g->material->bind(shader_programme);
+
 				// Define vao como verte array atual
 				glBindVertexArray(g->vao);
 
@@ -684,6 +721,10 @@ int runCube() {
 				glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
 			}
 		}
+
+
+
+
 
 
 
@@ -705,6 +746,20 @@ int runCube() {
 
 		glBindBuffer(GL_ARRAY_BUFFER, camVbo);
 		glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), camVertsNew, GL_STATIC_DRAW);
+
+		/*
+			Fim vetores na horigem que simbolizam a camera
+		*/
+
+
+
+
+
+
+
+
+
+
 
         glfwSwapBuffers(window);
 

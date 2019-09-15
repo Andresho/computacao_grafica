@@ -144,8 +144,10 @@
     <ClInclude Include="projects\meshCube\runCube.h" />
     <ClInclude Include="projects\meshCube\src\Face.h" />
     <ClInclude Include="projects\meshCube\src\Group.h" />
+    <ClInclude Include="projects\meshCube\src\Material.h" />
     <ClInclude Include="projects\meshCube\src\Mesh.h" />
     <ClInclude Include="projects\meshCube\src\Obj3d.h" />
+    <ClInclude Include="projects\meshCube\src\stb_image.h" />
     <ClInclude Include="projects\simpleTriangle\run.h" />
   </ItemGroup>
   <ItemGroup>

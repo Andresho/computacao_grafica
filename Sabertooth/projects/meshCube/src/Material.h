@@ -13,9 +13,16 @@ public:
 
     GLuint textureId;
 
+	void bind(GLuint shaderProgram) {
+		glActiveTexture(GL_TEXTURE0);
+		glBindTexture(GL_TEXTURE_2D, textureId);
+		glUniform1i((glGetUniformLocation(shaderProgram, "tex")), 0);
+	}
+
     void createTexture(const char* filename, bool useAlpha) {
 
         glGenTextures(1, &textureId);
+		//glActiveTexture(GL_TEXTURE0);
         glBindTexture(GL_TEXTURE_2D, textureId);
 
         // set the texture wrapping/filtering options (on the currently bound texture object)
@@ -30,6 +37,7 @@ public:
 
         unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
 
+		std::cout << filename << std::endl;
         if (data) {
             if (useAlpha)
                 glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
@@ -39,10 +47,11 @@ public:
             glGenerateMipmap(GL_TEXTURE_2D);
         }
         else {
-            std::cout << "Falha ao carregar images." << std::endl;
+			//string message = "Falha ao carregar images. " + std::to_string(filename);
+            //std::cout << filename << std::endl;
         }
 
-        //stbi_image_free(data);
+        stbi_image_free(data);
     }
 
     ~Material() {

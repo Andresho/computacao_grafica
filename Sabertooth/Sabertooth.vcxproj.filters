@@ -98,6 +98,12 @@
     <ClInclude Include="projects\meshCube\src\Obj3d.h">
       <Filter>Source Files\projects\meshCube\src</Filter>
     </ClInclude>
+    <ClInclude Include="projects\meshCube\src\Material.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
+    <ClInclude Include="projects\meshCube\src\stb_image.h">
+      <Filter>Source Files\projects\meshCube\src</Filter>
+    </ClInclude>
     <ClInclude Include="projects\meshCube\runCube.h">
       <Filter>Source Files\projects\meshCube</Filter>
     </ClInclude>
