@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o"
+  "CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o"
   "CMakeFiles/MeshCube.dir/main.cpp.o"
   "MeshCube.pdb"
   "MeshCube"

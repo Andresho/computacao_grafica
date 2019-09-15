@@ -6,19 +6,21 @@
 
 #IncludeRegexTransform: 
 
-.././projects/meshCube/src/Face.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Face.h
 
-.././projects/meshCube/src/Group.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Group.h
 
-.././projects/meshCube/src/Mesh.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Material.h
 
-.././projects/meshCube/src/Obj3d.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Mesh.h
 
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.cpp
-run.h
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Obj3d.h
 
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp
+runCube.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.h
+
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.h
 GL/glew.h
 -
 GLFW/glfw3.h
@@ -37,14 +39,16 @@ glm/gtc/matrix_transform.hpp
 -
 glm/gtc/type_ptr.hpp
 -
-projects/meshCube/src/Face.h
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/projects/meshCube/src/Face.h
-projects/meshCube/src/Group.h
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/projects/meshCube/src/Group.h
-projects/meshCube/src/Mesh.h
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/projects/meshCube/src/Mesh.h
-projects/meshCube/src/Obj3d.h
-/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/projects/meshCube/src/Obj3d.h
+./src/Face.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Face.h
+./src/Group.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Group.h
+./src/Mesh.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Mesh.h
+./src/Material.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Material.h
+./src/Obj3d.h
+/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/./src/Obj3d.h
 
 /usr/local/include/GL/glew.h
 stddef.h

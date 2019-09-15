@@ -150,32 +150,32 @@ main.cpp.s:
 	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/main.cpp.s
 .PHONY : main.cpp.s
 
-projects/meshCube/run.o: projects/meshCube/run.cpp.o
+projects/meshCube/runCube.o: projects/meshCube/runCube.cpp.o
 
-.PHONY : projects/meshCube/run.o
+.PHONY : projects/meshCube/runCube.o
 
 # target to build an object file
-projects/meshCube/run.cpp.o:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o
-.PHONY : projects/meshCube/run.cpp.o
+projects/meshCube/runCube.cpp.o:
+	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o
+.PHONY : projects/meshCube/runCube.cpp.o
 
-projects/meshCube/run.i: projects/meshCube/run.cpp.i
+projects/meshCube/runCube.i: projects/meshCube/runCube.cpp.i
 
-.PHONY : projects/meshCube/run.i
+.PHONY : projects/meshCube/runCube.i
 
 # target to preprocess a source file
-projects/meshCube/run.cpp.i:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.i
-.PHONY : projects/meshCube/run.cpp.i
+projects/meshCube/runCube.cpp.i:
+	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.i
+.PHONY : projects/meshCube/runCube.cpp.i
 
-projects/meshCube/run.s: projects/meshCube/run.cpp.s
+projects/meshCube/runCube.s: projects/meshCube/runCube.cpp.s
 
-.PHONY : projects/meshCube/run.s
+.PHONY : projects/meshCube/runCube.s
 
 # target to generate assembly for a file
-projects/meshCube/run.cpp.s:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.s
-.PHONY : projects/meshCube/run.cpp.s
+projects/meshCube/runCube.cpp.s:
+	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.s
+.PHONY : projects/meshCube/runCube.cpp.s
 
 # Help Target
 help:
@@ -189,9 +189,9 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... projects/meshCube/run.o"
-	@echo "... projects/meshCube/run.i"
-	@echo "... projects/meshCube/run.s"
+	@echo "... projects/meshCube/runCube.o"
+	@echo "... projects/meshCube/runCube.i"
+	@echo "... projects/meshCube/runCube.s"
 .PHONY : help
 
 

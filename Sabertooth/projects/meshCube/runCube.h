@@ -19,6 +19,7 @@ using namespace std;
 #include "./src/Face.h"
 #include "./src/Group.h"
 #include "./src/Mesh.h"
+#include "./src/Material.h"
 #include "./src/Obj3d.h"
 
 int runCube();

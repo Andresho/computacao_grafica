@@ -57,18 +57,18 @@ include CMakeFiles/MeshCube.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/MeshCube.dir/flags.make
 
-CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o: CMakeFiles/MeshCube.dir/flags.make
-CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o: ../projects/meshCube/run.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o"
-	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o -c /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.cpp
+CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: CMakeFiles/MeshCube.dir/flags.make
+CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o: ../projects/meshCube/runCube.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o"
+	/Library/Developer/CommandLineTools/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o -c /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp
 
-CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.i"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.cpp > CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.i
+CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.i"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp > CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.i
 
-CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.s"
-	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/run.cpp -o CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.s
+CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.s"
+	/Library/Developer/CommandLineTools/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp -o CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.s
 
 CMakeFiles/MeshCube.dir/main.cpp.o: CMakeFiles/MeshCube.dir/flags.make
 CMakeFiles/MeshCube.dir/main.cpp.o: ../main.cpp
@@ -85,14 +85,14 @@ CMakeFiles/MeshCube.dir/main.cpp.s: cmake_force
 
 # Object files for target MeshCube
 MeshCube_OBJECTS = \
-"CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o" \
+"CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o" \
 "CMakeFiles/MeshCube.dir/main.cpp.o"
 
 # External object files for target MeshCube
 MeshCube_EXTERNAL_OBJECTS = \
 "/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/objs/cube.obj"
 
-MeshCube: CMakeFiles/MeshCube.dir/projects/meshCube/run.cpp.o
+MeshCube: CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o
 MeshCube: CMakeFiles/MeshCube.dir/main.cpp.o
 MeshCube: ../projects/meshCube/objs/cube.obj
 MeshCube: CMakeFiles/MeshCube.dir/build.make

@@ -12,13 +12,14 @@ add_executable(MeshCube
         projects/meshCube/shaders/core.vert
         projects/meshCube/shaders/core.frag
         projects/meshCube/objs/cube.obj
-        projects/meshCube/run.h
-        projects/meshCube/run.cpp
+        projects/meshCube/runCube.h
+        projects/meshCube/runCube.cpp
         projects/meshCube/src/Face.h
         projects/meshCube/src/Group.h
         projects/meshCube/src/Mesh.h
+        projects/meshCube/src/Obj3d.h
         main.cpp
-        )
+        projects/meshCube/src/Material.h)
 
 find_package(GLEW REQUIRED)
 find_package(OpenGL REQUIRED)

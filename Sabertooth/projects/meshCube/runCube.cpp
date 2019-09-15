@@ -23,28 +23,28 @@ float directionSpeed = 50.f;
 vector<Face*> faces;
 vector<Group*> groups;
 vector<Obj3d*> objs;
+vector<Material*> materials;
 
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
-
 
 //eye: posição
 glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
-glm::vec3 direction;
-
+glm::vec3 direction = glm::vec3(
+        glm::normalize(
+                glm::vec3(
+                        cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle)),
+                        sin(glm::radians(pitchAngle)),
+                        cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle))
+)));
 
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
+// right: direita. Vetor perpendicular ao plano direction-up
 glm::vec3 cameraRight = glm::normalize(glm::cross(direction, cameraUp));
 
-//view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
-
-// right: direita. Vetor perpendicular ao plano direction-up
-
-
 glm::mat4 view =glm::mat4(1);
-
 
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
@@ -96,8 +96,8 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 			pitchAngle = 89.0f;
 		if (pitchAngle < -89.0f)
 			pitchAngle = -89.0f;
-	
-		//cameraUp = cross(direction, cameraRight);
+
+//		cameraUp = cross(direction, cameraRight);
 	}
 
 	if (keys[GLFW_KEY_UP]) {
@@ -124,7 +124,6 @@ void key_callback(GLFWwindow* window, int key, int scancode, int action, int mod
 	if (action == GLFW_RELEASE) keys[key] = false;
 }
 
-
 bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
     shaderStr[0] = '\0'; // zera a string
     FILE *file = fopen(fileName, "r");
@@ -146,17 +145,51 @@ bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
     return true;
 }
 
-Mesh* readData(string fileName) {
+void readMaterial(string pathName,string fileName){
+    Material *material;
+
+    ifstream arq(pathName+fileName);
+    if (!arq){
+        cout << "Archive not found!" + fileName;
+    } else {
+        while (!arq.eof()) {
+
+            string line;
+            getline(arq, line);
+            stringstream sline;
+            sline << line;
+            string temp;
+            sline >> temp; // pega ate primeiro espaco
+
+            if (temp == "newmtl") {
+                string nameMTL;
+                sline >> nameMTL;
+                material = new Material();
+                material->materialName = nameMTL;
+                materials.push_back(material);
+            }
+            else if (temp == "map_Kd") {
+                string nameTexture;
+                sline >> nameTexture;
+
+                materials[materials.size()-1]->textureId=0;
+            }
+        }
+
+    }
+}
+
+Mesh* readData(string pathName,string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
     vec3 maxBoundBox = vec3(0.f,0.f,0.f);
 	vec3 minBoundBox = vec3(0.f,0.f,0.f);
 
-    ifstream arq(fileName);
+    ifstream arq(pathName+fileName);
 
     if (!arq){
-        cout << "Archive not found!";
+        cout << "Archive not found!" + fileName;
     } else {
         while (!arq.eof()) {
             string line;
@@ -165,7 +198,12 @@ Mesh* readData(string fileName) {
             sline << line;
             string temp;
             sline >> temp; // pega ate primeiro espaco
-            if (temp == "v") {
+            if (temp == "mtllib") {
+                string fName;
+                sline >> fName;
+                readMaterial(pathName,fName);
+            }
+            else if (temp == "v") {
                 // ler vértice ...
                 float x, y, z;
                 sline >> x >> y >> z;
@@ -446,7 +484,7 @@ int runCube() {
         Realiza a leitura dos dados para criar o Mesh
     */
 //    Mesh* mesh = readData("projects/meshCube/objs/cube.obj");
-    Mesh* mesh = readData("projects/meshCube/objs/mesa/mesa01.obj");
+    Mesh* mesh = readData("projects/meshCube/objs/mesa/","mesa01.obj");
 //    Mesh* mesh = readData("projects/meshCube/objs/paintball/cenaPaintball.obj");
 
     // indica como ler os vertices
