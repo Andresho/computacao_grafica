@@ -6,6 +6,8 @@
 #include <vector>
 #include <string>
 
+#include "SOIL.h"
+
 //To GLM
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
