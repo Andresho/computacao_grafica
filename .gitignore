@@ -96,3 +96,10 @@ fabric.properties
 */cmake-build-debug/*
 */cmake-build-debug
 **/cmake-build-debug
+
+**/.idea/**
+*/.idea/*
+*/.idea
+**/.idea
+
+
