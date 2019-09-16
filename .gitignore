@@ -92,4 +92,7 @@ fabric.properties
 # End of https://www.gitignore.io/api/clion
 
 
-Sabertooth/cmake-build-debug/
+**/cmake-build-debug/**
+*/cmake-build-debug/*
+*/cmake-build-debug
+**/cmake-build-debug
