@@ -5,7 +5,6 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/gian/GitHub/computacao_grafica/Sabertooth/main.cpp" "/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/MeshCube.dir/main.cpp.o"
-  "/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp" "/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

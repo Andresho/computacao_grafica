@@ -1,5 +1,6 @@
 #pragma once
 
+
 class Material
 {
 public:
@@ -35,19 +36,20 @@ public:
         int width,height,nrChannels;
         nrChannels = 0;
 
-        //unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
-
-		unsigned char *data = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
+        unsigned char *data = stbi_load(filename, &width, &height, &nrChannels, 0);
+//		unsigned char *data = SOIL_load_image(filename, &width, &height, 0, SOIL_LOAD_RGBA);
 		
 		if (data) {
-			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+			glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
 			glGenerateMipmap(GL_TEXTURE_2D);
 		}
 		else {
-			//string message = "Falha ao carregar images. " + std::to_string(filename);
+			string message = "Falha ao carregar images. ";
+			printf(message.c_str());
 			std::cout << filename << std::endl;
 		}
-		SOIL_free_image_data(data);
+
+        stbi_image_free(data);
     }
 
     ~Material() {

@@ -111,17 +111,30 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named MeshCube
+# Target rules for targets named SimpleTriangle
 
 # Build rule for target.
-MeshCube: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 MeshCube
-.PHONY : MeshCube
+SimpleTriangle: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 SimpleTriangle
+.PHONY : SimpleTriangle
 
 # fast build rule for target.
-MeshCube/fast:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/build
-.PHONY : MeshCube/fast
+SimpleTriangle/fast:
+	$(MAKE) -f CMakeFiles/SimpleTriangle.dir/build.make CMakeFiles/SimpleTriangle.dir/build
+.PHONY : SimpleTriangle/fast
+
+#=============================================================================
+# Target rules for targets named TGA_CG
+
+# Build rule for target.
+TGA_CG: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 TGA_CG
+.PHONY : TGA_CG
+
+# fast build rule for target.
+TGA_CG/fast:
+	$(MAKE) -f CMakeFiles/TGA_CG.dir/build.make CMakeFiles/TGA_CG.dir/build
+.PHONY : TGA_CG/fast
 
 main.o: main.cpp.o
 
@@ -129,7 +142,8 @@ main.o: main.cpp.o
 
 # target to build an object file
 main.cpp.o:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/SimpleTriangle.dir/build.make CMakeFiles/SimpleTriangle.dir/main.cpp.o
+	$(MAKE) -f CMakeFiles/TGA_CG.dir/build.make CMakeFiles/TGA_CG.dir/main.cpp.o
 .PHONY : main.cpp.o
 
 main.i: main.cpp.i
@@ -138,7 +152,8 @@ main.i: main.cpp.i
 
 # target to preprocess a source file
 main.cpp.i:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/SimpleTriangle.dir/build.make CMakeFiles/SimpleTriangle.dir/main.cpp.i
+	$(MAKE) -f CMakeFiles/TGA_CG.dir/build.make CMakeFiles/TGA_CG.dir/main.cpp.i
 .PHONY : main.cpp.i
 
 main.s: main.cpp.s
@@ -147,35 +162,9 @@ main.s: main.cpp.s
 
 # target to generate assembly for a file
 main.cpp.s:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/SimpleTriangle.dir/build.make CMakeFiles/SimpleTriangle.dir/main.cpp.s
+	$(MAKE) -f CMakeFiles/TGA_CG.dir/build.make CMakeFiles/TGA_CG.dir/main.cpp.s
 .PHONY : main.cpp.s
-
-projects/meshCube/runCube.o: projects/meshCube/runCube.cpp.o
-
-.PHONY : projects/meshCube/runCube.o
-
-# target to build an object file
-projects/meshCube/runCube.cpp.o:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.o
-.PHONY : projects/meshCube/runCube.cpp.o
-
-projects/meshCube/runCube.i: projects/meshCube/runCube.cpp.i
-
-.PHONY : projects/meshCube/runCube.i
-
-# target to preprocess a source file
-projects/meshCube/runCube.cpp.i:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.i
-.PHONY : projects/meshCube/runCube.cpp.i
-
-projects/meshCube/runCube.s: projects/meshCube/runCube.cpp.s
-
-.PHONY : projects/meshCube/runCube.s
-
-# target to generate assembly for a file
-projects/meshCube/runCube.cpp.s:
-	$(MAKE) -f CMakeFiles/MeshCube.dir/build.make CMakeFiles/MeshCube.dir/projects/meshCube/runCube.cpp.s
-.PHONY : projects/meshCube/runCube.cpp.s
 
 # Help Target
 help:
@@ -185,13 +174,11 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... MeshCube"
+	@echo "... SimpleTriangle"
+	@echo "... TGA_CG"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
-	@echo "... projects/meshCube/runCube.o"
-	@echo "... projects/meshCube/runCube.i"
-	@echo "... projects/meshCube/runCube.s"
 .PHONY : help
 
 

@@ -86,40 +86,37 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/External/SOIL2/include/SOIL.h">
+			<Option target="MeshCube"/>
+		</Unit>
 		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/CMakeLists.txt">
 			<Option target="MeshCube"/>
 		</Unit>
 		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/main.cpp">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/objs/cube.obj">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/TGA.h">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.cpp">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/shaders/core.frag">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/runCube.h">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/shaders/core.vert">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/shaders/core.frag">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/src/Face.h">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/shaders/core.vert">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/src/Group.h">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/src/Face.h">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/src/Material.h">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/src/Group.h">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/src/Mesh.h">
 			<Option target="MeshCube"/>
 		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/src/Material.h">
-			<Option target="MeshCube"/>
-		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/src/Mesh.h">
-			<Option target="MeshCube"/>
-		</Unit>
-		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/meshCube/src/Obj3d.h">
+		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/projects/TGA/src/Obj3d.h">
 			<Option target="MeshCube"/>
 		</Unit>
 		<Unit filename="/Users/gian/GitHub/computacao_grafica/Sabertooth/CMakeLists.txt">

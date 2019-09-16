@@ -1,3 +1,4 @@
 /Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/rebuild_cache.dir
 /Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/edit_cache.dir
-/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/MeshCube.dir
+/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/SimpleTriangle.dir
+/Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug/CMakeFiles/TGA_CG.dir

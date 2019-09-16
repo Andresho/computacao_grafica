@@ -59,5 +59,6 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/MeshCube.dir/DependInfo.cmake"
+  "CMakeFiles/SimpleTriangle.dir/DependInfo.cmake"
+  "CMakeFiles/TGA_CG.dir/DependInfo.cmake"
   )
