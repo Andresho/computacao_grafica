@@ -1,4 +1,0 @@
-/Applications/CLion.app/Contents/bin/cmake/mac/bin/cmake -DCMAKE_BUILD_TYPE=Debug -DCMAKE_MAKE_PROGRAM=/usr/bin/make -DCMAKE_C_COMPILER=/Library/Developer/CommandLineTools/usr/bin/cc -DCMAKE_CXX_COMPILER=/Library/Developer/CommandLineTools/usr/bin/c++ -G "CodeBlocks - Unix Makefiles" /Users/gian/GitHub/computacao_grafica/Sabertooth
--- Configuring done
--- Generating done
--- Build files have been written to: /Users/gian/GitHub/computacao_grafica/Sabertooth/cmake-build-debug
