@@ -45,7 +45,7 @@ public:
 		}
 		else {
 			string message = "Falha ao carregar images. ";
-			printf(message.c_str());
+			printf("%s",message.c_str());
 			std::cout << filename << std::endl;
 		}
 

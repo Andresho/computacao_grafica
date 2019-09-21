@@ -20,7 +20,9 @@ float directionSpeed = 50.f;
 
 vector<Face*> faces;
 vector<Group*> groups;
+vector<Material*> materials;
 vector<Obj3d*> objs;
+
 
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
@@ -142,7 +144,7 @@ bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
     return true;
 }
 
-void readMaterial(vector<Material*> &materials, string pathName,string fileName){
+void readMaterial(string pathName,string fileName){
     Material *material;
 
     ifstream arq(pathName+fileName);
@@ -171,6 +173,31 @@ void readMaterial(vector<Material*> &materials, string pathName,string fileName)
                 string pathWithName = pathName+nameTexture;
                 materials[materials.size()-1]->createTexture(pathWithName.c_str(),false);
             }
+            else if (temp == "Kd") {
+                float x, y, z;
+                sline >> x >> y >> z;
+                vec3* Kd = new vec3(x, y, z);
+                materials[materials.size()-1]->Kd.push_back(Kd);
+            }
+            else if (temp == "Ka") {
+                float x, y, z;
+                sline >> x >> y >> z;
+                vec3* Ka = new vec3(x, y, z);
+                materials[materials.size()-1]->Ka.push_back(Ka);
+            }
+            else if (temp == "Ks") {
+                float x, y, z;
+                sline >> x >> y >> z;
+                vec3* Ks = new vec3(x, y, z);
+                materials[materials.size()-1]->Ks.push_back(Ks);
+            }
+            else if (temp == "Ns") {
+                float x;
+                sline >> x;
+                materials[materials.size()-1]->Ns = (float) x;
+            }
+
+
         }
 
     }
@@ -180,7 +207,6 @@ Mesh* readData(string pathName,string fileName) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
-    vector<Material*> materials;
     string materialName = "default";
 
     vec3 maxBoundBox = vec3(0.f,0.f,0.f);
@@ -211,7 +237,7 @@ Mesh* readData(string pathName,string fileName) {
             else if (temp == "mtllib") {
                 string fName;
                 sline >> fName;
-                readMaterial(materials, pathName,fName);
+                readMaterial(pathName,fName);
             }
             else if (temp == "v") {
                 // ler vértice ...
@@ -505,8 +531,8 @@ int main() {
         Realiza a leitura dos dados para criar o Mesh
     */
     //Mesh* mesh = readData("projects/TGA/objs/cube.obj");
-    //Mesh *mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj");
-    Mesh* mesh = readData("projects/TGA/objs/mesa/","mesa01.obj");
+    Mesh* mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj");
+    Mesh* mesh2 = readData("projects/TGA/objs/mesa/","mesa01.obj");
 
     // indica como ler os vertices
     loadVertices(mesh);
@@ -516,10 +542,9 @@ int main() {
 
 
 
-    //loadVertices(mesh2);
-
-    //objs.push_back(new Obj3d(mesh2, 0, 0, -5));
-    //objs[1]->scale(1 / mesh->distanceScale);
+//    loadVertices(mesh2);
+//    objs.push_back(new Obj3d(mesh2, 0, 0, -5));
+//    objs[1]->scale(1 / mesh2->distanceScale);
 
 
 
