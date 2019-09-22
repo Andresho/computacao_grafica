@@ -3,11 +3,15 @@
 #define WEIGTH 800
 #define HEIGHT 600
 
+#define N_ROTATE_DEGREE 10
+#define PORCENT_SCALE   10
+#define N_MOVE          0.1
+
+
 bool keys[1024];
 
 float xCentro = WEIGTH/2;
 float yCentro = HEIGHT/2;
-float value_scala = 1.1f;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
 float cameraSpeed = 3.f; // adjust accordingly
@@ -17,6 +21,7 @@ float pitchAngle = 0.f;
 float yawAngle = -90.f;
 
 float directionSpeed = 50.f;
+int indexSelectedObject = -1;
 
 vector<Face*> faces;
 vector<Group*> groups;
@@ -55,22 +60,108 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 90.0f;
 }
 
+bool testingIfKeysPressed(){
+    const int size = 16;
+
+    int relevantKeys[size] ={
+            //camera keys
+            GLFW_KEY_Q,
+            GLFW_KEY_E,
+            GLFW_KEY_RIGHT,
+            GLFW_KEY_LEFT,
+            GLFW_KEY_DOWN,
+            GLFW_KEY_UP,
+
+            //select objs keys
+            GLFW_KEY_0,
+            GLFW_KEY_1,
+            GLFW_KEY_2,
+
+            //shift keys
+            GLFW_KEY_LEFT_SHIFT,
+            GLFW_KEY_RIGHT_SHIFT,
+
+            //move object keys
+            GLFW_KEY_R,
+            GLFW_KEY_S,
+            GLFW_KEY_X,
+            GLFW_KEY_Y,
+            GLFW_KEY_Z
+    };
+
+    for (int i = 0; i < size; ++i)
+        if(keys[relevantKeys[i]]) return true;
+
+    return false;
+
+
+}
+
 void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
-    hasKeyboardPressed = keys[GLFW_KEY_W] || keys[GLFW_KEY_S] || keys[GLFW_KEY_A]
-                         || keys[GLFW_KEY_D] || keys[GLFW_KEY_Q] || keys[GLFW_KEY_E]
-                         || keys[GLFW_KEY_RIGHT] ||keys[GLFW_KEY_LEFT] || keys[GLFW_KEY_DOWN]
-                         || keys[GLFW_KEY_UP];
-    if(!hasKeyboardPressed)
-        return;
+
+    hasKeyboardPressed =testingIfKeysPressed();
+
+    //TESTA SE EXISTE ALGUM SHIFT PRESSIONADO
+    bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT]||keys[GLFW_KEY_RIGHT_SHIFT]);
+
+
+    // USADO PARA SELECAO DE OBJETOS
+    if(keys[GLFW_KEY_0])
+        indexSelectedObject = -1;
+    else if(keys[GLFW_KEY_1])
+        indexSelectedObject = 0;
+    else if(keys[GLFW_KEY_2])
+        indexSelectedObject = 1;
+
+    //MOVIMENTOS DO OBJETO SELECIONADO
+    if(indexSelectedObject>-1 && indexSelectedObject < objs.size()){
+
+        bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT]||keys[GLFW_KEY_RIGHT_SHIFT]);
+
+        if (keys[GLFW_KEY_R]&&shiftPressed==false)
+            objs[indexSelectedObject]->rotate(N_ROTATE_DEGREE);
+
+        if (keys[GLFW_KEY_R]&&shiftPressed)
+            objs[indexSelectedObject]->rotate(-N_ROTATE_DEGREE);
+
+        if (keys[GLFW_KEY_S]&&shiftPressed==false)
+            objs[indexSelectedObject]->scale(1+PORCENT_SCALE/100.f);
+
+        if (keys[GLFW_KEY_S]&&shiftPressed)
+            objs[indexSelectedObject]->scale(1-PORCENT_SCALE/100.f);
+
+        if (keys[GLFW_KEY_X]&&shiftPressed==false)
+            objs[indexSelectedObject]->move(N_MOVE,0,0);
+
+        if (keys[GLFW_KEY_X]&&shiftPressed)
+            objs[indexSelectedObject]->move(-N_MOVE,0,0);
+
+        if (keys[GLFW_KEY_Y]&&shiftPressed==false)
+            objs[indexSelectedObject]->move(0,N_MOVE,0);
+
+        if (keys[GLFW_KEY_Y]&&shiftPressed)
+            objs[indexSelectedObject]->move(0,-N_MOVE,0);
+
+        if (keys[GLFW_KEY_Z]&&shiftPressed==false)
+            objs[indexSelectedObject]->move(0,0,N_MOVE);
+
+        if (keys[GLFW_KEY_Z]&&shiftPressed)
+            objs[indexSelectedObject]->move(0,0,-N_MOVE);
+
+
+
+
+    }
+
 
     // MECHE A POSICAO DA CAMERA
-    if (keys[GLFW_KEY_W])
+    if (keys[GLFW_KEY_UP] && shiftPressed == false)
         cameraPos += cameraSpeed * direction * elapsedTime;
-    if (keys[GLFW_KEY_S])
+    if (keys[GLFW_KEY_DOWN] && shiftPressed == false)
         cameraPos -= cameraSpeed * direction * elapsedTime;
-    if (keys[GLFW_KEY_A])
+    if (keys[GLFW_KEY_LEFT] && shiftPressed == false)
         cameraPos -= cameraRight * cameraSpeed * elapsedTime;
-    if (keys[GLFW_KEY_D])
+    if (keys[GLFW_KEY_RIGHT] && shiftPressed == false)
         cameraPos += cameraRight * cameraSpeed * elapsedTime;
     if (keys[GLFW_KEY_Q])
         cameraPos -= cameraUp * cameraSpeed * elapsedTime;
@@ -78,18 +169,18 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
         cameraPos += cameraUp * cameraSpeed * elapsedTime;
 
     //meche a direcao da camera
-    if (keys[GLFW_KEY_RIGHT]) {
+    if (keys[GLFW_KEY_RIGHT] && shiftPressed) {
         yawAngle += directionSpeed * elapsedTime;
 
         cameraRight = cross(direction, cameraUp);
     }
-    if (keys[GLFW_KEY_LEFT]) {
+    if (keys[GLFW_KEY_LEFT] && shiftPressed) {
         yawAngle -= directionSpeed * elapsedTime;
 
         cameraRight = cross(direction, cameraUp);
     }
 
-    if (keys[GLFW_KEY_DOWN]) {
+    if (keys[GLFW_KEY_DOWN] && shiftPressed) {
         pitchAngle -= directionSpeed* elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
@@ -99,7 +190,7 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 //		cameraUp = cross(direction, cameraRight);
     }
 
-    if (keys[GLFW_KEY_UP]) {
+    if (keys[GLFW_KEY_UP] && shiftPressed) {
         pitchAngle += directionSpeed* elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
@@ -540,16 +631,10 @@ int main() {
     objs.push_back(new Obj3d(mesh, 0, 0, 0));
     objs[0]->scale(1/mesh->distanceScale);
 
-
-
-//    loadVertices(mesh2);
-//    objs.push_back(new Obj3d(mesh2, 0, 0, -5));
+    loadVertices(mesh2);
+    objs.push_back(new Obj3d(mesh2, 0, 0, 0));
+    objs[1]->scale(1 / mesh2->distanceScale);
 //    objs[1]->scale(1 / mesh2->distanceScale);
-
-
-
-//	objs.push_back(new Obj3d(mesh, 2, 0, 0));
-//	objs.push_back(new Obj3d(mesh, 0, 0, 6));
 
     // criacao dos shaders
     char vertex_shader[1024 * 256];
@@ -574,94 +659,6 @@ int main() {
     glAttachShader(shader_programme, fShader);
     glAttachShader(shader_programme, vShader);
     glLinkProgram(shader_programme);
-
-
-
-
-
-
-
-
-
-
-
-
-    /**********************************************************************************************************************/
-    /*camera shader, vbo e vao.  Para desenhar pequenos vetores na origem que simbolizam a camera*/
-    /**********************************************************************************************************************/
-
-    GLuint camVao;
-    glGenVertexArrays(1, &camVao);
-    glBindVertexArray(camVao);
-
-    float camVerts[18] = {
-            cameraPos.x, cameraPos.y, cameraPos.z,
-            direction.x, direction.y, direction.z,
-            cameraPos.x, cameraPos.y, cameraPos.z,
-            cameraUp.x + cameraPos.x, cameraUp.y + cameraPos.y, cameraUp.z + cameraPos.z,
-            cameraPos.x, cameraPos.y, cameraPos.z,
-            cameraRight.x + cameraPos.x, cameraRight.y + cameraPos.y, cameraRight.z + cameraPos.z
-    };
-
-    GLuint camVbo;
-    glGenBuffers(1, &camVbo);
-    glBindBuffer(GL_ARRAY_BUFFER, camVbo);
-    glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), camVerts, GL_STATIC_DRAW);
-    glEnableVertexAttribArray(0);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
-
-    /*camera shader*/
-
-    const char* cam_vertex_shader =
-            "#version 330"
-            "layout(location = 0) in vec3 vp;"
-            "void main() {"
-            "	gl_Position = vec4(3*vp.x, 3*vp.y, 3*vp.z, 1.0);"
-            "}";
-
-    const char* cam_fragment_shader =
-            "#version 330"
-            "out vec4 frag_color;"
-            "void main() {"
-            "	frag_color = vec4(1.0, 1.0, 1.0, 1.0);"
-            "}";
-
-    //convertFileInString("projects/TGA/shaders/camera.vert", cam_vertex_shader, 1024 * 256);
-    //convertFileInString("projects/TGA/shaders/camera.frag", cam_fragment_shader, 1024 * 256);
-
-    // identifica vShader e o associa com vertex_shader
-    GLuint camVShader = glCreateShader(GL_VERTEX_SHADER);
-    //auto camVShaderPointer = (const GLchar *)cam_vertex_shader;
-    glShaderSource(camVShader, 1, &cam_vertex_shader, NULL);
-    glCompileShader(camVShader);
-
-    // identifica fShader e o associa com fragment_shader
-    GLuint camFShader = glCreateShader(GL_FRAGMENT_SHADER);
-    //auto camFShaderPointer = (const GLchar *)cam_fragment_shader;
-    glShaderSource(camFShader, 1, &cam_fragment_shader, NULL);
-    glCompileShader(camFShader);
-
-    // identifica do programa, adiciona partes e faz "linkagem"
-    GLuint cam_shader_programme = glCreateProgram();
-    glAttachShader(cam_shader_programme, camFShader);
-    glAttachShader(cam_shader_programme, camVShader);
-    glLinkProgram(cam_shader_programme);
-
-    /**********************************************************************************************************************/
-    /*fim camera shader*/
-    /**********************************************************************************************************************/
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     glUseProgram(shader_programme);
@@ -726,9 +723,13 @@ int main() {
 
         glUseProgram(shader_programme);
         for (int o = 0; o < objs.size(); o++) {
+
+            glUniform1i((glGetUniformLocation(shader_programme, "selected")), indexSelectedObject==o);
+
+
             Group *g;
             for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
-                g = mesh->groups[i];
+                g = objs[o]->mesh->groups[i];
                 if (g->numVertices == 0) continue;
                 //if(g->materialName != "default")
                 g->material->bind(shader_programme);
@@ -744,45 +745,6 @@ int main() {
                 glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
             }
         }
-
-
-
-
-
-
-
-        /*
-            desenhar pequenos vetores na horigem que simbolizam a camera
-        */
-        glUseProgram(cam_shader_programme);
-        glBindVertexArray(camVao);
-        glDrawArrays(GL_LINES, 0, 6);
-
-        float camVertsNew[18] = {
-                cameraPos.x, cameraPos.y, cameraPos.z,
-                direction.x, direction.y, direction.z,
-                cameraPos.x, cameraPos.y, cameraPos.z,
-                cameraUp.x + cameraPos.x, cameraUp.y + cameraPos.y, cameraUp.z + cameraPos.z,
-                cameraPos.x, cameraPos.y, cameraPos.z,
-                cameraRight.x + cameraPos.x, cameraRight.y + cameraPos.y, cameraRight.z + cameraPos.z
-        };
-
-        glBindBuffer(GL_ARRAY_BUFFER, camVbo);
-        glBufferData(GL_ARRAY_BUFFER, 18 * sizeof(float), camVertsNew, GL_STATIC_DRAW);
-
-        /*
-            Fim vetores na horigem que simbolizam a camera
-        */
-
-
-
-
-
-
-
-
-
-
 
         glfwSwapBuffers(window);
 
