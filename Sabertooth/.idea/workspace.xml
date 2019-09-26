@@ -13,9 +13,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.3ds" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.blend" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/CrateImage1.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/CrateImage2.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/TGA/objs/box/crate_1.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGA/TGA.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGA/TGA.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGA/shaders/core.frag" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGA/shaders/core.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/TGA/src/Obj3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGA/src/Obj3d.h" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/cmake-build-debug/" />
     <ignored path="$PROJECT_DIR$/cmak/" />
@@ -38,8 +45,31 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/projects/TGA/TGA.cpp">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="342">
-              <caret line="100" selection-start-line="100" selection-end-line="100" />
+            <state relative-caret-position="137">
+              <caret line="191" column="5" lean-forward="true" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/Crate1.mtl">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="165">
+              <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/crate_1.jpg">
+          <provider selected="true" editor-type-id="images" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/Crate1.obj">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="253">
+              <caret line="24" column="5" selection-start-line="19" selection-start-column="4" selection-end-line="24" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -47,19 +77,14 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/TGA/src/Group.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
+            <state relative-caret-position="75">
+              <caret line="5" column="17" selection-start-line="5" selection-end-line="6" />
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/TGA/shaders/camera.vert">
-          <provider selected="true" editor-type-id="text-editor" />
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projects/TGA/shaders/camera.frag">
           <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
@@ -73,19 +98,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/projects/TGA/objs/mesa/mesa01.mtl">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="120">
-              <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/TGA/src/Obj3d.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="112">
-              <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
+            <state relative-caret-position="411">
+              <caret line="43" column="14" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="14" />
             </state>
           </provider>
         </entry>
@@ -93,7 +109,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/projects/TGA/src/Material.h">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="157">
+            <state relative-caret-position="285">
               <caret line="19" column="67" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="67" />
             </state>
           </provider>
@@ -120,6 +136,8 @@
       <find>arv_tronco.ppm</find>
       <find>school chair</find>
       <find>sch</find>
+      <find>mesa01.mtl</find>
+      <find>GLFW_KEY_E</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -159,8 +177,10 @@
         <option value="$PROJECT_DIR$/projects/TGA/objs/paintball/cenaPaintball.mtl" />
         <option value="$PROJECT_DIR$/projects/TGA/shaders/core.vert" />
         <option value="$PROJECT_DIR$/projects/TGA/shaders/core.frag" />
-        <option value="$PROJECT_DIR$/projects/TGA/src/Obj3d.h" />
         <option value="$PROJECT_DIR$/projects/TGA/objs/school/school chair.obj" />
+        <option value="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.mtl" />
+        <option value="$PROJECT_DIR$/projects/TGA/objs/box/Crate1.obj" />
+        <option value="$PROJECT_DIR$/projects/TGA/src/Obj3d.h" />
         <option value="$PROJECT_DIR$/projects/TGA/TGA.cpp" />
       </list>
     </option>
@@ -176,6 +196,7 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -219,13 +240,12 @@
           <select />
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/projects/meshCube/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/projects/TGA/objs" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -237,15 +257,16 @@
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/projects/TGA" />
       <recent name="$PROJECT_DIR$/projects/meshCube/libs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/objs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/src" />
       <recent name="$PROJECT_DIR$/projects/meshCube/Shaders" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projects/TGA/objs" />
+      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -309,7 +330,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="94226000" />
+    <option name="totallyTimeSpent" value="100943000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -324,20 +345,20 @@
     <frame x="0" y="0" width="1366" height="768" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.19486405" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.1978852" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info id="Favorites" order="2" side_tool="true" weight="0.32930514" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49848944" weight="0.32808024" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.46299094" visible="true" weight="0.14326647" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" sideWeight="0.4003021" visible="true" weight="0.042979944" />
       <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.6163142" weight="0.4304419" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.3295129" />
       <window_info anchor="bottom" id="Database Changes" order="7" />
-      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.46072507" weight="0.4512894" />
+      <window_info anchor="bottom" id="Messages" order="8" sideWeight="0.39803624" weight="0.4512894" />
       <window_info anchor="bottom" id="Terminal" order="9" weight="0.3295129" />
-      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.53700906" side_tool="true" visible="true" weight="0.14326647" />
+      <window_info anchor="bottom" id="Event Log" order="10" sideWeight="0.5996979" side_tool="true" visible="true" weight="0.042979944" />
       <window_info anchor="bottom" id="Version Control" order="11" weight="0.3295129" />
       <window_info anchor="bottom" id="CMake" order="12" sideWeight="0.49924472" weight="0.3295129" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -396,18 +417,6 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/meshCube/run.h" />
-    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/cube.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="328">
-          <caret line="21" selection-start-line="21" selection-end-line="21" selection-end-column="3" />
-          <caret line="22" selection-start-line="22" selection-end-line="22" selection-end-column="3" />
-          <caret line="23" selection-start-line="23" selection-end-line="23" selection-end-column="3" />
-          <caret line="24" selection-start-line="24" selection-end-line="24" selection-end-column="3" />
-          <caret line="25" selection-start-line="25" selection-end-line="25" selection-end-column="3" />
-          <caret line="26" selection-start-line="26" selection-end-line="26" selection-end-column="3" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/TGA/objs/paintball/arv_tronco.ptm">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
@@ -562,13 +571,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/mesa/mesa01.obj">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="17" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="17" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/TGA/objs/mesa/mesa01.mtl">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="120">
@@ -579,13 +581,6 @@
     <entry file="file://$PROJECT_DIR$/projects/TGA/shaders/camera.frag">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/src/Group.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file:///usr/local/include/GL/glew.h">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="15">
@@ -595,7 +590,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/TGA/src/Material.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="157">
+        <state relative-caret-position="285">
           <caret line="19" column="67" selection-start-line="19" selection-start-column="66" selection-end-line="19" selection-end-column="67" />
         </state>
       </provider>
@@ -614,37 +609,64 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/src/Obj3d.h">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="112">
-          <caret line="30" column="9" selection-start-line="30" selection-start-column="9" selection-end-line="30" selection-end-column="9" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/projects/TGA/shaders/camera.vert">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/school_chair.obj">
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/school_chair.obj" />
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/school_chair.mtl" />
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/Chair.mtl" />
+    <entry file="file://$PROJECT_DIR$/projects/TGA/src/Group.h">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="19" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="19" />
+        <state relative-caret-position="75">
+          <caret line="5" column="17" selection-start-line="5" selection-end-line="6" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/school_chair.mtl">
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/mesa/mesa01.obj">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="150">
-          <caret line="10" column="7" lean-forward="true" selection-start-line="10" selection-end-line="11" />
+        <state relative-caret-position="32">
+          <caret line="4" column="30" selection-start-line="4" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/school/Chair.mtl">
-      <provider selected="true" editor-type-id="text-editor" />
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/RubikCube.obj">
+      <provider selected="true" editor-type-id="LargeFileEditor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/cube.obj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-137">
+          <caret selection-end-line="7" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/Crate1.mtl">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="7" selection-start-line="11" selection-start-column="7" selection-end-line="11" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/crate_1.jpg">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/TGA/objs/box/Crate1.obj">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="253">
+          <caret line="24" column="5" selection-start-line="19" selection-start-column="4" selection-end-line="24" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/projects/TGA/src/Obj3d.h">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="411">
+          <caret line="43" column="14" selection-start-line="43" selection-start-column="9" selection-end-line="43" selection-end-column="14" />
+        </state>
+      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/projects/TGA/TGA.cpp">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="342">
-          <caret line="100" selection-start-line="100" selection-end-line="100" />
+        <state relative-caret-position="137">
+          <caret line="191" column="5" lean-forward="true" selection-start-line="191" selection-start-column="5" selection-end-line="191" selection-end-column="5" />
         </state>
       </provider>
     </entry>

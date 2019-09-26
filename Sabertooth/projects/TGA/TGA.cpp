@@ -14,13 +14,13 @@ float xCentro = WEIGTH/2;
 float yCentro = HEIGHT/2;
 float value_move = 0.10f;
 float angle_rotation = 1.0;
-float cameraSpeed = 3.f; // adjust accordingly
+float cameraSpeed = 1.f; // adjust accordingly
 float fov = 45.0f;
 
-float pitchAngle = 0.f;
+float pitchAngle = -30.f;
 float yawAngle = -90.f;
 
-float directionSpeed = 50.f;
+float directionSpeed = 25.f;
 int indexSelectedObject = -1;
 
 vector<Face*> faces;
@@ -32,7 +32,7 @@ vector<Obj3d*> objs;
 glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
 
 //eye: posição
-glm::vec3 cameraPos = glm::vec3(0.0f, 0.0f, 3.0f);
+glm::vec3 cameraPos = glm::vec3(0.f, 2.f, 4.f);
 // direction: direção
 glm::vec3 cameraTarget = glm::vec3(0.0f, 0.0f, 0.0f);
 glm::vec3 direction = glm::vec3(
@@ -50,6 +50,11 @@ glm::vec3 cameraRight = glm::normalize(glm::cross(direction, cameraUp));
 
 glm::mat4 view =glm::mat4(1);
 
+//Define acoes do redimensionamento da tela
+void window_size_callback(GLFWwindow* window, int width, int height) {
+    glViewport(0, 0, width, height);
+}
+
 void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
 {
     if(fov >= 1.0f && fov <= 90.0f)
@@ -60,8 +65,9 @@ void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
         fov = 90.0f;
 }
 
+
 bool testingIfKeysPressed(){
-    const int size = 16;
+    const int size = 25;
 
     int relevantKeys[size] ={
             //camera keys
@@ -76,6 +82,13 @@ bool testingIfKeysPressed(){
             GLFW_KEY_0,
             GLFW_KEY_1,
             GLFW_KEY_2,
+            GLFW_KEY_3,
+            GLFW_KEY_4,
+            GLFW_KEY_5,
+            GLFW_KEY_6,
+            GLFW_KEY_7,
+            GLFW_KEY_8,
+            GLFW_KEY_9,
 
             //shift keys
             GLFW_KEY_LEFT_SHIFT,
@@ -106,12 +119,10 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 
 
     // USADO PARA SELECAO DE OBJETOS
-    if(keys[GLFW_KEY_0])
-        indexSelectedObject = -1;
-    else if(keys[GLFW_KEY_1])
-        indexSelectedObject = 0;
-    else if(keys[GLFW_KEY_2])
-        indexSelectedObject = 1;
+    for(int i = GLFW_KEY_0; i <= GLFW_KEY_9; i++){
+        if(keys[i])
+            indexSelectedObject = i - GLFW_KEY_0 - 1;
+    }
 
     //MOVIMENTOS DO OBJETO SELECIONADO
     if(indexSelectedObject>-1 && indexSelectedObject < objs.size()){
@@ -294,7 +305,8 @@ void readMaterial(string pathName,string fileName){
     }
 }
 
-Mesh* readData(string pathName,string fileName) {
+// discartPointId usado para ajusta o tipo de triangulacao
+Mesh* readData(string pathName,string fileName, int discartPointId) {
     Mesh *mesh = new Mesh();
     Group *g = nullptr;
 
@@ -456,7 +468,8 @@ Mesh* readData(string pathName,string fileName) {
                 // Adiciona face no grupo
                 g->faces.push_back(f);
                 if(vertices>3){
-                    for(int i=0; i<2; i++){
+                    for(int i=0; i<3; i++){
+                        if(i==discartPointId) continue;
                         fAux->verts.push_back(f->verts[i]);
                         fAux->norms.push_back(f->norms[i]);
                         fAux->texts.push_back(f->texts[i]);
@@ -621,20 +634,55 @@ int main() {
     /*
         Realiza a leitura dos dados para criar o Mesh
     */
-    //Mesh* mesh = readData("projects/TGA/objs/cube.obj");
-    Mesh* mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj");
-    Mesh* mesh2 = readData("projects/TGA/objs/mesa/","mesa01.obj");
+
+    //campo
+    Mesh* mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj",1);
 
     // indica como ler os vertices
     loadVertices(mesh);
 
+    //adiciona no vetor de objetos
     objs.push_back(new Obj3d(mesh, 0, 0, 0));
-    objs[0]->scale(1/mesh->distanceScale);
+    objs[0]->scale((1/mesh->distanceScale) * 5);
 
+    //mesa
+    Mesh* mesh2 = readData("projects/TGA/objs/mesa/","mesa01.obj",2);
+
+    // indica como ler os vertices
     loadVertices(mesh2);
-    objs.push_back(new Obj3d(mesh2, 0, 0, 0));
-    objs[1]->scale(1 / mesh2->distanceScale);
-//    objs[1]->scale(1 / mesh2->distanceScale);
+
+    //mesa 01 (esquerda mais perto)
+    objs.push_back(new Obj3d(mesh2, -0.85f, 0, 1.1f));
+    objs[1]->scale((1 / mesh2->distanceScale)/2);
+
+    //mesa 02 (esquerda mais longe)
+    objs.push_back(new Obj3d(mesh2, -0.65f, 0, -1.3f));
+    objs[2]->scale((1 / mesh2->distanceScale)/2);
+
+    //mesa 01 (direita mais perto)
+    objs.push_back(new Obj3d(mesh2, 0.85f, 0, 1.2f));
+    objs[3]->scale((1 / mesh2->distanceScale)/2);
+
+    //mesa 02 (esquerda mais longe)
+    objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
+    objs[4]->scale((1 / mesh2->distanceScale)/2);
+
+    //caixa
+    Mesh* mesh3 = readData("projects/TGA/objs/box/","Crate1.obj",1);
+
+    // indica como ler os vertices
+    loadVertices(mesh3);
+    objs.push_back(new Obj3d(mesh3, 0.3f, 0.145f, 0.8f));
+    objs[5]->scale((1 / mesh3->distanceScale)/2);
+
+    objs.push_back(new Obj3d(mesh3, 0.27f, 0.36f, 0.8f));
+    objs[6]->scale((1 / mesh3->distanceScale)/4);
+    objs[6]->rotate(15.0f);
+
+
+    objs.push_back(new Obj3d(mesh3, 0, 2.85f, 0));
+    float objSevenDistanceScale = (1 / mesh3->distanceScale);
+    objs[7]->scale(objSevenDistanceScale*30, objSevenDistanceScale*10,objSevenDistanceScale*30);
 
     // criacao dos shaders
     char vertex_shader[1024 * 256];
@@ -683,8 +731,9 @@ int main() {
     printf("Informações de logs - Shader Program:\n%s", logSP);
 
     //define calbacks
-    glfwSetKeyCallback(window, key_callback);
-    glfwSetScrollCallback(window, scroll_callback);
+    glfwSetKeyCallback(window, key_callback);// teclas
+    glfwSetScrollCallback(window, scroll_callback);// scrool do mouse
+    glfwSetWindowSizeCallback(window, window_size_callback);// redimensionar a tela
 
     glm::vec3 front = vec3(0);
     front.x = cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle));
@@ -731,7 +780,7 @@ int main() {
             for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
                 g = objs[o]->mesh->groups[i];
                 if (g->numVertices == 0) continue;
-                //if(g->materialName != "default")
+
                 g->material->bind(shader_programme);
 
                 // Define vao como verte array atual

@@ -41,12 +41,17 @@ public:
 		transform();
 	}
 
-	void scale(float s) {
-		matrix_scala = glm::scale(matrix_scala, glm::vec3(s, s, s));
-		transform();
-	}
+    void scale(float x,float y,float z) {
+        matrix_scala = glm::scale(matrix_scala, glm::vec3(x, y, z));
+        transform();
+    }
 
-	void transform() {
+    void scale(float s) {
+        matrix_scala = glm::scale(matrix_scala, glm::vec3(s, s, s));
+        transform();
+    }
+
+    void transform() {
 		transformations = matrix_translaction * matrix_rotation * matrix_scala;
 	}
 
