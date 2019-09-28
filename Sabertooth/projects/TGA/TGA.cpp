@@ -594,48 +594,8 @@ void loadVertices(Mesh* mesh) {
 }
 
 
-int main() {
-    if (!glfwInit()) {
-        fprintf(stderr, "ERROR: could not start GLFW3\n");
-        return 1;
-    }
-    /* Caso necess�rio, defini��es espec�ficas para SOs, p. e. Apple OSX *
-    Definir como 3.2 para Apple OS X */
-
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
-    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
-    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-    //*/
-
-
-    GLFWwindow* window = glfwCreateWindow(
-            WEIGTH, HEIGHT, "Cube 3D", NULL, NULL);
-    if (!window) {
-        fprintf(stderr, "ERROR: could not open window with GLFW3\n");
-        glfwTerminate();
-        return 1;
-    }
-    glfwMakeContextCurrent(window);
-    // inicia manipulador da extens�o GLEW
-    glewExperimental = GL_TRUE;
-    glewInit();
-
-    //habilita profundidade
-    glEnable(GL_DEPTH_TEST);
-
-    // obten��o de vers�o suportada da OpenGL e renderizador
-    const GLubyte* renderer = glGetString(GL_RENDERER);
-    const GLubyte* version = glGetString(GL_VERSION);
-    printf("Renderer: %s\n", renderer);
-    printf("OpenGL (versao suportada) %s\n", version);
-    // encerra contexto GL e outros recursos da GLFW
-
-    /*
-        Realiza a leitura dos dados para criar o Mesh
-    */
-
-    //campo
+void createObjects(){
+    // Realiza a leitura dos dados para criar o Mesh (campo)
     Mesh* mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj",1);
 
     // indica como ler os vertices
@@ -645,7 +605,7 @@ int main() {
     objs.push_back(new Obj3d(mesh, 0, 0, 0));
     objs[0]->scale((1/mesh->distanceScale) * 5);
 
-    //mesa
+    // Realiza a leitura dos dados para criar o Mesh (mesa01)
     Mesh* mesh2 = readData("projects/TGA/objs/mesa/","mesa01.obj",2);
 
     // indica como ler os vertices
@@ -667,7 +627,7 @@ int main() {
     objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
     objs[4]->scale((1 / mesh2->distanceScale)/2);
 
-    //caixa
+    // Realiza a leitura dos dados para criar o Mesh (caixa)
     Mesh* mesh3 = readData("projects/TGA/objs/box/","Crate1.obj",1);
 
     // indica como ler os vertices
@@ -679,11 +639,13 @@ int main() {
     objs[6]->scale((1 / mesh3->distanceScale)/4);
     objs[6]->rotate(15.0f);
 
-
+    //caixote bem externo
     objs.push_back(new Obj3d(mesh3, 0, 2.85f, 0));
     float objSevenDistanceScale = (1 / mesh3->distanceScale);
     objs[7]->scale(objSevenDistanceScale*30, objSevenDistanceScale*10,objSevenDistanceScale*30);
+}
 
+void createShaders(GLuint &shader_programme){
     // criacao dos shaders
     char vertex_shader[1024 * 256];
     char fragment_shader[1024 * 256];
@@ -703,17 +665,10 @@ int main() {
     glCompileShader(fShader);
 
     // identifica do programa, adiciona partes e faz "linkagem"
-    GLuint shader_programme = glCreateProgram();
+    shader_programme = glCreateProgram();
     glAttachShader(shader_programme, fShader);
     glAttachShader(shader_programme, vShader);
     glLinkProgram(shader_programme);
-
-
-    glUseProgram(shader_programme);
-
-    int viewLocation = glGetUniformLocation(shader_programme, "view");
-    int projLocation = glGetUniformLocation(shader_programme, "proj");
-    int modelLocation = glGetUniformLocation(shader_programme, "model");
 
     //logs dos shaders
     int maxLength = 2048;
@@ -729,6 +684,69 @@ int main() {
     char logSP[2048];
     glGetProgramInfoLog(shader_programme, maxLength, &currentLength, logSP);
     printf("Informações de logs - Shader Program:\n%s", logSP);
+}
+
+void verifyOpenGL(){
+    // obtencao de versao suportada da OpenGL e renderizador
+    const GLubyte* renderer = glGetString(GL_RENDERER);
+    const GLubyte* version = glGetString(GL_VERSION);
+    printf("Renderer: %s\n\n", renderer);
+    printf("OpenGL (versao suportada) %s\n", version);
+    // encerra contexto GL e outros recursos da GLFW
+}
+
+int createGlfwWindow(GLFWwindow* &window){
+
+    /* Caso necessario, definicoes especificas para SOs, p. e. Apple OSX *
+    Definir como 3.2 para Apple OS X */
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 2);
+    glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GL_TRUE);
+    glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+
+    //cria a janela
+    window = glfwCreateWindow(
+            WEIGTH, HEIGHT, "Cenário do Grau A", NULL, NULL);
+    if (!window) {
+        fprintf(stderr, "ERROR: could not open window with GLFW3\n");
+        glfwTerminate();
+        return 1;
+    }
+    glfwMakeContextCurrent(window);
+}
+
+int main() {
+    if (!glfwInit()) {
+        fprintf(stderr, "ERROR: could not start GLFW3\n");
+        return 1;
+    }
+
+    //cria a janela com GLFW
+    GLFWwindow* window;
+    createGlfwWindow(window);
+
+    // inicia manipulador da extensao GLEW
+    glewExperimental = GL_TRUE;
+    glewInit();
+
+    //habilita profundidade
+    glEnable(GL_DEPTH_TEST);
+
+    //verifica a versao do Open GL
+    verifyOpenGL();
+
+    //criacao dos objetos
+    createObjects();
+
+    //cricao de shaders
+    GLuint shader_programme;
+    createShaders(shader_programme);
+    glUseProgram(shader_programme);
+
+    //criacao das locations
+    int viewLocation = glGetUniformLocation(shader_programme, "view");
+    int projLocation = glGetUniformLocation(shader_programme, "proj");
+    int modelLocation = glGetUniformLocation(shader_programme, "model");
 
     //define calbacks
     glfwSetKeyCallback(window, key_callback);// teclas
@@ -761,9 +779,7 @@ int main() {
         keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
 
         proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
-//        view = glm::lookAt(cameraPos, cameraTarget, up);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
-        //       view = glm::lookAt(cameraPos, cameraTarget, cameraUp);
 
         //pass uniform location to shader
         if(hasKeyboardPressed)
