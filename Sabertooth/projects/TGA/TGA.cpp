@@ -593,7 +593,6 @@ void loadVertices(Mesh* mesh) {
     }
 }
 
-
 void createObjects(){
     // Realiza a leitura dos dados para criar o Mesh (campo)
     Mesh* mesh = readData("projects/TGA/objs/paintball/", "cenaPaintball.obj",1);
@@ -753,6 +752,7 @@ int main() {
     glfwSetScrollCallback(window, scroll_callback);// scrool do mouse
     glfwSetWindowSizeCallback(window, window_size_callback);// redimensionar a tela
 
+    //inicializa camera
     glm::vec3 front = vec3(0);
     front.x = cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle));
     front.y = sin(glm::radians(pitchAngle));
@@ -781,7 +781,7 @@ int main() {
         proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
 
-        //pass uniform location to shader
+        //passa uniform para o shader
         if(hasKeyboardPressed)
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
@@ -802,11 +802,10 @@ int main() {
                 // Define vao como verte array atual
                 glBindVertexArray(g->vao);
 
-                //pass uniform location to shader
+                //passa uniform para o shader
                 glUniformMatrix4fv(modelLocation, 1, GL_FALSE, glm::value_ptr(objs[o]->transformations));
 
-
-//				glDrawArrays(GL_LINE_LOOP, 0,g->numVertices);
+                // define o tipo de desenho
                 glDrawArrays(GL_TRIANGLES, 0, g->numVertices);
             }
         }
