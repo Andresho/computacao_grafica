@@ -24,4 +24,4 @@ using namespace std;
 #include "./src/Group.h"
 #include "./src/Mesh.h"
 #include "./src/Obj3d.h"
-
+#include "./src/FileReader.h"
