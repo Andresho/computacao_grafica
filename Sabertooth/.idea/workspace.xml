@@ -2,7 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="TGA_CG" targetName="TGA_CG" />
+      <config projectName="TGB_CG" targetName="TGB_CG" />
+      <config projectName="TGB_CG" targetName="TGA_CG" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -12,8 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/TGA/libs/stb_image.h" beforeDir="false" afterPath="$PROJECT_DIR$/libs/stb_image.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -34,28 +38,6 @@
         <option value="CMakeLists.txt" />
       </list>
     </option>
-  </component>
-  <component name="FindInProjectRecents">
-    <findStrings>
-      <find>matrix_rotation_OBJ</find>
-      <find>vs</find>
-      <find>stb_image</find>
-      <find>mtllib</find>
-      <find>materials</find>
-      <find>vector&lt;Ma</find>
-      <find>arv_tronco.ppm</find>
-      <find>school chair</find>
-      <find>sch</find>
-      <find>mesa01.mtl</find>
-      <find>GLFW_KEY_E</find>
-      <find>numVer</find>
-      <find>lo</find>
-      <find>loa</find>
-      <find>conv</find>
-      <find>loadVertices</find>
-      <find>mesh</find>
-      <find>shader_programme</find>
-    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -78,17 +60,17 @@
     <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RecentsManager">
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/projects/TGA/src" />
-      <recent name="$PROJECT_DIR$/projects/TGA/objs" />
-      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
-    </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/projects/TGA" />
       <recent name="$PROJECT_DIR$/projects/meshCube/libs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/objs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/src" />
-      <recent name="$PROJECT_DIR$/projects/meshCube/Shaders" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projects/TGA/src" />
+      <recent name="$PROJECT_DIR$/projects/TGA/objs" />
+      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -103,26 +85,20 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.TGA_CG">
-    <configuration name="SimpleTriangle" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGA_CG" TARGET_NAME="SimpleTriangle" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGA_CG" RUN_TARGET_NAME="SimpleTriangle">
+  <component name="RunManager" selected="CMake Application.TGB_CG">
+    <configuration name="TGA_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGB_CG" TARGET_NAME="TGA_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGB_CG" RUN_TARGET_NAME="TGA_CG">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TGACG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGA_CG" TARGET_NAME="TGACG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGA_CG" RUN_TARGET_NAME="TGACG">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="TGA_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGA_CG" TARGET_NAME="TGA_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGA_CG" RUN_TARGET_NAME="TGA_CG">
+    <configuration name="TGB_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGB_CG" TARGET_NAME="TGB_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGB_CG" RUN_TARGET_NAME="TGB_CG">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
-      <item itemvalue="CMake Application.SimpleTriangle" />
-      <item itemvalue="CMake Application.TGACG" />
       <item itemvalue="CMake Application.TGA_CG" />
+      <item itemvalue="CMake Application.TGB_CG" />
     </list>
   </component>
   <component name="StructureViewFactory">
