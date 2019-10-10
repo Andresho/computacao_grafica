@@ -8,7 +8,7 @@ public:
     vector<vec3*> Ka;
     vector<vec3*> Ks;
 
-    float Ns;
+    float Ns;//shines
 
     string materialName;
 
