@@ -7,6 +7,6 @@ uniform mat4 view, proj, model;
 out vec2 texCoord;
 
 void main () {
- texCoord = vt;
- gl_Position = proj * view  * model * vec4(vp, 1.0);
+    texCoord = vt;
+    gl_Position = proj * view  * model * vec4(vp, 1.0);
 }

@@ -12,9 +12,11 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
+
 using namespace glm;
 
 #define STB_IMAGE_IMPLEMENTATION
+
 #include "libs/stb_image.h"
 
 using namespace std;

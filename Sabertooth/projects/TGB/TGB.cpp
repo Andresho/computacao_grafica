@@ -17,15 +17,15 @@ float pitchAngle = -30.f;
 float yawAngle = -90.f;
 float directionSpeed = 25.f;
 
-vector<Face*> faces;
-vector<Group*> groups;
-vector<Material*> materials;
-vector<Obj3d*> objs;
+vector<Face *> faces;
+vector<Group *> groups;
+vector<Material *> materials;
+vector<Obj3d *> objs;
 
 FileReader fileReader;
 
 //projecao
-glm::mat4 proj = glm::perspective(glm::radians(fov),((float)WEIGTH)/((float)HEIGHT),0.1f,100.0f);
+glm::mat4 proj = glm::perspective(glm::radians(fov), ((float) WEIGTH) / ((float) HEIGHT), 0.1f, 100.0f);
 
 //eye: posição
 glm::vec3 cameraPos = glm::vec3(0.f, 2.f, 4.f);
@@ -45,27 +45,26 @@ glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 glm::vec3 cameraRight = glm::normalize(glm::cross(direction, cameraUp));
 
 //inicializa view
-glm::mat4 view =glm::mat4(1);
+glm::mat4 view = glm::mat4(1);
 
 //Define acoes do redimensionamento da tela
-void window_size_callback(GLFWwindow* window, int width, int height) {
+void window_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
 }
 
-void scroll_callback(GLFWwindow* window, double xoffset, double yoffset)
-{
-    if(fov >= 1.0f && fov <= 90.0f)
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+    if (fov >= 1.0f && fov <= 90.0f)
         fov -= yoffset;
-    if(fov <= 1.0f)
+    if (fov <= 1.0f)
         fov = 1.0f;
-    if(fov >= 90.0f)
+    if (fov >= 90.0f)
         fov = 90.0f;
 }
 
-bool testingIfKeysPressed(){
+bool testingIfKeysPressed() {
     const int size = 25;
 
-    int relevantKeys[size] ={
+    int relevantKeys[size] = {
             //camera keys
             GLFW_KEY_Q,
             GLFW_KEY_E,
@@ -99,7 +98,7 @@ bool testingIfKeysPressed(){
     };
 
     for (int i = 0; i < size; ++i)
-        if(keys[relevantKeys[i]]) return true;
+        if (keys[relevantKeys[i]]) return true;
 
     return false;
 
@@ -108,51 +107,51 @@ bool testingIfKeysPressed(){
 
 void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 
-    hasKeyboardPressed =testingIfKeysPressed();
+    hasKeyboardPressed = testingIfKeysPressed();
 
     //TESTA SE EXISTE ALGUM SHIFT PRESSIONADO
-    bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT]||keys[GLFW_KEY_RIGHT_SHIFT]);
+    bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT] || keys[GLFW_KEY_RIGHT_SHIFT]);
 
     // USADO PARA SELECAO DE OBJETOS
-    for(int i = GLFW_KEY_0; i <= GLFW_KEY_9; i++){
-        if(keys[i])
+    for (int i = GLFW_KEY_0; i <= GLFW_KEY_9; i++) {
+        if (keys[i])
             indexSelectedObject = i - GLFW_KEY_0 - 1;
     }
 
     //MOVIMENTOS DO OBJETO SELECIONADO
-    if(indexSelectedObject>-1 && indexSelectedObject < objs.size()){
+    if (indexSelectedObject > -1 && indexSelectedObject < objs.size()) {
 
-        bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT]||keys[GLFW_KEY_RIGHT_SHIFT]);
+        bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT] || keys[GLFW_KEY_RIGHT_SHIFT]);
 
-        if (keys[GLFW_KEY_R]&&shiftPressed==false)
+        if (keys[GLFW_KEY_R] && shiftPressed == false)
             objs[indexSelectedObject]->rotate(N_ROTATE_DEGREE);
 
-        if (keys[GLFW_KEY_R]&&shiftPressed)
+        if (keys[GLFW_KEY_R] && shiftPressed)
             objs[indexSelectedObject]->rotate(-N_ROTATE_DEGREE);
 
-        if (keys[GLFW_KEY_S]&&shiftPressed==false)
-            objs[indexSelectedObject]->scale(1+PORCENT_SCALE/100.f);
+        if (keys[GLFW_KEY_S] && shiftPressed == false)
+            objs[indexSelectedObject]->scale(1 + PORCENT_SCALE / 100.f);
 
-        if (keys[GLFW_KEY_S]&&shiftPressed)
-            objs[indexSelectedObject]->scale(1-PORCENT_SCALE/100.f);
+        if (keys[GLFW_KEY_S] && shiftPressed)
+            objs[indexSelectedObject]->scale(1 - PORCENT_SCALE / 100.f);
 
-        if (keys[GLFW_KEY_X]&&shiftPressed==false)
-            objs[indexSelectedObject]->move(N_MOVE,0,0);
+        if (keys[GLFW_KEY_X] && shiftPressed == false)
+            objs[indexSelectedObject]->move(N_MOVE, 0, 0);
 
-        if (keys[GLFW_KEY_X]&&shiftPressed)
-            objs[indexSelectedObject]->move(-N_MOVE,0,0);
+        if (keys[GLFW_KEY_X] && shiftPressed)
+            objs[indexSelectedObject]->move(-N_MOVE, 0, 0);
 
-        if (keys[GLFW_KEY_Y]&&shiftPressed==false)
-            objs[indexSelectedObject]->move(0,N_MOVE,0);
+        if (keys[GLFW_KEY_Y] && shiftPressed == false)
+            objs[indexSelectedObject]->move(0, N_MOVE, 0);
 
-        if (keys[GLFW_KEY_Y]&&shiftPressed)
-            objs[indexSelectedObject]->move(0,-N_MOVE,0);
+        if (keys[GLFW_KEY_Y] && shiftPressed)
+            objs[indexSelectedObject]->move(0, -N_MOVE, 0);
 
-        if (keys[GLFW_KEY_Z]&&shiftPressed==false)
-            objs[indexSelectedObject]->move(0,0,N_MOVE);
+        if (keys[GLFW_KEY_Z] && shiftPressed == false)
+            objs[indexSelectedObject]->move(0, 0, N_MOVE);
 
-        if (keys[GLFW_KEY_Z]&&shiftPressed)
-            objs[indexSelectedObject]->move(0,0,-N_MOVE);
+        if (keys[GLFW_KEY_Z] && shiftPressed)
+            objs[indexSelectedObject]->move(0, 0, -N_MOVE);
     }
 
     // MECHE A POSICAO DA CAMERA
@@ -182,7 +181,7 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     }
 
     if (keys[GLFW_KEY_DOWN] && shiftPressed) {
-        pitchAngle -= directionSpeed* elapsedTime;
+        pitchAngle -= directionSpeed * elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
         if (pitchAngle < -89.0f)
@@ -190,7 +189,7 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     }
 
     if (keys[GLFW_KEY_UP] && shiftPressed) {
-        pitchAngle += directionSpeed* elapsedTime;
+        pitchAngle += directionSpeed * elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
         if (pitchAngle < -89.0f)
@@ -205,69 +204,68 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
 }
 
 //Define acoes do teclado
-void key_callback(GLFWwindow* window, int key, int scancode, int action, int mods)
-{
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
     if (action == GLFW_PRESS) keys[key] = true;
     if (action == GLFW_RELEASE) keys[key] = false;
 }
 
-void createObjects(){
+void createObjects() {
     // Realiza a leitura dos dados para criar o Mesh (campo)
-    Mesh* mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
+    Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
 
     // indica como ler os vertices
     mesh->loadVertices();
 
     //adiciona no vetor de objetos
     objs.push_back(new Obj3d(mesh, 0, 0, 0));
-    objs[0]->scale((1/mesh->distanceScale) * 5);
+    objs[0]->scale((1 / mesh->distanceScale) * 5);
 
     // Realiza a leitura dos dados para criar o Mesh (mesa01)
-    Mesh* mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+    Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
 
     // indica como ler os vertices
     mesh2->loadVertices();
 
     //mesa 01 (esquerda mais perto)
     objs.push_back(new Obj3d(mesh2, -0.85f, 0, 1.1f));
-    objs[1]->scale((1 / mesh2->distanceScale)/2);
+    objs[1]->scale((1 / mesh2->distanceScale) / 2);
 
     //mesa 02 (esquerda mais longe)
     objs.push_back(new Obj3d(mesh2, -0.65f, 0, -1.3f));
-    objs[2]->scale((1 / mesh2->distanceScale)/2);
+    objs[2]->scale((1 / mesh2->distanceScale) / 2);
 
     //mesa 01 (direita mais perto)
     objs.push_back(new Obj3d(mesh2, 0.85f, 0, 1.2f));
-    objs[3]->scale((1 / mesh2->distanceScale)/2);
+    objs[3]->scale((1 / mesh2->distanceScale) / 2);
 
     //mesa 02 (esquerda mais longe)
     objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
-    objs[4]->scale((1 / mesh2->distanceScale)/2);
+    objs[4]->scale((1 / mesh2->distanceScale) / 2);
 
     // Realiza a leitura dos dados para criar o Mesh (caixa)
-    Mesh* mesh3 = fileReader.readOBJ("projects/TGB/objs/box/", "Crate1.obj", 1, materials);
+    Mesh *mesh3 = fileReader.readOBJ("projects/TGB/objs/box/", "Crate1.obj", 1, materials);
 
     // indica como ler os vertices
     mesh3->loadVertices();
     objs.push_back(new Obj3d(mesh3, 0.3f, 0.145f, 0.8f));
-    objs[5]->scale((1 / mesh3->distanceScale)/2);
+    objs[5]->scale((1 / mesh3->distanceScale) / 2);
 
     objs.push_back(new Obj3d(mesh3, 0.27f, 0.36f, 0.8f));
-    objs[6]->scale((1 / mesh3->distanceScale)/4);
+    objs[6]->scale((1 / mesh3->distanceScale) / 4);
     objs[6]->rotate(15.0f);
 }
 
 
-void verifyOpenGL(){
+void verifyOpenGL() {
     // obtencao de versao suportada da OpenGL e renderizador
-    const GLubyte* renderer = glGetString(GL_RENDERER);
-    const GLubyte* version = glGetString(GL_VERSION);
+    const GLubyte *renderer = glGetString(GL_RENDERER);
+    const GLubyte *version = glGetString(GL_VERSION);
     printf("Renderer: %s\n\n", renderer);
     printf("OpenGL (versao suportada) %s\n", version);
     // encerra contexto GL e outros recursos da GLFW
 }
 
-int createGlfwWindow(GLFWwindow* &window){
+int createGlfwWindow(GLFWwindow *&window) {
 
     /* Caso necessario, definicoes especificas para SOs, p. e. Apple OSX *
     Definir como 3.2 para Apple OS X */
@@ -295,7 +293,7 @@ int main() {
     }
 
     //cria a janela com GLFW
-    GLFWwindow* window;
+    GLFWwindow *window;
     createGlfwWindow(window);
 
     // inicia manipulador da extensao GLEW
@@ -312,7 +310,7 @@ int main() {
     createObjects();
 
     //cricao de shaders
-    Shader* shader = new Shader("projects/TGB/shaders/core.vert","projects/TGB/shaders/core.frag");
+    Shader *shader = new Shader("projects/TGB/shaders/core.vert", "projects/TGB/shaders/core.frag");
     shader->use();
 
     //criacao das locations
@@ -351,18 +349,18 @@ int main() {
 
         keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
 
-        proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
+        proj = glm::perspective(glm::radians(fov), ((float) WEIGTH) / ((float) HEIGHT), 0.1f, 100.0f);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
 
         //passa uniform para o shader
-        if(hasKeyboardPressed)
+        if (hasKeyboardPressed)
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
 
         shader->use();
         for (int o = 0; o < objs.size(); o++) {
 
-            glUniform1i((glGetUniformLocation(shader->shader_programme, "selected")), indexSelectedObject==o);
+            glUniform1i((glGetUniformLocation(shader->shader_programme, "selected")), indexSelectedObject == o);
 
 
             Group *g;
