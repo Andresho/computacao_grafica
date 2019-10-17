@@ -58,17 +58,17 @@ public:
                     float x, y, z;
                     sline >> x >> y >> z;
                     vec3 *Kd = new vec3(x, y, z);
-                    materials[materials.size() - 1]->Kd.push_back(Kd);
+                    materials[materials.size() - 1]->Kd = Kd;
                 } else if (temp == "Ka") {
                     float x, y, z;
                     sline >> x >> y >> z;
                     vec3 *Ka = new vec3(x, y, z);
-                    materials[materials.size() - 1]->Ka.push_back(Ka);
+                    materials[materials.size() - 1]->Ka = Ka;
                 } else if (temp == "Ks") {
                     float x, y, z;
                     sline >> x >> y >> z;
                     vec3 *Ks = new vec3(x, y, z);
-                    materials[materials.size() - 1]->Ks.push_back(Ks);
+                    materials[materials.size() - 1]->Ks = Ks;
                 } else if (temp == "Ns") {
                     float x;
                     sline >> x;

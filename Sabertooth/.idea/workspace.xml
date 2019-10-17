@@ -13,17 +13,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/TGB.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/TGB.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/TGB.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/TGB.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/src/Face.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Face.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/src/FileReader.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/FileReader.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/src/Group.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Group.h" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/src/Material.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Material.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/src/Mesh.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Mesh.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/src/Obj3d.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Obj3d.h" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/src/Shader.h" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/src/Shader.h" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />

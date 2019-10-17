@@ -368,7 +368,11 @@ int main() {
                 g = objs[o]->mesh->groups[i];
                 if (g->numVertices == 0) continue;
 
+                //passa a textura para o shader
                 g->material->bind(shader->shader_programme);
+
+                // passa os parametros do material para o shader( Kd, Ks, Ka e Ns)
+                g->sendToShaderMaterialParams(shader->shader_programme);
 
                 // Define vao como verte array atual
                 glBindVertexArray(g->vao);
