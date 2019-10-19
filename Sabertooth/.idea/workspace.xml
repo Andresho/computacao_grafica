@@ -2,8 +2,8 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="TGB_CG" targetName="TGA_CG" />
       <config projectName="TGB_CG" targetName="TGB_CG" />
+      <config projectName="TGB_CG" targetName="TGA_CG" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -14,6 +14,7 @@
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" afterDir="false" />
     </list>
