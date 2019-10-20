@@ -226,9 +226,9 @@ void createObjects() {
     // indica como ler os vertices
     mesh2->loadVertices();
 
-    //mesa 01 (esquerda mais perto)
-    objs.push_back(new Obj3d(mesh2, -0.85f, 0, 1.1f));
-    objs[1]->scale((1 / mesh2->distanceScale) / 2);
+
+    objs.push_back(new Obj3d(mesh2, -0.3f, 0, 1.1f));
+    objs[1]->scale((1 / mesh2->distanceScale) /2.0f );
 
     //mesa 02 (esquerda mais longe)
     objs.push_back(new Obj3d(mesh2, -0.65f, 0, -1.3f));
@@ -242,17 +242,17 @@ void createObjects() {
     objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
     objs[4]->scale((1 / mesh2->distanceScale) / 2);
 
-    // Realiza a leitura dos dados para criar o Mesh (caixa)
-    Mesh *mesh3 = fileReader.readOBJ("projects/TGB/objs/box/", "Crate1.obj", 1, materials);
-
-    // indica como ler os vertices
-    mesh3->loadVertices();
-    objs.push_back(new Obj3d(mesh3, 0.3f, 0.145f, 0.8f));
-    objs[5]->scale((1 / mesh3->distanceScale) / 2);
-
-    objs.push_back(new Obj3d(mesh3, 0.27f, 0.36f, 0.8f));
-    objs[6]->scale((1 / mesh3->distanceScale) / 4);
-    objs[6]->rotate(15.0f);
+//    // Realiza a leitura dos dados para criar o Mesh (caixa)
+//    Mesh *mesh3 = fileReader.readOBJ("projects/TGB/objs/box/", "Crate1.obj", 1, materials);
+//
+//    // indica como ler os vertices
+//    mesh3->loadVertices();
+//    objs.push_back(new Obj3d(mesh3, 0.3f, 0.145f, 0.8f));
+//    objs[5]->scale((1 / mesh3->distanceScale) / 2);
+//
+//    objs.push_back(new Obj3d(mesh3, 0.27f, 0.36f, 0.8f));
+//    objs[6]->scale((1 / mesh3->distanceScale) / 4);
+//    objs[6]->rotate(15.0f);
 }
 
 
