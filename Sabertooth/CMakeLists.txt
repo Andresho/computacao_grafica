@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.10)
 project(TGA_CG)
 project(TGB_CG)
 
-SET(CMAKE_CXX_STANDARD 11)
+SET(CMAKE_CXX_STANDARD 14)
 
 include_directories(.)
 
