@@ -45,7 +45,7 @@ void main () {
     // caso produto escalar for negativo, define 0 como valor minimo
     dot_prod = max(dot_prod, 0.0);
 
-    // Define  a contribuicao da difusa
+    // Define  a contribuicao da difusa (intensidade final da difusa)
     vec3 Id = Ld * Kd * dot_prod;
 
     // calculo de intensidade da especular
@@ -66,12 +66,15 @@ void main () {
     // textura
     vec4 texel0 = texture(tex, texCoord);
 
+    //contribuicao iluminacao
+    vec4 color = vec4 (Id + Ia + Is, 1.0);
+
     // descart realizado para imagens png p/ posibilitar transparencia
 	if(texel0.a < 0.5){
         discard;
     }
 
     //saida para tela
-    frag_color = texel0 * vec4 (Id + Ia + Is, 1.0);
+    frag_color = texel0 * color;
 
 }

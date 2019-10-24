@@ -18,5 +18,5 @@ void main () {
     texCoord = vt;
 
     //define glposition
-    gl_Position = proj * view  * model * vec4(vp, 1.0);
+     gl_Position = proj * vec4(eye_position, 1.0);
 }

@@ -2,21 +2,20 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="TGB_CG" targetName="TGB_CG" />
       <config projectName="TGB_CG" targetName="TGA_CG" />
+      <config projectName="TGB_CG" targetName="TGB_CG" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
-      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" GENERATION_DIR="build" />
+      <configuration PROFILE_NAME="Debug" CONFIG_NAME="Debug" />
     </configurations>
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/TGB.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/TGB.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -149,7 +148,8 @@
       <workItem from="1571100365545" duration="53000" />
       <workItem from="1571100558705" duration="3853000" />
       <workItem from="1571527613184" duration="2008000" />
-      <workItem from="1571534563803" duration="5923000" />
+      <workItem from="1571534563803" duration="6235000" />
+      <workItem from="1571870755186" duration="1923000" />
     </task>
     <servers />
   </component>
