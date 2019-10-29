@@ -10,6 +10,7 @@
 
 bool keys[1024];
 int indexSelectedObject = -1;
+glm::vec3 ilumination_Ia_Id_Is = glm::vec3(1.f);
 
 float cameraSpeed = 1.f;
 float fov = 45.0f;
@@ -62,7 +63,7 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
 }
 
 bool testingIfKeysPressed() {
-    const int size = 25;
+    const int size = 28;
 
     int relevantKeys[size] = {
             //camera keys
@@ -94,7 +95,12 @@ bool testingIfKeysPressed() {
             GLFW_KEY_S,
             GLFW_KEY_X,
             GLFW_KEY_Y,
-            GLFW_KEY_Z
+            GLFW_KEY_Z,
+
+            //ilumination control
+            GLFW_KEY_F1,
+            GLFW_KEY_F2,
+            GLFW_KEY_F3
     };
 
     for (int i = 0; i < size; ++i)
@@ -201,6 +207,23 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     front.z = cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle));
     direction = glm::normalize(front);
 
+
+    // liga a iluminacao
+    if (keys[GLFW_KEY_F1] && !shiftPressed)
+        ilumination_Ia_Id_Is.x = 1.f;
+    if (keys[GLFW_KEY_F2] && !shiftPressed)
+        ilumination_Ia_Id_Is.y = 1.f;
+    if (keys[GLFW_KEY_F3] && !shiftPressed)
+        ilumination_Ia_Id_Is.z = 1.f;
+
+    // desliga a iluminacao
+    if (keys[GLFW_KEY_F1] && shiftPressed)
+        ilumination_Ia_Id_Is.x = 0.f;
+    if (keys[GLFW_KEY_F2] && shiftPressed)
+        ilumination_Ia_Id_Is.y = 0.f;
+    if (keys[GLFW_KEY_F3] && shiftPressed)
+        ilumination_Ia_Id_Is.z = 0.f;
+
 }
 
 //Define acoes do teclado
@@ -242,17 +265,6 @@ void createObjects() {
     objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
     objs[4]->scale((1 / mesh2->distanceScale) / 2);
 
-//    // Realiza a leitura dos dados para criar o Mesh (caixa)
-//    Mesh *mesh3 = fileReader.readOBJ("projects/TGB/objs/box/", "Crate1.obj", 1, materials);
-//
-//    // indica como ler os vertices
-//    mesh3->loadVertices();
-//    objs.push_back(new Obj3d(mesh3, 0.3f, 0.145f, 0.8f));
-//    objs[5]->scale((1 / mesh3->distanceScale) / 2);
-//
-//    objs.push_back(new Obj3d(mesh3, 0.27f, 0.36f, 0.8f));
-//    objs[6]->scale((1 / mesh3->distanceScale) / 4);
-//    objs[6]->rotate(15.0f);
 }
 
 
@@ -358,10 +370,13 @@ int main() {
 
 
         shader->use();
+
+        glUniform3f(glGetUniformLocation(shader->shader_programme, "ilumination_Ia_Id_Is"),
+                    ilumination_Ia_Id_Is.x,ilumination_Ia_Id_Is.y,ilumination_Ia_Id_Is.z);
+
         for (int o = 0; o < objs.size(); o++) {
 
             glUniform1i((glGetUniformLocation(shader->shader_programme, "selected")), indexSelectedObject == o);
-
 
             Group *g;
             for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {

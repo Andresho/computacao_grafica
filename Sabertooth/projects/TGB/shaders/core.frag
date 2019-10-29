@@ -10,6 +10,10 @@ uniform sampler2D tex;
 // uniform de objeto selecionado ou nao
 uniform bool selected;
 
+//define iluminacoes ativas
+//0 para inativo e 1 ativo
+uniform vec3 ilumination_Ia_Id_Is;
+
 //Ka é coeficiente de reflexão do objeto
 uniform vec3 Ka, Kd, Ks;
 uniform float Ns;
@@ -31,6 +35,7 @@ void main () {
     vec3 eye_normal_normalized = normalize(eye_normal);
 
     // Elevar a fonte de luz para o espaço de visao
+//    vec3 light_position_eye = vec3 (view * vec4 (light_position_world, 1.0));
     vec3 light_position_eye = vec3 (view * vec4 (light_position_world, 1.0));
 
     // Mede a distancia da fonte da luz em relacao ao olho
@@ -66,8 +71,13 @@ void main () {
     // textura
     vec4 texel0 = texture(tex, texCoord);
 
+    // iluminacoes ativas
+    Ia = ilumination_Ia_Id_Is.x * Ia;
+    Id = ilumination_Ia_Id_Is.y * Id;
+    Is = ilumination_Ia_Id_Is.z * Is;
+
     //contribuicao iluminacao
-    vec4 color = vec4 (Id + Ia + Is, 1.0);
+    vec4 color = vec4 (Ia + Id + Is, 1.0);
 
     // descart realizado para imagens png p/ posibilitar transparencia
 	if(texel0.a < 0.5){
