@@ -2,8 +2,9 @@
 <project version="4">
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
     <generated>
-      <config projectName="TGB_CG" targetName="TGA_CG" />
-      <config projectName="TGB_CG" targetName="TGB_CG" />
+      <config projectName="CurvesEditor" targetName="TGB_CG" />
+      <config projectName="CurvesEditor" targetName="TGA_CG" />
+      <config projectName="CurvesEditor" targetName="CurvesEditor" />
     </generated>
   </component>
   <component name="CMakeSettings" AUTO_RELOAD="true">
@@ -13,9 +14,39 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="42e566ba-1d23-48ed-ae99-0143b4415b7e" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/Crate1.3ds" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/Crate1.blend" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/Crate1.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/Crate1.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/CrateImage1.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/CrateImage2.JPG" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/box/crate_1.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/cube.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/mesa/mesa01.bmp" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/mesa/mesa01.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/mesa/mesa01.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/arv_tronco.png" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/arv_tronco.ptm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/cenaPaintball.mtl" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/cenaPaintball.obj" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/cópia de arv_tronco.ppm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/grama01.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/grama01.ppm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/muro02.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/objs/paintball/muro02.ppm" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/shaders/core.frag" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/shaders/core.vert" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Face.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/FileReader.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Group.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Material.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Mesh.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Obj3d.h" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/projects/CurvesEditor/src/Shader.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.name" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.name" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.frag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" beforeDir="false" afterPath="$PROJECT_DIR$/projects/TGB/shaders/core.vert" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -46,7 +77,7 @@
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/projects/TGA/src" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/projects" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.path.for.package.eslint" value="project" />
@@ -58,16 +89,17 @@
     <property name="settings.editor.selected.configurable" value="CMakeSettings" />
   </component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/projects" />
+      <recent name="$PROJECT_DIR$/projects/TGA/src" />
+      <recent name="$PROJECT_DIR$/projects/TGA/objs" />
+      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/projects/TGA" />
       <recent name="$PROJECT_DIR$/projects/meshCube/libs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/objs" />
-      <recent name="$PROJECT_DIR$/projects/meshCube/src" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/projects/TGA/src" />
-      <recent name="$PROJECT_DIR$/projects/TGA/objs" />
       <recent name="$PROJECT_DIR$/projects/meshCube/src" />
     </key>
   </component>
@@ -83,18 +115,24 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="CMake Application.TGB_CG">
-    <configuration name="TGA_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGB_CG" TARGET_NAME="TGA_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGB_CG" RUN_TARGET_NAME="TGA_CG">
+  <component name="RunManager" selected="CMake Application.CurvesEditor">
+    <configuration name="CurvesEditor" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CurvesEditor" TARGET_NAME="CurvesEditor" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CurvesEditor" RUN_TARGET_NAME="CurvesEditor">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
-    <configuration name="TGB_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="TGB_CG" TARGET_NAME="TGB_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="TGB_CG" RUN_TARGET_NAME="TGB_CG">
+    <configuration name="TGA_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CurvesEditor" TARGET_NAME="TGA_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CurvesEditor" RUN_TARGET_NAME="TGA_CG">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="TGB_CG" type="CMakeRunConfiguration" factoryName="Application" WORKING_DIR="file://$PROJECT_DIR$/" PASS_PARENT_ENVS_2="true" PROJECT_NAME="CurvesEditor" TARGET_NAME="TGB_CG" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="CurvesEditor" RUN_TARGET_NAME="TGB_CG">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
     <list>
+      <item itemvalue="CMake Application.CurvesEditor" />
       <item itemvalue="CMake Application.TGA_CG" />
       <item itemvalue="CMake Application.TGB_CG" />
     </list>
@@ -150,6 +188,7 @@
       <workItem from="1571527613184" duration="2008000" />
       <workItem from="1571534563803" duration="6235000" />
       <workItem from="1571870755186" duration="1923000" />
+      <workItem from="1572475382803" duration="5258000" />
     </task>
     <servers />
   </component>
