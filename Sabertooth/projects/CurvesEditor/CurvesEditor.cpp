@@ -9,8 +9,18 @@ int RESIZED_HEIGHT = HEIGHT;
 
 bool keys[1024];
 
-GLuint vao;
-vector<float> arrayPoints;
+GLuint pointsVAO, curveVAO;
+GLuint pointsVBO, curveVBO;
+
+vector<float> controlPoints;
+vector<float> controlPointsX;
+vector<float> controlPointsY;
+
+vector<float> curvePoints;
+vector<float> curvePointsX;
+vector<float> curvePointsY;
+
+bool isCurveDrawn = false;
 
 vector<Face *> faces;
 vector<Group *> groups;
@@ -26,21 +36,61 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
     RESIZED_HEIGHT = height;
 }
 
+void calulateBezierCurve(int i) {
+    float inc = 0.05;
+//    x0 = controlPointsX[0], y0 = Y[0];
+    for (float t = 0.f; t <= 1.f; t += inc) {
+        float x = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsX[i] +
+             (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsX[i + 1] +
+             (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsX[i + 2] +
+             (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsX[i + 3]);
+        float y = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsY[i] +
+             (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsY[i + 1] +
+             (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsY[i + 2] +
+             (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsY[i + 3]);
+
+        curvePoints.push_back(x);
+        curvePoints.push_back(y);
+
+        curvePointsX.push_back(x);
+        curvePointsY.push_back(y);
+    }
+}
+
 /*
 Define acoes do mouse
 */
 void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-    if (action == GLFW_PRESS && button == GLFW_MOUSE_BUTTON_LEFT) {
-        double xPos, yPos;
+    if(action == GLFW_PRESS){
+        if (button == GLFW_MOUSE_BUTTON_LEFT) {
+            double xPos, yPos;
 
-        glfwGetCursorPos(window, &xPos, &yPos);
+            glfwGetCursorPos(window, &xPos, &yPos);
 
-        //Realiza a proporcao do clique para projecao original
-        xPos = WIDTH * xPos / RESIZED_WIDTH;
-        yPos = HEIGHT * yPos / RESIZED_HEIGHT;
+            //Realiza a proporcao do clique para projecao original
+            xPos = WIDTH * xPos / RESIZED_WIDTH;
+            yPos = HEIGHT * yPos / RESIZED_HEIGHT;
 
-        arrayPoints.push_back(xPos);
-        arrayPoints.push_back(yPos);
+            controlPoints.push_back(xPos);
+            controlPoints.push_back(yPos);
+
+            controlPointsX.push_back(xPos);
+            controlPointsY.push_back(yPos);
+
+            glBindVertexArray(pointsVAO);
+            glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
+            glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * sizeof(float), controlPoints.data(), GL_STATIC_DRAW);
+
+        } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+            if(controlPointsX.size()>=4){
+                calulateBezierCurve(controlPointsX.size()-4);
+                isCurveDrawn = true;
+
+                glBindVertexArray(curveVAO);
+                glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
+                glBufferData(GL_ARRAY_BUFFER, curvePoints.size() * sizeof(float), curvePoints.data(), GL_STATIC_DRAW);
+            }
+        }
 
     }
 }
@@ -87,36 +137,35 @@ int createGlfwWindow(GLFWwindow *&window) {
     return 0;
 }
 
-void createVAO (){
-    // VAO
-    glGenVertexArrays(1, &vao);
-    glBindVertexArray(vao);
-}
+void initializeVertexBuffers(){
 
-void loadVBO(){
-    /* VBO vertices */
-    GLuint vboVerts;
-    glGenBuffers(1, &vboVerts);
-    glBindBuffer(GL_ARRAY_BUFFER, vboVerts);
-    glBufferData(GL_ARRAY_BUFFER, arrayPoints.size() * sizeof(float), arrayPoints.data(), GL_STATIC_DRAW);
+    // VAO e VBO to points
+    glGenVertexArrays(1, &pointsVAO);
+    glBindVertexArray(pointsVAO);
+
+    glGenBuffers(1, &pointsVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
     glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
     // associacao do vbo atual com primeiro atributo
     // 0 identifica que o primeiro atributo está sendo definido
     // 2, GL_FLOAT identifica que dados sao vec3 e estao a cada 2 float.
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+
+    // VAO e VBO to curve
+    glGenVertexArrays(1, &curveVAO);
+    glBindVertexArray(curveVAO);
+
+    glGenBuffers(1, &curveVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
+    glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
+    // associacao do vbo atual com primeiro atributo
+    // 0 identifica que o primeiro atributo está sendo definido
+    // 2, GL_FLOAT identifica que dados sao vec3 e estao a cada 2 float.
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+
 }
-
-
-void initPoints(){
-    //p1
-    arrayPoints.push_back(WIDTH/2.f);
-    arrayPoints.push_back(HEIGHT/2.f);
-
-    //p2
-    arrayPoints.push_back(300.f);
-    arrayPoints.push_back(400.f);
-}
-
 
 int main() {
     if (!glfwInit()) {
@@ -139,16 +188,12 @@ int main() {
     //verifica a versao do Open GL
     verifyOpenGL();
 
-
-    createVAO();
-
-    initPoints();
-
-    loadVBO();
-
     // cricao de shaders
     Shader *shader = new Shader("projects/CurvesEditor/shaders/core.vert", "projects/CurvesEditor/shaders/core.frag");
     shader->use();
+
+    //inicializa VAOs e VBOs
+    initializeVertexBuffers();
 
     // criacao das locations
     int projLocation = glGetUniformLocation(shader->shader_programme, "proj");
@@ -180,14 +225,15 @@ int main() {
 
         shader->use();
 
-        glBufferData(GL_ARRAY_BUFFER, arrayPoints.size() * sizeof(float), arrayPoints.data(), GL_STATIC_DRAW);
+        // desenha apenas os pontos
+        glBindVertexArray(pointsVAO);
+        glDrawArrays(GL_POINTS, 0, controlPoints.size() / 2);
 
-        // Define vao como verte array atual
-        glBindVertexArray(vao);
-
-
-        // define o tipo de desenho
-        glDrawArrays(GL_LINE_STRIP, 0, arrayPoints.size()/2);
+        // desenha a curva
+        if( isCurveDrawn ){
+            glBindVertexArray(curveVAO);
+            glDrawArrays(GL_LINE_STRIP, 0, curvePoints.size() / 2);
+        }
 
         glfwSwapBuffers(window);
 

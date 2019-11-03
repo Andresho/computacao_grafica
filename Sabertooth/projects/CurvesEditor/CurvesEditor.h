@@ -7,6 +7,7 @@
 #include <vector>
 #include <string>
 #include <stdlib.h>
+#include <cmath>
 
 //To GLM
 #include <glm/glm.hpp>
