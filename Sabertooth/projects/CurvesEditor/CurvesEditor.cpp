@@ -36,24 +36,29 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
     RESIZED_HEIGHT = height;
 }
 
-void calulateBezierCurve(int i) {
+void calulateBezierCurve() {
     float inc = 0.05;
-//    x0 = controlPointsX[0], y0 = Y[0];
-    for (float t = 0.f; t <= 1.f; t += inc) {
-        float x = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsX[i] +
-             (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsX[i + 1] +
-             (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsX[i + 2] +
-             (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsX[i + 3]);
-        float y = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsY[i] +
-             (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsY[i + 1] +
-             (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsY[i + 2] +
-             (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsY[i + 3]);
 
-        curvePoints.push_back(x);
-        curvePoints.push_back(y);
+    int n = controlPointsX.size();
 
-        curvePointsX.push_back(x);
-        curvePointsY.push_back(y);
+
+    for (int i=0; i < controlPointsX.size()-3; i+=3) {
+        for (float t = 0.f; t <= 1.f; t += inc) {
+            float x = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsX[i] +
+                       (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsX[(i + 1)%n] +
+                       (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsX[(i + 2)%n] +
+                       (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsX[(i + 3)%n]);
+            float y = ((-1 * pow(t, 3) + 3 * pow(t, 2) - 3 * t + 1) * controlPointsY[i] +
+                       (3 * pow(t, 3) - 6 * pow(t, 2) + 3 * t + 0) * controlPointsY[(i + 1)%n] +
+                       (-3 * pow(t, 3) + 3 * pow(t, 2) + 0 * t + 0) * controlPointsY[(i + 2)%n] +
+                       (1 * pow(t, 3) + 0 * pow(t, 2) + 0 * t + 0) * controlPointsY[(i + 3)%n]);
+
+            curvePoints.push_back(x);
+            curvePoints.push_back(y);
+
+            curvePointsX.push_back(x);
+            curvePointsY.push_back(y);
+        }
     }
 }
 
@@ -83,7 +88,8 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
         } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
             if(controlPointsX.size()>=4){
-                calulateBezierCurve(controlPointsX.size()-4);
+
+                calulateBezierCurve();
                 isCurveDrawn = true;
 
                 glBindVertexArray(curveVAO);
@@ -227,12 +233,12 @@ int main() {
 
         // desenha apenas os pontos
         glBindVertexArray(pointsVAO);
-        glDrawArrays(GL_POINTS, 0, controlPoints.size() / 2);
+        glDrawArrays(GL_POINTS, 0, controlPointsX.size());
 
         // desenha a curva
         if( isCurveDrawn ){
             glBindVertexArray(curveVAO);
-            glDrawArrays(GL_LINE_STRIP, 0, curvePoints.size() / 2);
+            glDrawArrays(GL_LINES, 0, curvePointsX.size());
         }
 
         glfwSwapBuffers(window);
