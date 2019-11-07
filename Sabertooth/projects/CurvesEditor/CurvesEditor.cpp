@@ -9,17 +9,28 @@ int RESIZED_HEIGHT = HEIGHT;
 
 bool keys[1024];
 
-GLuint pointsVAO, curveVAO;
-GLuint pointsVBO, curveVBO;
+GLuint pointsVAO, centralCurveVAO, internalCurveVAO, externalCurveVAO;
+GLuint pointsVBO, centralCurveVBO, internalCurveVBO, externalCurveVBO;
 
 vector<float> controlPoints;
 vector<float> controlPointsX;
 vector<float> controlPointsY;
 vector<float> controlPointsZ;
 
-vector<float> curvePoints;
-vector<float> curvePointsX;
-vector<float> curvePointsY;
+vector<float> centralCurvePoints;
+vector<float> centralCurvePointsX;
+vector<float> centralCurvePointsY;
+vector<float> centralCurvePointsZ;
+
+vector<float> internalCurvePoints;
+vector<float> internalCurvePointsX;
+vector<float> internalCurvePointsY;
+vector<float> internalCurvePointsZ;
+
+vector<float> externalCurvePoints;
+vector<float> externalCurvePointsX;
+vector<float> externalCurvePointsY;
+vector<float> externalCurvePointsZ;
 
 float zColor = 0.0f;
 
@@ -41,9 +52,10 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
 }
 
 void calulateSPlineCurve() {
-    curvePoints.clear();
-    curvePointsX.clear();
-    curvePointsY.clear();
+    centralCurvePoints.clear();
+    centralCurvePointsX.clear();
+    centralCurvePointsY.clear();
+    centralCurvePointsZ.clear();
 
     float inc = 0.01f;
 
@@ -64,12 +76,13 @@ void calulateSPlineCurve() {
                         (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsZ[(i + 2) % n] +
                         (1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsZ[(i + 3) % n]) / 6.f);
 
-            curvePoints.push_back(x);
-            curvePoints.push_back(y);
-            curvePoints.push_back(z);
+            centralCurvePoints.push_back(x);
+            centralCurvePoints.push_back(y);
+            centralCurvePoints.push_back(z);
 
-            curvePointsX.push_back(x);
-            curvePointsY.push_back(y);
+            centralCurvePointsX.push_back(x);
+            centralCurvePointsY.push_back(y);
+            centralCurvePointsZ.push_back(z);
         }
     }
 }
@@ -81,9 +94,21 @@ void drawControlPoints(){
 }
 
 void drawCentralCurve() {
-    glBindVertexArray(curveVAO);
-    glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
-    glBufferData(GL_ARRAY_BUFFER, curvePoints.size() * sizeof(float), curvePoints.data(), GL_STATIC_DRAW);
+    glBindVertexArray(centralCurveVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, centralCurveVBO);
+    glBufferData(GL_ARRAY_BUFFER, centralCurvePoints.size() * sizeof(float), centralCurvePoints.data(), GL_STATIC_DRAW);
+}
+
+void drawInternalCurve() {
+    glBindVertexArray(internalCurveVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, internalCurveVBO);
+    glBufferData(GL_ARRAY_BUFFER, internalCurvePoints.size() * sizeof(float), internalCurvePoints.data(), GL_STATIC_DRAW);
+}
+
+void drawExternalCurve() {
+    glBindVertexArray(externalCurveVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, externalCurveVBO);
+    glBufferData(GL_ARRAY_BUFFER, externalCurvePoints.size() * sizeof(float), externalCurvePoints.data(), GL_STATIC_DRAW);
 }
 
 /*
@@ -205,18 +230,44 @@ void initializeVertexBuffers() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 
-    // VAO e VBO to curve
-    glGenVertexArrays(1, &curveVAO);
-    glBindVertexArray(curveVAO);
+    // VAO e VBO to centralCurve
+    glGenVertexArrays(1, &centralCurveVAO);
+    glBindVertexArray(centralCurveVAO);
 
-    glGenBuffers(1, &curveVBO);
-    glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
+    glGenBuffers(1, &centralCurveVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, centralCurveVBO);
     glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
-    // associacao do vbo atual com primeiro atributo
-    // 0 identifica que o primeiro atributo está sendo definido
-    // 3, GL_FLOAT identifica que dados sao vec3 e estao a cada 3 float.
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
+
+    // VAO e VBO to centralCurve
+    glGenVertexArrays(1, &centralCurveVAO);
+    glBindVertexArray(centralCurveVAO);
+
+    glGenBuffers(1, &centralCurveVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, centralCurveVBO);
+    glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+
+    // VAO e VBO to internalCurve
+    glGenVertexArrays(1, &internalCurveVAO);
+    glBindVertexArray(internalCurveVAO);
+
+    glGenBuffers(1, &internalCurveVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, internalCurveVBO);
+    glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
+
+
+    // VAO e VBO to externalCurve
+    glGenVertexArrays(1, &externalCurveVAO);
+    glBindVertexArray(externalCurveVAO);
+
+    glGenBuffers(1, &externalCurveVBO);
+    glBindBuffer(GL_ARRAY_BUFFER, externalCurveVBO);
+    glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 }
 
@@ -284,8 +335,8 @@ int main() {
 
         // desenha a curva
         if (isCurveDrawn) {
-            glBindVertexArray(curveVAO);
-            glDrawArrays(GL_LINE_STRIP, 0, curvePointsX.size());
+            glBindVertexArray(centralCurveVAO);
+            glDrawArrays(GL_LINE_STRIP, 0, centralCurvePointsX.size());
         }
 
         glfwSwapBuffers(window);
