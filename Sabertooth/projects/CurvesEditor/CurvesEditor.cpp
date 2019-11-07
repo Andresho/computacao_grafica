@@ -15,10 +15,13 @@ GLuint pointsVBO, curveVBO;
 vector<float> controlPoints;
 vector<float> controlPointsX;
 vector<float> controlPointsY;
+vector<float> controlPointsZ;
 
 vector<float> curvePoints;
 vector<float> curvePointsX;
 vector<float> curvePointsY;
+
+float zColor = 0.0f;
 
 bool isCurveDrawn = false;
 
@@ -37,6 +40,9 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
 }
 
 void calulateSPlineCurve() {
+    curvePoints.clear();
+    curvePointsX.clear();
+    curvePointsY.clear();
 
     float inc = 0.01f;
 
@@ -52,9 +58,14 @@ void calulateSPlineCurve() {
                 ( 3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsY[(i + 1)%n] +
                 (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsY[(i + 2)%n] +
                 ( 1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsY[(i + 3)%n]) / 6.f);
+            float z=(((-1 * pow(j, 3) + 3 * pow(j, 2) - 3.f * j + 1.f) * controlPointsZ[i ] +
+                      ( 3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsZ[(i + 1)%n] +
+                      (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsZ[(i + 2)%n] +
+                      ( 1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsZ[(i + 3)%n]) / 6.f);
 
             curvePoints.push_back(x);
             curvePoints.push_back(y);
+            curvePoints.push_back(z);
 
             curvePointsX.push_back(x);
             curvePointsY.push_back(y);
@@ -81,6 +92,7 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
             controlPointsX.push_back(xPos);
             controlPointsY.push_back(yPos);
+            controlPointsZ.push_back(zColor);
 
             glBindVertexArray(pointsVAO);
             glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
@@ -102,6 +114,19 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 }
 
 void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
+    float inc = 0.01f;
+    float limite = 1.0f;
+
+    if(keys[GLFW_KEY_PERIOD]==1){
+        if(zColor < limite)
+            zColor+=inc;
+    }
+
+    if(keys[GLFW_KEY_COMMA]==1){
+        if(zColor > 0.f)
+            zColor-=inc;
+    }
+
 
 }
 
@@ -167,8 +192,8 @@ void initializeVertexBuffers(){
     glEnableVertexAttribArray(0);// habilitado primeiro atributo do shader
     // associacao do vbo atual com primeiro atributo
     // 0 identifica que o primeiro atributo está sendo definido
-    // 2, GL_FLOAT identifica que dados sao vec3 e estao a cada 2 float.
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+    // 3, GL_FLOAT identifica que dados sao vec3 e estao a cada 3 float.
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 
 }
