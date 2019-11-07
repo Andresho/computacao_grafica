@@ -14,6 +14,6 @@ void main () {
     gl_PointSize = 10.0;
 
     //define glposition
-    gl_Position = proj * vec4(vp, 1.0);
+    gl_Position = proj * vec4(vp.x,vp.y,0.0, 1.0);
 
 }

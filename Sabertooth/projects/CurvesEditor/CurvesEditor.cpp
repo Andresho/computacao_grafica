@@ -32,6 +32,7 @@ vector<Obj3d *> objs;
 
 FileReader fileReader;
 
+
 //Define acoes do redimensionamento da tela
 void window_size_callback(GLFWwindow *window, int width, int height) {
     glViewport(0, 0, width, height);
@@ -48,20 +49,20 @@ void calulateSPlineCurve() {
 
     int n = controlPointsX.size();
 
-    for (int i=0; i < controlPointsX.size(); i+=1 ) {
+    for (int i = 0; i < controlPointsX.size(); i += 1) {
         for (float j = 0.f; j <= 1.f; j += inc) {
-            float  x=(((-1 * pow(j, 3) + 3 * pow(j, 2) - 3 * j + 1.f) * controlPointsX[i] +
-                ( 3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsX[(i + 1)%n] +
-                (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsX[(i + 2)%n] +
-                ( 1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsX[(i + 3)%n]) / 6.f);
-            float y=(((-1 * pow(j, 3) + 3 * pow(j, 2) - 3.f * j + 1.f) * controlPointsY[i ] +
-                ( 3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsY[(i + 1)%n] +
-                (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsY[(i + 2)%n] +
-                ( 1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsY[(i + 3)%n]) / 6.f);
-            float z=(((-1 * pow(j, 3) + 3 * pow(j, 2) - 3.f * j + 1.f) * controlPointsZ[i ] +
-                      ( 3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsZ[(i + 1)%n] +
-                      (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsZ[(i + 2)%n] +
-                      ( 1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsZ[(i + 3)%n]) / 6.f);
+            float x = (((-1 * pow(j, 3) + 3 * pow(j, 2) - 3 * j + 1.f) * controlPointsX[i] +
+                        (3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsX[(i + 1) % n] +
+                        (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsX[(i + 2) % n] +
+                        (1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsX[(i + 3) % n]) / 6.f);
+            float y = (((-1 * pow(j, 3) + 3 * pow(j, 2) - 3.f * j + 1.f) * controlPointsY[i] +
+                        (3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsY[(i + 1) % n] +
+                        (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsY[(i + 2) % n] +
+                        (1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsY[(i + 3) % n]) / 6.f);
+            float z = (((-1 * pow(j, 3) + 3 * pow(j, 2) - 3.f * j + 1.f) * controlPointsZ[i] +
+                        (3.f * pow(j, 3) - 6.f * pow(j, 2) + 0.f * j + 4.f) * controlPointsZ[(i + 1) % n] +
+                        (-3.f * pow(j, 3) + 3.f * pow(j, 2) + 3.f * j + 1.f) * controlPointsZ[(i + 2) % n] +
+                        (1.f * pow(j, 3) + 0.f * pow(j, 2) + 0.f * j + 0.f) * controlPointsZ[(i + 3) % n]) / 6.f);
 
             curvePoints.push_back(x);
             curvePoints.push_back(y);
@@ -73,11 +74,23 @@ void calulateSPlineCurve() {
     }
 }
 
+void drawControlPoints(){
+    glBindVertexArray(pointsVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
+    glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * sizeof(float), controlPoints.data(), GL_STATIC_DRAW);
+}
+
+void drawCentralCurve() {
+    glBindVertexArray(curveVAO);
+    glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
+    glBufferData(GL_ARRAY_BUFFER, curvePoints.size() * sizeof(float), curvePoints.data(), GL_STATIC_DRAW);
+}
+
 /*
 Define acoes do mouse
 */
-void mouse_button_callback(GLFWwindow* window, int button, int action, int mods) {
-    if(action == GLFW_PRESS){
+void mouse_button_callback(GLFWwindow *window, int button, int action, int mods) {
+    if (action == GLFW_PRESS) {
         if (button == GLFW_MOUSE_BUTTON_LEFT) {
             double xPos, yPos;
 
@@ -89,42 +102,52 @@ void mouse_button_callback(GLFWwindow* window, int button, int action, int mods)
 
             controlPoints.push_back(xPos);
             controlPoints.push_back(yPos);
+            controlPoints.push_back(zColor);
 
             controlPointsX.push_back(xPos);
             controlPointsY.push_back(yPos);
             controlPointsZ.push_back(zColor);
 
-            glBindVertexArray(pointsVAO);
-            glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
-            glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * sizeof(float), controlPoints.data(), GL_STATIC_DRAW);
+            drawControlPoints();
 
-        } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
-            if(controlPointsX.size()>=4){
+            if (controlPointsX.size() >= 4) {
 
                 calulateSPlineCurve();
                 isCurveDrawn = true;
 
-                glBindVertexArray(curveVAO);
-                glBindBuffer(GL_ARRAY_BUFFER, curveVBO);
-                glBufferData(GL_ARRAY_BUFFER, curvePoints.size() * sizeof(float), curvePoints.data(), GL_STATIC_DRAW);
+                drawCentralCurve();
             }
-        }
 
+        }
     }
 }
+
 
 void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     float inc = 0.01f;
     float limite = 1.0f;
 
-    if(keys[GLFW_KEY_PERIOD]==1){
-        if(zColor < limite)
-            zColor+=inc;
+    if (keys[GLFW_KEY_PERIOD] == 1) {
+        if (zColor < limite) {
+            zColor = zColor + inc;
+            controlPoints[controlPoints.size()-1] = zColor;
+            drawControlPoints();
+
+            calulateSPlineCurve();
+            drawCentralCurve();
+
+        }
     }
 
-    if(keys[GLFW_KEY_COMMA]==1){
-        if(zColor > 0.f)
-            zColor-=inc;
+    if (keys[GLFW_KEY_COMMA] == 1) {
+        if (zColor > 0.f){
+            zColor = zColor - inc;
+            controlPoints[controlPoints.size()-1] = zColor;
+            drawControlPoints();
+
+            calulateSPlineCurve();
+            drawCentralCurve();
+        }
     }
 
 
@@ -144,7 +167,6 @@ void verifyOpenGL() {
     printf("OpenGL (versao suportada) %s\n", version);
     // encerra contexto GL e outros recursos da GLFW
 }
-
 
 
 int createGlfwWindow(GLFWwindow *&window) {
@@ -168,7 +190,7 @@ int createGlfwWindow(GLFWwindow *&window) {
     return 0;
 }
 
-void initializeVertexBuffers(){
+void initializeVertexBuffers() {
 
     // VAO e VBO to points
     glGenVertexArrays(1, &pointsVAO);
@@ -180,7 +202,7 @@ void initializeVertexBuffers(){
     // associacao do vbo atual com primeiro atributo
     // 0 identifica que o primeiro atributo está sendo definido
     // 2, GL_FLOAT identifica que dados sao vec3 e estao a cada 2 float.
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, 0, nullptr);
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, nullptr);
 
 
     // VAO e VBO to curve
@@ -230,7 +252,7 @@ int main() {
     int projLocation = glGetUniformLocation(shader->shader_programme, "proj");
 
     // criacao glm projection
-    glm::mat4 projection = glm::ortho(0.0f, (float)WIDTH, (float)HEIGHT, 0.0f, -1.0f, 1.0f);
+    glm::mat4 projection = glm::ortho(0.0f, (float) WIDTH, (float) HEIGHT, 0.0f, -1.0f, 1.0f);
 
     // passa projection ao shader
     glUniformMatrix4fv(projLocation, 1, GL_FALSE, glm::value_ptr(projection));
@@ -261,7 +283,7 @@ int main() {
         glDrawArrays(GL_POINTS, 0, controlPointsX.size());
 
         // desenha a curva
-        if( isCurveDrawn ){
+        if (isCurveDrawn) {
             glBindVertexArray(curveVAO);
             glDrawArrays(GL_LINE_STRIP, 0, curvePointsX.size());
         }
