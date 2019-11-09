@@ -153,25 +153,33 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     float limite = 1.0f;
 
     if (keys[GLFW_KEY_PERIOD] == 1) {
-        if (zColor < limite) {
+        if (zColor < (limite-inc)) {
             zColor = zColor + inc;
             controlPoints[controlPoints.size()-1] = zColor;
             drawControlPoints();
 
-            calulateSPlineCurve();
-            drawCentralCurve();
+            controlPointsZ[controlPointsZ.size()-1] = zColor;
+
+            if (controlPointsX.size() >= 4) {
+                calulateSPlineCurve();
+                drawCentralCurve();
+            }
 
         }
     }
 
     if (keys[GLFW_KEY_COMMA] == 1) {
-        if (zColor > 0.f){
+        if (zColor > (0.f+inc)){
             zColor = zColor - inc;
             controlPoints[controlPoints.size()-1] = zColor;
             drawControlPoints();
 
-            calulateSPlineCurve();
-            drawCentralCurve();
+            controlPointsZ[controlPointsZ.size()-1] = zColor;
+
+            if (controlPointsX.size() >= 4) {
+                calulateSPlineCurve();
+                drawCentralCurve();
+            }
         }
     }
 
