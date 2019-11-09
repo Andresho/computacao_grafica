@@ -2,6 +2,7 @@
 
 #define WIDTH 800
 #define HEIGHT 600
+#define CURVE_SIZE 20.0
 
 //Atributos janela
 int RESIZED_WIDTH = WIDTH;
@@ -12,25 +13,13 @@ bool keys[1024];
 GLuint pointsVAO, centralCurveVAO, internalCurveVAO, externalCurveVAO;
 GLuint pointsVBO, centralCurveVBO, internalCurveVBO, externalCurveVBO;
 
-vector<float> controlPoints;
-vector<float> controlPointsX;
-vector<float> controlPointsY;
-vector<float> controlPointsZ;
+vector<float> controlPoints, controlPointsX, controlPointsY, controlPointsZ;
 
-vector<float> centralCurvePoints;
-vector<float> centralCurvePointsX;
-vector<float> centralCurvePointsY;
-vector<float> centralCurvePointsZ;
+vector<float> centralCurvePoints, centralCurvePointsX, centralCurvePointsY, centralCurvePointsZ;
 
-vector<float> internalCurvePoints;
-vector<float> internalCurvePointsX;
-vector<float> internalCurvePointsY;
-vector<float> internalCurvePointsZ;
+vector<float> internalCurvePoints, internalCurvePointsX, internalCurvePointsY, internalCurvePointsZ;
 
-vector<float> externalCurvePoints;
-vector<float> externalCurvePointsX;
-vector<float> externalCurvePointsY;
-vector<float> externalCurvePointsZ;
+vector<float> externalCurvePoints, externalCurvePointsX, externalCurvePointsY, externalCurvePointsZ;
 
 float zColor = 0.0f;
 
@@ -52,6 +41,7 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
 }
 
 void calulateSPlineCurve() {
+
     centralCurvePoints.clear();
     centralCurvePointsX.clear();
     centralCurvePointsY.clear();
@@ -87,7 +77,58 @@ void calulateSPlineCurve() {
     }
 }
 
-void drawControlPoints(){
+void calculateAroundCurves() {
+
+    internalCurvePoints.clear();
+    internalCurvePointsX.clear();
+    internalCurvePointsY.clear();
+    internalCurvePointsZ.clear();
+
+    externalCurvePoints.clear();
+    externalCurvePointsX.clear();
+    externalCurvePointsY.clear();
+    externalCurvePointsZ.clear();
+
+    float xVector, yVector, theta, perpedicAngle;
+
+    for (int i = 0; i < centralCurvePointsX.size() - 1; i += 1) {
+
+        xVector = centralCurvePointsX[i + 1] - centralCurvePointsX[i];
+        yVector = centralCurvePointsY[i + 1] - centralCurvePointsY[i];
+        theta = atan(yVector / xVector);
+
+        //calcula a curval interna
+        if (xVector < 0)
+            perpedicAngle = theta - (M_PI / 2);
+        else
+            perpedicAngle = theta + (M_PI / 2);
+
+        //seta parametros da curva interna
+        internalCurvePoints.push_back((float) cos(perpedicAngle) * CURVE_SIZE + centralCurvePointsX[i]);
+        internalCurvePoints.push_back((float) sin(perpedicAngle) * CURVE_SIZE + centralCurvePointsY[i]);
+        internalCurvePoints.push_back((float) centralCurvePointsZ[i]);
+        internalCurvePointsX.push_back((float) cos(perpedicAngle) * CURVE_SIZE + centralCurvePointsX[i]);
+        internalCurvePointsY.push_back((float) sin(perpedicAngle) * CURVE_SIZE + centralCurvePointsY[i]);
+        internalCurvePointsZ.push_back((float) centralCurvePointsZ[i]);
+
+        //calcula a curval externa
+        if (xVector < 0)
+            perpedicAngle = theta + (M_PI / 2);
+        else
+            perpedicAngle = theta - (M_PI / 2);
+
+        //seta parametros da curva externa
+        externalCurvePoints.push_back((float) cos(perpedicAngle) * CURVE_SIZE + centralCurvePointsX[i]);
+        externalCurvePoints.push_back((float) sin(perpedicAngle) * CURVE_SIZE + centralCurvePointsY[i]);
+        externalCurvePoints.push_back((float) centralCurvePointsZ[i]);
+        externalCurvePointsX.push_back((float) cos(perpedicAngle) * CURVE_SIZE + centralCurvePointsX[i]);
+        externalCurvePointsY.push_back((float) sin(perpedicAngle) * CURVE_SIZE + centralCurvePointsY[i]);
+        externalCurvePointsZ.push_back((float) centralCurvePointsZ[i]);
+
+    }
+}
+
+void drawControlPoints() {
     glBindVertexArray(pointsVAO);
     glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
     glBufferData(GL_ARRAY_BUFFER, controlPoints.size() * sizeof(float), controlPoints.data(), GL_STATIC_DRAW);
@@ -102,13 +143,21 @@ void drawCentralCurve() {
 void drawInternalCurve() {
     glBindVertexArray(internalCurveVAO);
     glBindBuffer(GL_ARRAY_BUFFER, internalCurveVBO);
-    glBufferData(GL_ARRAY_BUFFER, internalCurvePoints.size() * sizeof(float), internalCurvePoints.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, internalCurvePoints.size() * sizeof(float), internalCurvePoints.data(),
+                 GL_STATIC_DRAW);
 }
 
 void drawExternalCurve() {
     glBindVertexArray(externalCurveVAO);
     glBindBuffer(GL_ARRAY_BUFFER, externalCurveVBO);
-    glBufferData(GL_ARRAY_BUFFER, externalCurvePoints.size() * sizeof(float), externalCurvePoints.data(), GL_STATIC_DRAW);
+    glBufferData(GL_ARRAY_BUFFER, externalCurvePoints.size() * sizeof(float), externalCurvePoints.data(),
+                 GL_STATIC_DRAW);
+}
+
+void drawCurves() {
+    drawCentralCurve();
+    drawInternalCurve();
+    drawExternalCurve();
 }
 
 /*
@@ -136,11 +185,12 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
             drawControlPoints();
 
             if (controlPointsX.size() >= 4) {
-
-                calulateSPlineCurve();
                 isCurveDrawn = true;
 
-                drawCentralCurve();
+                calulateSPlineCurve();
+                calculateAroundCurves();
+
+                drawCurves();
             }
 
         }
@@ -153,32 +203,34 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     float limite = 1.0f;
 
     if (keys[GLFW_KEY_PERIOD] == 1) {
-        if (zColor < (limite-inc)) {
+        if (zColor < (limite - inc)) {
             zColor = zColor + inc;
-            controlPoints[controlPoints.size()-1] = zColor;
+            controlPoints[controlPoints.size() - 1] = zColor;
             drawControlPoints();
 
-            controlPointsZ[controlPointsZ.size()-1] = zColor;
+            controlPointsZ[controlPointsZ.size() - 1] = zColor;
 
             if (controlPointsX.size() >= 4) {
                 calulateSPlineCurve();
-                drawCentralCurve();
+                calculateAroundCurves();
+                drawCurves();
             }
 
         }
     }
 
     if (keys[GLFW_KEY_COMMA] == 1) {
-        if (zColor > (0.f+inc)){
+        if (zColor > (0.f + inc)) {
             zColor = zColor - inc;
-            controlPoints[controlPoints.size()-1] = zColor;
+            controlPoints[controlPoints.size() - 1] = zColor;
             drawControlPoints();
 
-            controlPointsZ[controlPointsZ.size()-1] = zColor;
+            controlPointsZ[controlPointsZ.size() - 1] = zColor;
 
             if (controlPointsX.size() >= 4) {
                 calulateSPlineCurve();
-                drawCentralCurve();
+                calculateAroundCurves();
+                drawCurves();
             }
         }
     }
@@ -345,6 +397,13 @@ int main() {
         if (isCurveDrawn) {
             glBindVertexArray(centralCurveVAO);
             glDrawArrays(GL_LINE_STRIP, 0, centralCurvePointsX.size());
+
+            glBindVertexArray(internalCurveVAO);
+            glDrawArrays(GL_LINE_STRIP, 0, internalCurvePointsX.size());
+
+            glBindVertexArray(externalCurveVAO);
+            glDrawArrays(GL_LINE_STRIP, 0, externalCurvePointsX.size());
+
         }
 
         glfwSwapBuffers(window);
