@@ -21,6 +21,8 @@ vector<float> internalCurvePoints, internalCurvePointsX, internalCurvePointsY, i
 
 vector<float> externalCurvePoints, externalCurvePointsX, externalCurvePointsY, externalCurvePointsZ;
 
+vector<glm::vec3*> normals;
+
 float zColor = 0.0f;
 
 bool isCurveDrawn = false;
@@ -128,6 +130,55 @@ void calculateAroundCurves() {
     }
 }
 
+
+void calculateNormals() {
+
+    // limpara o vector
+    normals.clear();
+
+    float Ux, Uy, Uz, Vx, Vy, Vz;
+    float Nx, Ny, Nz;
+
+    /*
+     * https://www.khronos.org/opengl/wiki/Calculating_a_Surface_Normal
+     * A surface normal for a triangle can be calculated by taking the vector cross product of two edges of that triangle.
+     * The order of the vertices used in the calculation will affect the direction of the normal (in or out of the face w.r.t. winding).
+     * So for a triangle p1, p2, p3,
+     * if the vector U = p2 - p1 and the vector V = p3 - p1 then the normal N = U X V and can be calculated by:
+
+        Nx = UyVz - UzVy
+
+        Ny = UzVx - UxVz
+
+        Nz = UxVy - UyVx
+     * */
+
+    for (int i = 0; i < internalCurvePointsX.size()-1; i += 1) {
+
+        if (i % 2 != 0) {
+            Ux = externalCurvePointsX[i] - internalCurvePointsX[i];
+            Uy = externalCurvePointsY[i] - internalCurvePointsY[i];
+            Uz = externalCurvePointsZ[i] - internalCurvePointsZ[i];
+            Vx = externalCurvePointsX[i + 1] - internalCurvePointsX[i];
+            Vy = externalCurvePointsY[i + 1] - internalCurvePointsY[i];
+            Vz = externalCurvePointsZ[i + 1] - internalCurvePointsZ[i];
+        } else {
+            Ux = internalCurvePointsX[i + 1] - externalCurvePointsX[i + 1];
+            Uy = internalCurvePointsY[i + 1] - externalCurvePointsY[i + 1];
+            Uz = internalCurvePointsZ[i + 1] - externalCurvePointsZ[i + 1];
+            Vx = internalCurvePointsX[i] - externalCurvePointsX[i + 1];
+            Vy = internalCurvePointsY[i] - externalCurvePointsY[i + 1];
+            Vz = internalCurvePointsZ[i] - externalCurvePointsZ[i + 1];
+        }
+
+        Nx = Uy * Vz - Uz * Vy;
+        Ny = Uz * Vx - Ux * Vz;
+        Nz = Ux * Vy - Uy * Vx;
+
+        normals.push_back(new glm::vec3(Nx, Ny, Nz));
+    }
+}
+
 void drawControlPoints() {
     glBindVertexArray(pointsVAO);
     glBindBuffer(GL_ARRAY_BUFFER, pointsVBO);
@@ -193,8 +244,13 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
                 drawCurves();
             }
 
+        } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
+            calculateNormals();
+            for(int i = 0 ;  i< normals.size()-1; i++){
+                printf("pos %f x %f  y %f  z %f \n",(float)i,normals[i]->x,normals[i]->y,normals[i]->z);
+            }
         }
-    }
+}
 }
 
 
