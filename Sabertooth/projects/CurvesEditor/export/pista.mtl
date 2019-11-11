@@ -1,0 +1,7 @@
+newmtl Pista
+
+map_Kd terra.jpg
+Kd 0.50 0.50 0.50
+Ka 0.15 0.15 0.15
+Ks 1.00 1.00 1.00
+Ns 0.06

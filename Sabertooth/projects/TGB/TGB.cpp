@@ -234,6 +234,17 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void createObjects() {
     // Realiza a leitura dos dados para criar o Mesh (campo)
+    Mesh *mesh = fileReader.readOBJ("projects/CurvesEditor/export/", "pista.obj", 1, materials);
+
+    // indica como ler os vertices
+    mesh->loadVertices();
+
+    //adiciona no vetor de objetos
+    objs.push_back(new Obj3d(mesh, -5, 0, 0));
+    objs[0]->scale((1 / mesh->distanceScale) *5);
+
+    /*
+    // Realiza a leitura dos dados para criar o Mesh (campo)
     Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
 
     // indica como ler os vertices
@@ -264,7 +275,7 @@ void createObjects() {
     //mesa 02 (esquerda mais longe)
     objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
     objs[4]->scale((1 / mesh2->distanceScale) / 2);
-
+*/
 }
 
 

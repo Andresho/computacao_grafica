@@ -28,4 +28,5 @@ using namespace std;
 #include "./src/Mesh.h"
 #include "./src/Obj3d.h"
 #include "./src/FileReader.h"
+#include "./src/FileWriter.h"
 #include "./src/Shader.h"

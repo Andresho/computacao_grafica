@@ -14,11 +14,8 @@ GLuint pointsVAO, centralCurveVAO, internalCurveVAO, externalCurveVAO;
 GLuint pointsVBO, centralCurveVBO, internalCurveVBO, externalCurveVBO;
 
 vector<float> controlPoints, controlPointsX, controlPointsY, controlPointsZ;
-
 vector<float> centralCurvePoints, centralCurvePointsX, centralCurvePointsY, centralCurvePointsZ;
-
 vector<float> internalCurvePoints, internalCurvePointsX, internalCurvePointsY, internalCurvePointsZ;
-
 vector<float> externalCurvePoints, externalCurvePointsX, externalCurvePointsY, externalCurvePointsZ;
 
 vector<glm::vec3*> normals;
@@ -33,7 +30,7 @@ vector<Material *> materials;
 vector<Obj3d *> objs;
 
 FileReader fileReader;
-
+FileWriter fileWriter;
 
 //Define acoes do redimensionamento da tela
 void window_size_callback(GLFWwindow *window, int width, int height) {
@@ -249,6 +246,12 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
             for(int i = 0 ;  i< normals.size()-1; i++){
                 printf("pos %f x %f  y %f  z %f \n",(float)i,normals[i]->x,normals[i]->y,normals[i]->z);
             }
+            fileWriter.writeArchivesOBJandMTL(
+                    internalCurvePointsX, internalCurvePointsY, internalCurvePointsZ,
+                    externalCurvePointsX, externalCurvePointsY, externalCurvePointsZ,
+                    normals
+            );
+
         }
 }
 }
