@@ -18,35 +18,38 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{EF584987-9C37-48F1-91F9-B4DB96AB1EBF}</ProjectGuid>
     <RootNamespace>Sabertooth</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.17763.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>MultiByte</CharacterSet>
   </PropertyGroup>
@@ -123,41 +126,6 @@
       <AdditionalDependencies>opengl32.lib;glew32.lib;glfw3.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-    <ClCompile Include="main.cpp" />
-    <ClCompile Include="old_archives\Shader.cpp" />
-    <ClCompile Include="old_archives\System.cpp" />
-    <ClCompile Include="old_archives\Texture.cpp" />
-    <ClCompile Include="projects\meshCube\runCube.cpp" />
-    <ClCompile Include="projects\simpleTriangle\run.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AssetManager.h" />
-    <ClInclude Include="Face.h" />
-    <ClInclude Include="Group.h" />
-    <ClInclude Include="Mesh.h" />
-    <ClInclude Include="Obj3d.h" />
-    <ClInclude Include="old_archives\AssetManager.h" />
-    <ClInclude Include="old_archives\Shader.h" />
-    <ClInclude Include="old_archives\System.h" />
-    <ClInclude Include="old_archives\Texture.h" />
-    <ClInclude Include="projects\meshCube\runCube.h" />
-    <ClInclude Include="projects\meshCube\src\Face.h" />
-    <ClInclude Include="projects\meshCube\src\Group.h" />
-    <ClInclude Include="projects\meshCube\src\Material.h" />
-    <ClInclude Include="projects\meshCube\src\Mesh.h" />
-    <ClInclude Include="projects\meshCube\src\Obj3d.h" />
-    <ClInclude Include="projects\meshCube\src\stb_image.h" />
-    <ClInclude Include="projects\simpleTriangle\run.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="projects\meshCube\shaders\camera.frag" />
-    <None Include="projects\meshCube\shaders\camera.vert" />
-    <None Include="projects\meshCube\shaders\core.frag" />
-    <None Include="projects\meshCube\shaders\core.vert" />
-    <None Include="Shaders\Core\core.frag" />
-    <None Include="Shaders\Core\core.vert" />
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

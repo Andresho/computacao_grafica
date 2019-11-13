@@ -1,131 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
-      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
-    </Filter>
-    <Filter Include="Resource Files">
-      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
-      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
-    </Filter>
-    <Filter Include="Shaders">
-      <UniqueIdentifier>{144377e4-e915-4645-a9cb-2170b78cf5ee}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Shaders\Core">
-      <UniqueIdentifier>{a385c29a-17a6-49db-8114-65941d6252aa}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\projects">
-      <UniqueIdentifier>{d68dd97c-b606-4197-8d96-8f026b46b4e0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\projects\simpleTriangle">
-      <UniqueIdentifier>{b3c9de6e-3e5c-4f8b-ab28-05bd3c0547e6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\projects\meshCube">
-      <UniqueIdentifier>{2b2b1ec3-37c0-4c1d-8b12-a6c4e54dd14d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\projects\meshCube\src">
-      <UniqueIdentifier>{86effaad-972c-47c1-9108-787b34c26558}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\projects\meshCube\shaders">
-      <UniqueIdentifier>{d5803eb7-b47c-4110-bb0d-254ea0dca801}</UniqueIdentifier>
+    <Filter Include="source">
+      <UniqueIdentifier>{3941df6c-3961-4f82-9501-99e7b38e6c4f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>source</Filter>
     </ClCompile>
-    <ClCompile Include="projects\simpleTriangle\run.cpp">
-      <Filter>Source Files\projects\simpleTriangle</Filter>
-    </ClCompile>
-    <ClCompile Include="old_archives\Shader.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="old_archives\System.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="old_archives\Texture.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="projects\meshCube\runCube.cpp">
-      <Filter>Source Files\projects\meshCube</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="AssetManager.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\simpleTriangle\run.h">
-      <Filter>Source Files\projects\simpleTriangle</Filter>
-    </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Group.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Face.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Obj3d.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="old_archives\AssetManager.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="old_archives\Shader.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="old_archives\System.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="old_archives\Texture.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\Face.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\Group.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\Mesh.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\Obj3d.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\Material.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\src\stb_image.h">
-      <Filter>Source Files\projects\meshCube\src</Filter>
-    </ClInclude>
-    <ClInclude Include="projects\meshCube\runCube.h">
-      <Filter>Source Files\projects\meshCube</Filter>
-    </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Shaders\Core\core.frag">
-      <Filter>Shaders\Core</Filter>
-    </None>
-    <None Include="Shaders\Core\core.vert">
-      <Filter>Shaders\Core</Filter>
-    </None>
-    <None Include="projects\meshCube\shaders\core.frag">
-      <Filter>Source Files\projects\meshCube\shaders</Filter>
-    </None>
-    <None Include="projects\meshCube\shaders\core.vert">
-      <Filter>Source Files\projects\meshCube\shaders</Filter>
-    </None>
-    <None Include="projects\meshCube\shaders\camera.frag">
-      <Filter>Source Files\projects\meshCube\shaders</Filter>
-    </None>
-    <None Include="projects\meshCube\shaders\camera.vert">
-      <Filter>Source Files\projects\meshCube\shaders</Filter>
-    </None>
   </ItemGroup>
 </Project>
