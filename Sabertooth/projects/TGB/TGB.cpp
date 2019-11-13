@@ -84,6 +84,31 @@ void moveCar(){
 
     objs[1]->move(x,y,z);
     carIndex = carIndex + inc ;
+
+//
+    vec3 xyzNormalized  = glm::normalize(glm::vec3(x,y,z));
+//
+//    float theta = glm::dot(xyzNormalized,glm::vec3(0.f,0.f,0.f));
+//    theta = acos(theta);
+//
+    float theta2 = glm::dot(xyzNormalized, glm::vec3(0.f,0.f,0.f));
+
+//    float angle = glm::atan(dz, dx);
+//
+//
+//    float thetaYX = atan(x/y);
+//
+//    float thetaYZ = atan(y / z);
+
+
+    float theta = glm::atan(z, x);
+     printf("theta : %f\n", theta);
+
+//    theta += 1.5708f;
+    objs[1]->rotateYZ(theta,0);
+
+
+
 }
 
 bool testingIfKeysPressed() {

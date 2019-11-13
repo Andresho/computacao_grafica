@@ -41,6 +41,17 @@ public:
         transform();
     }
 
+    void rotateXZ(float rad) {
+        matrix_rotation = glm::rotate(matrix_rotation, glm::radians(rad), glm::vec3(0, 1, 0));
+        transform();
+    }
+
+    void rotateYZ(float radY, float radZ) {
+        matrix_rotation = glm::rotate(matrix_rotation, radY, glm::vec3(1, 0, 0));
+        //matrix_rotation = glm::rotate(matrix_rotation, glm::radians(radZ), glm::vec3(0, 1, 0));
+        transform();
+    }
+
     void scale(float x, float y, float z) {
         matrix_scala = glm::scale(matrix_scala, glm::vec3(x, y, z));
         transform();
