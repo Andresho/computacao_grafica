@@ -244,8 +244,22 @@ void createObjects() {
     mesh->loadVertices();
 
     //adiciona no vetor de objetos
-    objs.push_back(new Obj3d(mesh, -5, 0, 0));
-    objs[0]->scale((1 / mesh->distanceScale) *5);
+    objs.push_back(new Obj3d(mesh, 0, 0, 0));
+    float paramToScale = (1 / mesh->distanceScale) * 5;
+    objs[0]->scale(paramToScale);
+
+    // Realiza a leitura dos dados para criar o Mesh (mesa01)
+    Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+
+    // indica como ler os vertices
+    mesh2->loadVertices();
+
+    objs.push_back(new Obj3d(mesh2,
+            centralCurvePointsX[0]*paramToScale,
+            centralCurvePointsY[0]*paramToScale,
+            centralCurvePointsZ[0]*paramToScale)
+            );
+    objs[1]->scale((1 / mesh2->distanceScale) / 10 );
 
     /*
     // Realiza a leitura dos dados para criar o Mesh (campo)
@@ -333,16 +347,16 @@ int main() {
     //verifica a versao do Open GL
     verifyOpenGL();
 
-    //criacao dos objetos
-    createObjects();
-
     //carrega caminho da pista
     fileReader.readCarPath(
             "projects/CurvesEditor/export/", "carPath.txt",
             centralCurvePointsX,
             centralCurvePointsY,
             centralCurvePointsZ
-            );
+    );
+
+    //criacao dos objetos
+    createObjects();
 
     //cricao de shaders
     Shader *shader = new Shader("projects/TGB/shaders/core.vert", "projects/TGB/shaders/core.frag");
