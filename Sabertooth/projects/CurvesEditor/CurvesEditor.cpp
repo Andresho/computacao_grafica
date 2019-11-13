@@ -18,7 +18,7 @@ vector<float> centralCurvePoints, centralCurvePointsX, centralCurvePointsY, cent
 vector<float> internalCurvePoints, internalCurvePointsX, internalCurvePointsY, internalCurvePointsZ;
 vector<float> externalCurvePoints, externalCurvePointsX, externalCurvePointsY, externalCurvePointsZ;
 
-vector<glm::vec3*> normals;
+vector<glm::vec3 *> normals;
 
 float zColor = 0.0f;
 
@@ -46,7 +46,7 @@ void calulateSPlineCurve() {
     centralCurvePointsY.clear();
     centralCurvePointsZ.clear();
 
-    float inc = 0.01f;
+    float inc = 0.001f;
 
     int n = controlPointsX.size();
 
@@ -150,7 +150,7 @@ void calculateNormals() {
         Nz = UxVy - UyVx
      * */
 
-    for (int i = 0; i < internalCurvePointsX.size()-1; i += 1) {
+    for (int i = 0; i < internalCurvePointsX.size() - 1; i += 1) {
 
         if (i % 2 != 0) {
             Ux = externalCurvePointsX[i] - internalCurvePointsX[i];
@@ -243,8 +243,8 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
 
         } else if (button == GLFW_MOUSE_BUTTON_RIGHT) {
             calculateNormals();
-            for(int i = 0 ;  i< normals.size()-1; i++){
-                printf("pos %f x %f  y %f  z %f \n",(float)i,normals[i]->x,normals[i]->y,normals[i]->z);
+            for (int i = 0; i < normals.size() - 1; i++) {
+                printf("pos %f x %f  y %f  z %f \n", (float) i, normals[i]->x, normals[i]->y, normals[i]->z);
             }
             fileWriter.writeArchivesOBJandMTL(
                     internalCurvePointsX, internalCurvePointsY, internalCurvePointsZ,
@@ -252,8 +252,14 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
                     normals
             );
 
+            fileWriter.writeCarPath(
+                    centralCurvePointsX,
+                    centralCurvePointsY,
+                    centralCurvePointsZ
+            );
+
         }
-}
+    }
 }
 
 

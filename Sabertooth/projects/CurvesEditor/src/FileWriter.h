@@ -1,10 +1,13 @@
 #pragma once
 
+#define TRACK_HEIGHT 200
+
 class FileWriter {
 public:
     FileWriter() {
 
     }
+
     void writeArchivesOBJandMTL(
             vector<float> &internalCurvePointsX,
             vector<float> &internalCurvePointsY,
@@ -12,7 +15,7 @@ public:
             vector<float> &externalCurvePointsX,
             vector<float> &externalCurvePointsY,
             vector<float> &externalCurvePointsZ,
-            vector<glm::vec3*> &normals
+            vector<glm::vec3 *> &normals
     ) {
         ofstream objFileStream;
         objFileStream.open("projects/CurvesEditor/export/pista.obj");
@@ -22,13 +25,15 @@ public:
         // escreve os vertices da curva interna
         for (int i = 0; i < internalCurvePointsX.size(); i += 1) {
             // o X e o Z ficam invertidos devido a geometria 3D
-            objFileStream << "v " << internalCurvePointsX[i] << " " << internalCurvePointsZ[i] * 100 << " " << internalCurvePointsY[i] - 300 << endl;
+            objFileStream << "v " << internalCurvePointsX[i] << " " << internalCurvePointsZ[i] * TRACK_HEIGHT << " "
+                          << internalCurvePointsY[i] << endl;
         }
 
         // escreve os vertices da curva externa
         for (int i = 0; i < externalCurvePointsX.size(); i += 1) {
             // o X e o Z ficam invertidos devido a geometria 3D
-            objFileStream << "v " << externalCurvePointsX[i] << " " << externalCurvePointsZ[i] * 100 << " " << externalCurvePointsY[i] - 300 << endl;
+            objFileStream << "v " << externalCurvePointsX[i] << " " << externalCurvePointsZ[i] * TRACK_HEIGHT << " "
+                          << externalCurvePointsY[i] << endl;
         }
 
         // define e escreve as coordenadas de textura
@@ -39,7 +44,7 @@ public:
 
         // escreve as normais no arquivo
         for (int i = 0; i < normals.size(); i += 1) {
-            float zNormal = ((1/normals[i]->z)-1) * (-1);
+            float zNormal = normals[i]->z > 0 ? ((1 / normals[i]->z) - 1) * (-1) : ((1 / normals[i]->z) + 1) * (-1);
             objFileStream << "vn " << normals[i]->x << " " << normals[i]->y << " " << zNormal << endl;
         }
 
@@ -53,8 +58,10 @@ public:
         // comeca a escrever em 1 pois o padrao das faces é 1 e nao 0 nos arquivos OB
         for (int i = 1; i < points; i += 1) {
             qtdId += 1;
-            objFileStream << "f " << i << "/3/" << qtdId << " " << i + points << "/1/" << qtdId << " " << i + points + 1 << "/2/" << qtdId << endl;
-            objFileStream << "f " << i + points + 1 << "/2/" << qtdId << " " << i + 1 << "/4/" << qtdId << " " << i << "/3/" << qtdId << endl;
+            objFileStream << "f " << i << "/3/" << qtdId << " " << i + points << "/1/" << qtdId << " " << i + points + 1
+                          << "/2/" << qtdId << endl;
+            objFileStream << "f " << i + points + 1 << "/2/" << qtdId << " " << i + 1 << "/4/" << qtdId << " " << i
+                          << "/3/" << qtdId << endl;
         }
 
         objFileStream.close();
@@ -77,6 +84,28 @@ public:
 
         mtlFileStream.close();
     }
+
+
+    void writeCarPath(
+            vector<float> &centralCurvePointsX,
+            vector<float> &centralCurvePointsY,
+            vector<float> &centralCurvePointsZ
+    ) {
+
+        // escrever o arquivo do caminho do carro
+        ofstream carFileStream;
+        carFileStream.open("projects/CurvesEditor/export/carPath.txt");
+
+        // escreve os vertices da curva central
+        for (int i = 0; i < centralCurvePointsX.size(); i += 1) {
+            carFileStream << "xyz " << centralCurvePointsX[i] << " " << centralCurvePointsZ[i] * TRACK_HEIGHT  << " "
+                          << centralCurvePointsY[i] << endl;
+        }
+
+
+        carFileStream.close();
+    }
+
 
 };
 

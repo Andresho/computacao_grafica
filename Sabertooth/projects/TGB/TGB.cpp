@@ -18,6 +18,10 @@ float pitchAngle = -30.f;
 float yawAngle = -90.f;
 float directionSpeed = 25.f;
 
+vector<float> centralCurvePointsX;
+vector<float> centralCurvePointsY;
+vector<float> centralCurvePointsZ;
+
 vector<Face *> faces;
 vector<Group *> groups;
 vector<Material *> materials;
@@ -331,6 +335,14 @@ int main() {
 
     //criacao dos objetos
     createObjects();
+
+    //carrega caminho da pista
+    fileReader.readCarPath(
+            "projects/CurvesEditor/export/", "carPath.txt",
+            centralCurvePointsX,
+            centralCurvePointsY,
+            centralCurvePointsZ
+            );
 
     //cricao de shaders
     Shader *shader = new Shader("projects/TGB/shaders/core.vert", "projects/TGB/shaders/core.frag");

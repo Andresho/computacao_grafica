@@ -6,6 +6,40 @@ public:
 
     }
 
+    void readCarPath(
+            string pathName,
+            string fileName,
+            vector<float> &centralCurvePointsX,
+            vector<float> &centralCurvePointsY,
+            vector<float> &centralCurvePointsZ
+    ) {
+
+
+        ifstream arq(pathName + fileName);
+        if (!arq) {
+            cout << "Archive not found!" + fileName;
+        } else {
+            while (!arq.eof()) {
+
+                string line;
+                getline(arq, line);
+                stringstream sline;
+                sline << line;
+                string temp;
+                sline >> temp; // pega ate primeiro espaco
+
+                if (temp == "xyz") {
+                    float x, y, z;
+                    sline >> x >> y >> z;
+                    centralCurvePointsX.push_back(x);
+                    centralCurvePointsY.push_back(y);
+                    centralCurvePointsZ.push_back(z);
+                }
+
+            }
+        }
+    }
+
     bool convertFileInString(const char *fileName, char *shaderStr, int maxLength) {
         shaderStr[0] = '\0'; // zera a string
         FILE *file = fopen(fileName, "r");
