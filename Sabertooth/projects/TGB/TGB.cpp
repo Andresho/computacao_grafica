@@ -22,6 +22,9 @@ vector<float> centralCurvePointsX;
 vector<float> centralCurvePointsY;
 vector<float> centralCurvePointsZ;
 
+float trackScale = 0.f;
+int carIndex = 0;
+
 vector<Face *> faces;
 vector<Group *> groups;
 vector<Material *> materials;
@@ -66,8 +69,25 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
         fov = 90.0f;
 }
 
+void moveCar(){
+    float x,y,z;
+    int n, current, next;
+    int inc = 10;
+
+    n = centralCurvePointsX.size();
+    current = carIndex % n;
+    next = (carIndex+inc) % n;
+
+    x = ( centralCurvePointsX[next] - centralCurvePointsX[current] ) * trackScale;
+    y = ( centralCurvePointsY[next] - centralCurvePointsY[current] )  * trackScale;
+    z = ( centralCurvePointsZ[next] - centralCurvePointsZ[current] )  * trackScale;
+
+    objs[1]->move(x,y,z);
+    carIndex = carIndex + inc ;
+}
+
 bool testingIfKeysPressed() {
-    const int size = 28;
+    const int size = 29;
 
     int relevantKeys[size] = {
             //camera keys
@@ -77,6 +97,9 @@ bool testingIfKeysPressed() {
             GLFW_KEY_LEFT,
             GLFW_KEY_DOWN,
             GLFW_KEY_UP,
+
+            //para transladar carro
+            GLFW_KEY_SPACE,
 
             //select objs keys
             GLFW_KEY_0,
@@ -228,6 +251,10 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     if (keys[GLFW_KEY_F3] && shiftPressed)
         ilumination_Ia_Id_Is.z = 0.f;
 
+
+    if (keys[GLFW_KEY_SPACE])
+        moveCar();
+
 }
 
 //Define acoes do teclado
@@ -245,8 +272,8 @@ void createObjects() {
 
     //adiciona no vetor de objetos
     objs.push_back(new Obj3d(mesh, 0, 0, 0));
-    float paramToScale = (1 / mesh->distanceScale) * 5;
-    objs[0]->scale(paramToScale);
+    trackScale = (1 / mesh->distanceScale) * 5;
+    objs[0]->scale(trackScale);
 
     // Realiza a leitura dos dados para criar o Mesh (mesa01)
     Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
@@ -255,9 +282,9 @@ void createObjects() {
     mesh2->loadVertices();
 
     objs.push_back(new Obj3d(mesh2,
-            centralCurvePointsX[0]*paramToScale,
-            centralCurvePointsY[0]*paramToScale,
-            centralCurvePointsZ[0]*paramToScale)
+                             centralCurvePointsX[0] * trackScale,
+                             centralCurvePointsY[0] * trackScale,
+                             centralCurvePointsZ[0] * trackScale)
             );
     objs[1]->scale((1 / mesh2->distanceScale) / 10 );
 
