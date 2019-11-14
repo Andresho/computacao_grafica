@@ -1,3 +1,5 @@
+#pragma warning(disable:4996)
+
 
 //this for run TGA of CG
 //#include "projects/TGA/TGA.cpp"

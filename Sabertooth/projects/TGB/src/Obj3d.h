@@ -1,6 +1,7 @@
 #pragma once
 
-class Obj3d {
+class Obj3d
+{
 public:
     Mesh *mesh;
 
@@ -13,7 +14,8 @@ public:
     glm::mat4 matrix_scala;
     glm::mat4 transformations;
 
-    Obj3d(Mesh *mesh, float initialPosX, float initialPosY, float initialPosZ) {
+    Obj3d(Mesh *mesh, float initialPosX, float initialPosY, float initialPosZ)
+    {
         this->mesh = mesh;
 
         this->xCenter = 0.0f;
@@ -28,7 +30,8 @@ public:
         this->transform();
     };
 
-    void move(float x, float y, float z) {
+    void move(float x, float y, float z)
+    {
         matrix_translaction = glm::translate(matrix_translaction, glm::vec3(x, y, z));
         xCenter += x;
         yCenter += y;
@@ -36,35 +39,41 @@ public:
         transform();
     }
 
-    void rotate(float rad) {
+    void rotate(float rad)
+    {
         matrix_rotation = glm::rotate(matrix_rotation, glm::radians(rad), glm::vec3(0, 1, 0));
         transform();
     }
 
-    void rotateXZ(float rad) {
-        matrix_rotation = glm::rotate(matrix_rotation, glm::radians(rad), glm::vec3(0, 1, 0));
+    void rotateXZ(float rad)
+    {
+        matrix_rotation = glm::rotate(matrix_rotation, glm::radians(rad), glm::vec3(1, 1, 1));
         transform();
     }
 
-    void rotateYZ(float radY, float radZ) {
-        matrix_rotation = glm::rotate(matrix_rotation, radY, glm::vec3(1, 0, 0));
+    void rotateYZ(float radY, float radZ)
+    {
+        matrix_rotation = glm::rotate(matrix_rotation, radY, glm::vec3(0, 1, 0));
         //matrix_rotation = glm::rotate(matrix_rotation, glm::radians(radZ), glm::vec3(0, 1, 0));
         transform();
     }
 
-    void scale(float x, float y, float z) {
+    void scale(float x, float y, float z)
+    {
         matrix_scala = glm::scale(matrix_scala, glm::vec3(x, y, z));
         transform();
     }
 
-    void scale(float s) {
+    void scale(float s)
+    {
         matrix_scala = glm::scale(matrix_scala, glm::vec3(s, s, s));
         transform();
     }
 
-    void transform() {
+    void transform()
+    {
         transformations = matrix_translaction * matrix_rotation * matrix_scala;
     }
 
-    ~Obj3d() {};
+    ~Obj3d(){};
 };

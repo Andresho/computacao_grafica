@@ -4,9 +4,10 @@
 #define HEIGHT 600
 
 #define N_ROTATE_DEGREE 10
-#define PORCENT_SCALE   10
-#define N_MOVE          0.1
+#define PORCENT_SCALE 10
+#define N_MOVE 0.1
 
+float lastTheta = -999;
 
 bool keys[1024];
 int indexSelectedObject = -1;
@@ -33,19 +34,18 @@ vector<Obj3d *> objs;
 FileReader fileReader;
 
 //projecao
-glm::mat4 proj = glm::perspective(glm::radians(fov), ((float) WEIGTH) / ((float) HEIGHT), 0.1f, 100.0f);
+glm::mat4 proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
 
 //eye: posição
 glm::vec3 cameraPos = glm::vec3(0.f, 2.f, 4.f);
 
 // direction: direção
 glm::vec3 direction = glm::vec3(
-        glm::normalize(
-                glm::vec3(
-                        cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle)),
-                        sin(glm::radians(pitchAngle)),
-                        cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle))
-                )));
+    glm::normalize(
+        glm::vec3(
+            cos(glm::radians(pitchAngle)) * cos(glm::radians(yawAngle)),
+            sin(glm::radians(pitchAngle)),
+            cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle)))));
 
 glm::vec3 cameraUp = glm::vec3(0.0f, 1.0f, 0.0f);
 
@@ -56,11 +56,13 @@ glm::vec3 cameraRight = glm::normalize(glm::cross(direction, cameraUp));
 glm::mat4 view = glm::mat4(1);
 
 //Define acoes do redimensionamento da tela
-void window_size_callback(GLFWwindow *window, int width, int height) {
+void window_size_callback(GLFWwindow *window, int width, int height)
+{
     glViewport(0, 0, width, height);
 }
 
-void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
+void scroll_callback(GLFWwindow *window, double xoffset, double yoffset)
+{
     if (fov >= 1.0f && fov <= 90.0f)
         fov -= yoffset;
     if (fov <= 1.0f)
@@ -69,101 +71,86 @@ void scroll_callback(GLFWwindow *window, double xoffset, double yoffset) {
         fov = 90.0f;
 }
 
-void moveCar(){
-    float x,y,z;
+void moveCar()
+{
+    float x, y, z;
     int n, current, next;
-    int inc = 10;
+    int inc = 2;
 
     n = centralCurvePointsX.size();
     current = carIndex % n;
-    next = (carIndex+inc) % n;
+    next = (carIndex + inc) % n;
 
-    x = ( centralCurvePointsX[next] - centralCurvePointsX[current] ) * trackScale;
-    y = ( centralCurvePointsY[next] - centralCurvePointsY[current] )  * trackScale;
-    z = ( centralCurvePointsZ[next] - centralCurvePointsZ[current] )  * trackScale;
+    x = (centralCurvePointsX[next] - centralCurvePointsX[current]) * trackScale;
+    y = (centralCurvePointsY[next] - centralCurvePointsY[current]) * trackScale;
+    z = (centralCurvePointsZ[next] - centralCurvePointsZ[current]) * trackScale;
 
-    objs[1]->move(x,y,z);
-    carIndex = carIndex + inc ;
-
-//
-    vec3 xyzNormalized  = glm::normalize(glm::vec3(x,y,z));
-//
-//    float theta = glm::dot(xyzNormalized,glm::vec3(0.f,0.f,0.f));
-//    theta = acos(theta);
-//
-    float theta2 = glm::dot(xyzNormalized, glm::vec3(0.f,0.f,0.f));
-
-//    float angle = glm::atan(dz, dx);
-//
-//
-//    float thetaYX = atan(x/y);
-//
-//    float thetaYZ = atan(y / z);
-
+    objs[1]->move(x, y, z);
+    carIndex = carIndex + inc;
 
     float theta = glm::atan(z, x);
-     printf("theta : %f\n", theta);
+    float diff = theta - lastTheta;
+    if (carIndex == inc)
+        lastTheta = theta;
+    else
+        lastTheta += diff;
 
-//    theta += 1.5708f;
-    objs[1]->rotateYZ(theta,0);
-
-
-
+    objs[1]->rotateYZ(-diff, 0);
 }
 
-bool testingIfKeysPressed() {
+bool testingIfKeysPressed()
+{
     const int size = 29;
 
     int relevantKeys[size] = {
-            //camera keys
-            GLFW_KEY_Q,
-            GLFW_KEY_E,
-            GLFW_KEY_RIGHT,
-            GLFW_KEY_LEFT,
-            GLFW_KEY_DOWN,
-            GLFW_KEY_UP,
+        //camera keys
+        GLFW_KEY_Q,
+        GLFW_KEY_E,
+        GLFW_KEY_RIGHT,
+        GLFW_KEY_LEFT,
+        GLFW_KEY_DOWN,
+        GLFW_KEY_UP,
 
-            //para transladar carro
-            GLFW_KEY_SPACE,
+        //para transladar carro
+        GLFW_KEY_SPACE,
 
-            //select objs keys
-            GLFW_KEY_0,
-            GLFW_KEY_1,
-            GLFW_KEY_2,
-            GLFW_KEY_3,
-            GLFW_KEY_4,
-            GLFW_KEY_5,
-            GLFW_KEY_6,
-            GLFW_KEY_7,
-            GLFW_KEY_8,
-            GLFW_KEY_9,
+        //select objs keys
+        GLFW_KEY_0,
+        GLFW_KEY_1,
+        GLFW_KEY_2,
+        GLFW_KEY_3,
+        GLFW_KEY_4,
+        GLFW_KEY_5,
+        GLFW_KEY_6,
+        GLFW_KEY_7,
+        GLFW_KEY_8,
+        GLFW_KEY_9,
 
-            //shift keys
-            GLFW_KEY_LEFT_SHIFT,
-            GLFW_KEY_RIGHT_SHIFT,
+        //shift keys
+        GLFW_KEY_LEFT_SHIFT,
+        GLFW_KEY_RIGHT_SHIFT,
 
-            //move object keys
-            GLFW_KEY_R,
-            GLFW_KEY_S,
-            GLFW_KEY_X,
-            GLFW_KEY_Y,
-            GLFW_KEY_Z,
+        //move object keys
+        GLFW_KEY_R,
+        GLFW_KEY_S,
+        GLFW_KEY_X,
+        GLFW_KEY_Y,
+        GLFW_KEY_Z,
 
-            //ilumination control
-            GLFW_KEY_F1,
-            GLFW_KEY_F2,
-            GLFW_KEY_F3
-    };
+        //ilumination control
+        GLFW_KEY_F1,
+        GLFW_KEY_F2,
+        GLFW_KEY_F3};
 
     for (int i = 0; i < size; ++i)
-        if (keys[relevantKeys[i]]) return true;
+        if (keys[relevantKeys[i]])
+            return true;
 
     return false;
-
-
 }
 
-void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
+void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed)
+{
 
     hasKeyboardPressed = testingIfKeysPressed();
 
@@ -171,13 +158,15 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT] || keys[GLFW_KEY_RIGHT_SHIFT]);
 
     // USADO PARA SELECAO DE OBJETOS
-    for (int i = GLFW_KEY_0; i <= GLFW_KEY_9; i++) {
+    for (int i = GLFW_KEY_0; i <= GLFW_KEY_9; i++)
+    {
         if (keys[i])
             indexSelectedObject = i - GLFW_KEY_0 - 1;
     }
 
     //MOVIMENTOS DO OBJETO SELECIONADO
-    if (indexSelectedObject > -1 && indexSelectedObject < objs.size()) {
+    if (indexSelectedObject > -1 && indexSelectedObject < objs.size())
+    {
 
         bool shiftPressed = (keys[GLFW_KEY_LEFT_SHIFT] || keys[GLFW_KEY_RIGHT_SHIFT]);
 
@@ -227,18 +216,21 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
         cameraPos += cameraUp * cameraSpeed * elapsedTime;
 
     //meche a direcao da camera
-    if (keys[GLFW_KEY_RIGHT] && shiftPressed) {
+    if (keys[GLFW_KEY_RIGHT] && shiftPressed)
+    {
         yawAngle += directionSpeed * elapsedTime;
 
         cameraRight = cross(direction, cameraUp);
     }
-    if (keys[GLFW_KEY_LEFT] && shiftPressed) {
+    if (keys[GLFW_KEY_LEFT] && shiftPressed)
+    {
         yawAngle -= directionSpeed * elapsedTime;
 
         cameraRight = cross(direction, cameraUp);
     }
 
-    if (keys[GLFW_KEY_DOWN] && shiftPressed) {
+    if (keys[GLFW_KEY_DOWN] && shiftPressed)
+    {
         pitchAngle -= directionSpeed * elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
@@ -246,7 +238,8 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
             pitchAngle = -89.0f;
     }
 
-    if (keys[GLFW_KEY_UP] && shiftPressed) {
+    if (keys[GLFW_KEY_UP] && shiftPressed)
+    {
         pitchAngle += directionSpeed * elapsedTime;
         if (pitchAngle > 89.0f)
             pitchAngle = 89.0f;
@@ -258,7 +251,6 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     front.y = sin(glm::radians(pitchAngle));
     front.z = cos(glm::radians(pitchAngle)) * sin(glm::radians(yawAngle));
     direction = glm::normalize(front);
-
 
     // liga a iluminacao
     if (keys[GLFW_KEY_F1] && !shiftPressed)
@@ -276,19 +268,21 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     if (keys[GLFW_KEY_F3] && shiftPressed)
         ilumination_Ia_Id_Is.z = 0.f;
 
-
     if (keys[GLFW_KEY_SPACE])
         moveCar();
-
 }
 
 //Define acoes do teclado
-void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods) {
-    if (action == GLFW_PRESS) keys[key] = true;
-    if (action == GLFW_RELEASE) keys[key] = false;
+void key_callback(GLFWwindow *window, int key, int scancode, int action, int mods)
+{
+    if (action == GLFW_PRESS)
+        keys[key] = true;
+    if (action == GLFW_RELEASE)
+        keys[key] = false;
 }
 
-void createObjects() {
+void createObjects()
+{
     // Realiza a leitura dos dados para criar o Mesh (campo)
     Mesh *mesh = fileReader.readOBJ("projects/CurvesEditor/export/", "pista.obj", 1, materials);
 
@@ -309,9 +303,8 @@ void createObjects() {
     objs.push_back(new Obj3d(mesh2,
                              centralCurvePointsX[0] * trackScale,
                              centralCurvePointsY[0] * trackScale,
-                             centralCurvePointsZ[0] * trackScale)
-            );
-    objs[1]->scale((1 / mesh2->distanceScale) / 10 );
+                             centralCurvePointsZ[0] * trackScale));
+    objs[1]->scale((1 / mesh2->distanceScale) / 10);
 
     /*
     // Realiza a leitura dos dados para criar o Mesh (campo)
@@ -348,8 +341,8 @@ void createObjects() {
 */
 }
 
-
-void verifyOpenGL() {
+void verifyOpenGL()
+{
     // obtencao de versao suportada da OpenGL e renderizador
     const GLubyte *renderer = glGetString(GL_RENDERER);
     const GLubyte *version = glGetString(GL_VERSION);
@@ -358,7 +351,8 @@ void verifyOpenGL() {
     // encerra contexto GL e outros recursos da GLFW
 }
 
-int createGlfwWindow(GLFWwindow *&window) {
+int createGlfwWindow(GLFWwindow *&window)
+{
 
     /* Caso necessario, definicoes especificas para SOs, p. e. Apple OSX *
     Definir como 3.2 para Apple OS X */
@@ -369,8 +363,9 @@ int createGlfwWindow(GLFWwindow *&window) {
 
     //cria a janela
     window = glfwCreateWindow(
-            WEIGTH, HEIGHT, "Cenário do Grau B", NULL, NULL);
-    if (!window) {
+        WEIGTH, HEIGHT, "Cenário do Grau B", NULL, NULL);
+    if (!window)
+    {
         fprintf(stderr, "ERROR: could not open window with GLFW3\n");
         glfwTerminate();
         return 1;
@@ -379,8 +374,10 @@ int createGlfwWindow(GLFWwindow *&window) {
     return 0;
 }
 
-int main() {
-    if (!glfwInit()) {
+int main()
+{
+    if (!glfwInit())
+    {
         fprintf(stderr, "ERROR: could not start GLFW3\n");
         return 1;
     }
@@ -401,11 +398,10 @@ int main() {
 
     //carrega caminho da pista
     fileReader.readCarPath(
-            "projects/CurvesEditor/export/", "carPath.txt",
-            centralCurvePointsX,
-            centralCurvePointsY,
-            centralCurvePointsZ
-    );
+        "projects/CurvesEditor/export/", "carPath.txt",
+        centralCurvePointsX,
+        centralCurvePointsY,
+        centralCurvePointsZ);
 
     //criacao dos objetos
     createObjects();
@@ -420,9 +416,9 @@ int main() {
     int modelLocation = glGetUniformLocation(shader->shader_programme, "model");
 
     //define calbacks
-    glfwSetKeyCallback(window, key_callback);// teclas
-    glfwSetScrollCallback(window, scroll_callback);// scrool do mouse
-    glfwSetWindowSizeCallback(window, window_size_callback);// redimensionar a tela
+    glfwSetKeyCallback(window, key_callback);                // teclas
+    glfwSetScrollCallback(window, scroll_callback);          // scrool do mouse
+    glfwSetWindowSizeCallback(window, window_size_callback); // redimensionar a tela
 
     //inicializa camera
     glm::vec3 front = vec3(0);
@@ -441,7 +437,8 @@ int main() {
     double previous_seconds = glfwGetTime();
     bool hasKeyboardPressed = false;
 
-    while (!glfwWindowShouldClose(window)) {
+    while (!glfwWindowShouldClose(window))
+    {
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
         double current_seconds = glfwGetTime();
@@ -450,27 +447,29 @@ int main() {
 
         keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
 
-        proj = glm::perspective(glm::radians(fov), ((float) WEIGTH) / ((float) HEIGHT), 0.1f, 100.0f);
+        proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
 
         //passa uniform para o shader
         if (hasKeyboardPressed)
             glUniformMatrix4fv(viewLocation, 1, GL_FALSE, glm::value_ptr(view));
 
-
         shader->use();
 
         glUniform3f(glGetUniformLocation(shader->shader_programme, "ilumination_Ia_Id_Is"),
-                    ilumination_Ia_Id_Is.x,ilumination_Ia_Id_Is.y,ilumination_Ia_Id_Is.z);
+                    ilumination_Ia_Id_Is.x, ilumination_Ia_Id_Is.y, ilumination_Ia_Id_Is.z);
 
-        for (int o = 0; o < objs.size(); o++) {
+        for (int o = 0; o < objs.size(); o++)
+        {
 
             glUniform1i((glGetUniformLocation(shader->shader_programme, "selected")), indexSelectedObject == o);
 
             Group *g;
-            for (int i = 0; i < objs[o]->mesh->groups.size(); i++) {
+            for (int i = 0; i < objs[o]->mesh->groups.size(); i++)
+            {
                 g = objs[o]->mesh->groups[i];
-                if (g->numVertices == 0) continue;
+                if (g->numVertices == 0)
+                    continue;
 
                 //passa a textura para o shader
                 g->material->bind(shader->shader_programme);
@@ -494,7 +493,6 @@ int main() {
         /* para a janela 'responder' */
         glfwPollEvents();
     }
-
 
     glfwTerminate();
     return 0;
