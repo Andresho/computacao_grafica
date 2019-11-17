@@ -36,7 +36,7 @@ void main () {
 
     // Elevar a fonte de luz para o espaço de visao
 //    vec3 light_position_eye = vec3 (view * vec4 (light_position_world, 1.0));
-    vec3 light_position_eye = vec3 (view * vec4 (light_position_world, 1.0));
+    vec3 light_position_eye = vec3 (vec4 (light_position_world, 1.0));
 
     // Mede a distancia da fonte da luz em relacao ao olho
     vec3 distance_to_light_eye = light_position_eye - eye_position;
