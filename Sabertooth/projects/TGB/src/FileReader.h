@@ -250,7 +250,7 @@ public:
                                             f->texts.push_back(stoi(aux[i]) - 1);
                                     }
                                     break;
-                                    // posicao 1 --> indice de normais
+                                    // posicao 2 --> indice de normais
                                 case 2:
                                     if (aux[i].empty()) {
                                         if (vertices > 3)

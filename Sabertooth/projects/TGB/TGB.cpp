@@ -1,5 +1,9 @@
 #include "TGB.h"
 
+// para ler curva setar 1
+// para cena do paintball com mesas setar 2
+#define CENARIO_ID 1
+
 #define WEIGTH 800
 #define HEIGHT 600
 
@@ -7,7 +11,7 @@
 #define PORCENT_SCALE 10
 #define N_MOVE 0.1
 
-float lastTheta = -999;
+float lastTheta;
 
 bool keys[1024];
 int indexSelectedObject = -1;
@@ -283,62 +287,64 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void createObjects()
 {
-    // Realiza a leitura dos dados para criar o Mesh (campo)
-    Mesh *mesh = fileReader.readOBJ("projects/CurvesEditor/export/", "pista.obj", 1, materials);
+    if(CENARIO_ID==1){
+        // Realiza a leitura dos dados para criar o Mesh (campo)
+        Mesh *mesh = fileReader.readOBJ("projects/CurvesEditor/export/", "pista.obj", 1, materials);
 
-    // indica como ler os vertices
-    mesh->loadVertices();
+        // indica como ler os vertices
+        mesh->loadVertices();
 
-    //adiciona no vetor de objetos
-    objs.push_back(new Obj3d(mesh, 0, 0, 0));
-    trackScale = (1 / mesh->distanceScale) * 5;
-    objs[0]->scale(trackScale);
+        //adiciona no vetor de objetos
+        objs.push_back(new Obj3d(mesh, 0, 0, 0));
+        trackScale = (1 / mesh->distanceScale) * 5;
+        objs[0]->scale(trackScale);
 
-    // Realiza a leitura dos dados para criar o Mesh (mesa01)
-    Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+        // Realiza a leitura dos dados para criar o Mesh (carro)
+        Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/car/", "car.obj", 2, materials);
 
-    // indica como ler os vertices
-    mesh2->loadVertices();
+        // indica como ler os vertices
+        mesh2->loadVertices();
 
-    objs.push_back(new Obj3d(mesh2,
-                             centralCurvePointsX[0] * trackScale,
-                             centralCurvePointsY[0] * trackScale,
-                             centralCurvePointsZ[0] * trackScale));
-    objs[1]->scale((1 / mesh2->distanceScale) / 10);
+        objs.push_back(new Obj3d(mesh2,
+                                 centralCurvePointsX[0] * trackScale,
+                                 centralCurvePointsY[0] * trackScale,
+                                 centralCurvePointsZ[0] * trackScale));
+        objs[1]->scale((1 / mesh2->distanceScale) / 4);
 
-    /*
-    // Realiza a leitura dos dados para criar o Mesh (campo)
-    Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
+    } else {
 
-    // indica como ler os vertices
-    mesh->loadVertices();
+        // Realiza a leitura dos dados para criar o Mesh (campo)
+        Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
 
-    //adiciona no vetor de objetos
-    objs.push_back(new Obj3d(mesh, 0, 0, 0));
-    objs[0]->scale((1 / mesh->distanceScale) * 5);
+        // indica como ler os vertices
+        mesh->loadVertices();
 
-    // Realiza a leitura dos dados para criar o Mesh (mesa01)
-    Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+        //adiciona no vetor de objetos
+        objs.push_back(new Obj3d(mesh, 0, 0, 0));
+        objs[0]->scale((1 / mesh->distanceScale) * 5);
 
-    // indica como ler os vertices
-    mesh2->loadVertices();
+        // Realiza a leitura dos dados para criar o Mesh (mesa01)
+        Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+
+        // indica como ler os vertices
+        mesh2->loadVertices();
 
 
-    objs.push_back(new Obj3d(mesh2, -0.3f, 0, 1.1f));
-    objs[1]->scale((1 / mesh2->distanceScale) /2.0f );
+        objs.push_back(new Obj3d(mesh2, -0.3f, 0, 1.1f));
+        objs[1]->scale((1 / mesh2->distanceScale) / 2.0f);
 
-    //mesa 02 (esquerda mais longe)
-    objs.push_back(new Obj3d(mesh2, -0.65f, 0, -1.3f));
-    objs[2]->scale((1 / mesh2->distanceScale) / 2);
+        //mesa 02 (esquerda mais longe)
+        objs.push_back(new Obj3d(mesh2, -0.65f, 0, -1.3f));
+        objs[2]->scale((1 / mesh2->distanceScale) / 2);
 
-    //mesa 01 (direita mais perto)
-    objs.push_back(new Obj3d(mesh2, 0.85f, 0, 1.2f));
-    objs[3]->scale((1 / mesh2->distanceScale) / 2);
+        //mesa 01 (direita mais perto)
+        objs.push_back(new Obj3d(mesh2, 0.85f, 0, 1.2f));
+        objs[3]->scale((1 / mesh2->distanceScale) / 2);
 
-    //mesa 02 (esquerda mais longe)
-    objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
-    objs[4]->scale((1 / mesh2->distanceScale) / 2);
-*/
+        //mesa 02 (esquerda mais longe)
+        objs.push_back(new Obj3d(mesh2, 1.1f, 0, -0.6f));
+        objs[4]->scale((1 / mesh2->distanceScale) / 2);
+    }
 }
 
 void verifyOpenGL()
