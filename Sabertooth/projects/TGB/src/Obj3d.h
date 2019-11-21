@@ -47,8 +47,9 @@ public:
 
     void rotateYZ(float radY, float radZ)
     {
-        matrix_rotation = glm::rotate(matrix_rotation, radY, glm::vec3(0, 1, 0));
-        //matrix_rotation = glm::rotate(matrix_rotation, glm::radians(radZ), glm::vec3(0, 1, 0));
+        matrix_rotation = glm::rotate(glm::mat4(1), radY, glm::vec3(0, 1, 0));
+        // matrix_rotation = glm::rotate(matrix_rotation, radZ, glm::vec3(0, 0, 1));
+
         transform();
     }
 

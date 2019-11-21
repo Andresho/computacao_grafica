@@ -93,13 +93,16 @@ void moveCar()
     carIndex = carIndex + inc;
 
     float theta = glm::atan(z, x);
-    float diff = theta - lastTheta;
-    if (carIndex == inc)
-        lastTheta = theta;
-    else
-        lastTheta += diff;
 
-    objs[1]->rotateYZ(-diff, 0);
+    float theta2 = glm::atan(y, x);
+    if (x <= 0)
+    {
+        theta2 -= 3.14f;
+    }
+
+    printf("rad: %f x: %f y: %f\n", theta2, x, y);
+
+    objs[1]->rotateYZ(-theta, theta2);
 }
 
 bool testingIfKeysPressed()
@@ -287,7 +290,8 @@ void key_callback(GLFWwindow *window, int key, int scancode, int action, int mod
 
 void createObjects()
 {
-    if(CENARIO_ID==1){
+    if (CENARIO_ID == 1)
+    {
         // Realiza a leitura dos dados para criar o Mesh (campo)
         Mesh *mesh = fileReader.readOBJ("projects/CurvesEditor/export/", "pista.obj", 1, materials);
 
@@ -310,8 +314,9 @@ void createObjects()
                                  centralCurvePointsY[0] * trackScale,
                                  centralCurvePointsZ[0] * trackScale));
         objs[1]->scale((1 / mesh2->distanceScale) / 4);
-
-    } else {
+    }
+    else
+    {
 
         // Realiza a leitura dos dados para criar o Mesh (campo)
         Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
@@ -328,7 +333,6 @@ void createObjects()
 
         // indica como ler os vertices
         mesh2->loadVertices();
-
 
         objs.push_back(new Obj3d(mesh2, -0.3f, 0, 1.1f));
         objs[1]->scale((1 / mesh2->distanceScale) / 2.0f);
