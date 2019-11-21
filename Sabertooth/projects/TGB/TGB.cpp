@@ -11,6 +11,8 @@
 #define PORCENT_SCALE 10
 #define N_MOVE 0.1
 
+#define CAR_SPEED 10
+
 float lastTheta;
 
 bool keys[1024];
@@ -79,7 +81,7 @@ void moveCar()
 {
     float x, y, z;
     int n, current, next;
-    int inc = 2;
+    int inc = CAR_SPEED;
 
     n = centralCurvePointsX.size();
     current = carIndex % n;
