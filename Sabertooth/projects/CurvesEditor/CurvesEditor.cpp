@@ -39,14 +39,37 @@ void window_size_callback(GLFWwindow *window, int width, int height) {
     RESIZED_HEIGHT = height;
 }
 
-void calulateSPlineCurve() {
+void resetControlPoints (){
+    controlPoints.clear();
+    controlPointsX.clear();
+    controlPointsY.clear();
+    controlPointsZ.clear();
+}
 
+void resetAroundCurvesPoints (){
+    internalCurvePoints.clear();
+    internalCurvePointsX.clear();
+    internalCurvePointsY.clear();
+    internalCurvePointsZ.clear();
+
+    externalCurvePoints.clear();
+    externalCurvePointsX.clear();
+    externalCurvePointsY.clear();
+    externalCurvePointsZ.clear();
+}
+
+void resetCentralCurvePoints () {
     centralCurvePoints.clear();
     centralCurvePointsX.clear();
     centralCurvePointsY.clear();
     centralCurvePointsZ.clear();
+}
 
-    float inc = 0.001f;
+void calulateSPlineCurve() {
+
+    resetCentralCurvePoints();
+
+    float inc = 0.01f;
 
     int n = controlPointsX.size();
 
@@ -78,22 +101,16 @@ void calulateSPlineCurve() {
 
 void calculateAroundCurves() {
 
-    internalCurvePoints.clear();
-    internalCurvePointsX.clear();
-    internalCurvePointsY.clear();
-    internalCurvePointsZ.clear();
-
-    externalCurvePoints.clear();
-    externalCurvePointsX.clear();
-    externalCurvePointsY.clear();
-    externalCurvePointsZ.clear();
+    resetAroundCurvesPoints();
 
     float xVector, yVector, theta, perpedicAngle;
 
-    for (int i = 0; i < centralCurvePointsX.size() - 1; i += 1) {
+    int n = centralCurvePointsX.size();
 
-        xVector = centralCurvePointsX[i + 1] - centralCurvePointsX[i];
-        yVector = centralCurvePointsY[i + 1] - centralCurvePointsY[i];
+    for (int i = 0; i < centralCurvePointsX.size(); i += 1) {
+
+        xVector = centralCurvePointsX[(i + 1)%n] - centralCurvePointsX[i];
+        yVector = centralCurvePointsY[(i + 1)%n] - centralCurvePointsY[i];
         theta = atan(yVector / xVector);
 
         //calcula a curval interna
@@ -149,23 +166,24 @@ void calculateNormals() {
 
         Nz = UxVy - UyVx
      * */
+    int n = internalCurvePointsX.size();
 
-    for (int i = 0; i < internalCurvePointsX.size() - 1; i += 1) {
+    for (int i = 0; i < internalCurvePointsX.size(); i += 1) {
 
         if (i % 2 != 0) {
             Ux = externalCurvePointsX[i] - internalCurvePointsX[i];
             Uy = externalCurvePointsY[i] - internalCurvePointsY[i];
             Uz = externalCurvePointsZ[i] - internalCurvePointsZ[i];
-            Vx = externalCurvePointsX[i + 1] - internalCurvePointsX[i];
-            Vy = externalCurvePointsY[i + 1] - internalCurvePointsY[i];
-            Vz = externalCurvePointsZ[i + 1] - internalCurvePointsZ[i];
+            Vx = externalCurvePointsX[(i + 1)%n] - internalCurvePointsX[i];
+            Vy = externalCurvePointsY[(i + 1)%n] - internalCurvePointsY[i];
+            Vz = externalCurvePointsZ[(i + 1)%n] - internalCurvePointsZ[i];
         } else {
-            Ux = internalCurvePointsX[i + 1] - externalCurvePointsX[i + 1];
-            Uy = internalCurvePointsY[i + 1] - externalCurvePointsY[i + 1];
-            Uz = internalCurvePointsZ[i + 1] - externalCurvePointsZ[i + 1];
-            Vx = internalCurvePointsX[i] - externalCurvePointsX[i + 1];
-            Vy = internalCurvePointsY[i] - externalCurvePointsY[i + 1];
-            Vz = internalCurvePointsZ[i] - externalCurvePointsZ[i + 1];
+            Ux = internalCurvePointsX[(i + 1)%n] - externalCurvePointsX[(i + 1)%n];
+            Uy = internalCurvePointsY[(i + 1)%n] - externalCurvePointsY[(i + 1)%n];
+            Uz = internalCurvePointsZ[(i + 1)%n] - externalCurvePointsZ[(i + 1)%n];
+            Vx = internalCurvePointsX[i] - externalCurvePointsX[(i + 1)%n];
+            Vy = internalCurvePointsY[i] - externalCurvePointsY[(i + 1)%n];
+            Vz = internalCurvePointsZ[i] - externalCurvePointsZ[(i + 1)%n];
         }
 
         Nx = Uy * Vz - Uz * Vy;
@@ -262,7 +280,6 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
     }
 }
 
-
 void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
     float inc = 0.01f;
     float limite = 1.0f;
@@ -299,6 +316,14 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed) {
             }
         }
     }
+
+    if (keys[GLFW_KEY_R] == 1){
+        resetControlPoints();
+        resetAroundCurvesPoints();
+        resetCentralCurvePoints();
+    }
+
+
 
 
 }

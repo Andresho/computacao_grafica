@@ -3,6 +3,7 @@
 // para ler curva setar 1
 // para cena do paintball com mesas setar 2
 #define CENARIO_ID 1
+#define DEBUG false
 
 #define WEIGTH 800
 #define HEIGHT 600
@@ -11,8 +12,9 @@
 #define PORCENT_SCALE 10
 #define N_MOVE 0.1
 
-#define CAR_SPEED 10
+#define CAR_SPEED_MAIN 2
 
+float CAR_SPEED = CAR_SPEED_MAIN;
 float lastTheta;
 
 bool keys[1024];
@@ -102,7 +104,7 @@ void moveCar()
         theta2 -= 3.14f;
     }
 
-    printf("rad: %f x: %f y: %f\n", theta2, x, y);
+    if(DEBUG)  printf("rad: %f x: %f y: %f\n", theta2, x, y);
 
     objs[1]->rotateYZ(-theta, theta2);
 }
@@ -277,8 +279,15 @@ void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed)
     if (keys[GLFW_KEY_F3] && shiftPressed)
         ilumination_Ia_Id_Is.z = 0.f;
 
-    if (keys[GLFW_KEY_SPACE])
-        moveCar();
+    float boost = 2.f;
+    if(keys[GLFW_KEY_SPACE]){
+        if(CAR_SPEED<CAR_SPEED_MAIN*boost)
+            CAR_SPEED=CAR_SPEED_MAIN*boost;
+    } else{
+        CAR_SPEED=CAR_SPEED_MAIN;
+    }
+
+
 }
 
 //Define acoes do teclado
@@ -458,6 +467,9 @@ int main()
         previous_seconds = current_seconds;
 
         keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
+
+        //move o carro
+        moveCar();
 
         proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
