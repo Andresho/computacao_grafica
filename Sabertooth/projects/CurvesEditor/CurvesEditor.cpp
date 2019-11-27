@@ -144,7 +144,6 @@ void calculateAroundCurves() {
     }
 }
 
-
 void calculateNormals() {
 
     // limpara o vector
@@ -346,7 +345,6 @@ void verifyOpenGL() {
     printf("OpenGL (versao suportada) %s\n", version);
     // encerra contexto GL e outros recursos da GLFW
 }
-
 
 int createGlfwWindow(GLFWwindow *&window) {
 

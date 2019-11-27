@@ -1,8 +1,8 @@
-#include "TGB.h"
+#include "TrackReader.h"
 
 // para ler curva setar 1
 // para cena do paintball com mesas setar 2
-#define CENARIO_ID 1
+#define CENARIO_ID 2
 #define DEBUG false
 
 #define WEIGTH 800
@@ -160,7 +160,7 @@ bool testingIfKeysPressed()
     return false;
 }
 
-void keyboard_reaction(float elapsedTime, bool &hasKeyboardPressed)
+void keyboard_reaction(float elapsedTime,bool &hasKeyboardPressed)
 {
 
     hasKeyboardPressed = testingIfKeysPressed();
@@ -315,7 +315,7 @@ void createObjects()
         objs[0]->scale(trackScale);
 
         // Realiza a leitura dos dados para criar o Mesh (carro)
-        Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/car/", "car.obj", 2, materials);
+        Mesh *mesh2 = fileReader.readOBJ("projects/TrackReader/objs/car/", "car.obj", 2, materials);
 
         // indica como ler os vertices
         mesh2->loadVertices();
@@ -330,7 +330,7 @@ void createObjects()
     {
 
         // Realiza a leitura dos dados para criar o Mesh (campo)
-        Mesh *mesh = fileReader.readOBJ("projects/TGB/objs/paintball/", "cenaPaintball.obj", 1, materials);
+        Mesh *mesh = fileReader.readOBJ("projects/TrackReader/objs/paintball/", "cenaPaintball.obj", 1, materials);
 
         // indica como ler os vertices
         mesh->loadVertices();
@@ -340,7 +340,7 @@ void createObjects()
         objs[0]->scale((1 / mesh->distanceScale) * 5);
 
         // Realiza a leitura dos dados para criar o Mesh (mesa01)
-        Mesh *mesh2 = fileReader.readOBJ("projects/TGB/objs/mesa/", "mesa01.obj", 2, materials);
+        Mesh *mesh2 = fileReader.readOBJ("projects/TrackReader/objs/mesa/", "mesa01.obj", 2, materials);
 
         // indica como ler os vertices
         mesh2->loadVertices();
@@ -428,7 +428,7 @@ int main()
     createObjects();
 
     //cricao de shaders
-    Shader *shader = new Shader("projects/TGB/shaders/core.vert", "projects/TGB/shaders/core.frag");
+    Shader *shader = new Shader("projects/TrackReader/shaders/core.vert", "projects/TrackReader/shaders/core.frag");
     shader->use();
 
     //criacao das locations
@@ -464,12 +464,14 @@ int main()
 
         double current_seconds = glfwGetTime();
         double elapsed_seconds = current_seconds - previous_seconds;
-        previous_seconds = current_seconds;
 
         keyboard_reaction(elapsed_seconds, hasKeyboardPressed);
 
         //move o carro
-        moveCar();
+        if(elapsed_seconds >= 0.01 ){
+            moveCar();
+            previous_seconds = current_seconds;
+        }
 
         proj = glm::perspective(glm::radians(fov), ((float)WEIGTH) / ((float)HEIGHT), 0.1f, 100.0f);
         view = glm::lookAt(cameraPos, cameraPos + direction, cameraUp);
