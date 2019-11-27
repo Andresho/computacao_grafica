@@ -12,7 +12,7 @@
 #define PORCENT_SCALE 10
 #define N_MOVE 0.1
 
-#define CAR_SPEED_MAIN 2
+#define CAR_SPEED_MAIN 10
 
 float CAR_SPEED = CAR_SPEED_MAIN;
 float lastTheta;

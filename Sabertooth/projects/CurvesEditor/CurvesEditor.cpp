@@ -69,7 +69,7 @@ void calulateSPlineCurve() {
 
     resetCentralCurvePoints();
 
-    float inc = 0.01f;
+    float inc = 0.001f;
 
     int n = controlPointsX.size();
 
@@ -275,6 +275,10 @@ void mouse_button_callback(GLFWwindow *window, int button, int action, int mods)
                     centralCurvePointsY,
                     centralCurvePointsZ
             );
+
+            resetAroundCurvesPoints();
+            resetCentralCurvePoints();
+            resetControlPoints();
 
         }
     }
