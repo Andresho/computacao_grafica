@@ -2,7 +2,7 @@
 
 // para ler curva setar 1
 // para cena do paintball com mesas setar 2
-#define CENARIO_ID 2
+#define CENARIO_ID 1
 #define DEBUG false
 
 #define WEIGTH 800
